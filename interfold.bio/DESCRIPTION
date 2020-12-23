@@ -1,0 +1,47 @@
+Package: interfold.bio
+Type: Package
+Title: Toolkit containing Utilities for Integration of Multi-omic data
+Version: 1.0.1
+Authors@R: c(
+    person("Shameer", "Khader", email = "shameer.khader@astrazeneca.com", role = c("own", "pdr")),
+    person("Carlos", "Roca", email = "carlos.roca@astrazeneca.com", role = c("cre")),
+    person("Deepak", "Gopalakrishnan", email = "vancheswaran.gopalakrishnan@astrazeneca.com", role = c("ctb")),
+    person("Stuart", "McHattie", email = "stuart.mchattie@tessella.com", role = c("aut")),
+    person("Jonathan", "Ayling", email = "aylj@tessella.com", role = c("aut")),
+    person("AstraZeneca", role = c("cph")))
+Description: Provides a unified toolkit for the analysis and integration of multi-omic high-throughput data.
+    It relies upon the mixOmics toolkit to provide implementations of many of the underlying projection to latent structures
+    (PLS) methods used to analyse high-dimensional data. In addition to this, it includes custom implementations of
+    data pre-processing, normalisation, collation, model validation, visualisation & output functions.
+License: Copyright (2020) AstraZeneca
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.6.0)
+biocViews:
+Imports:
+    devtools,
+    rlang (>= 0.4.5),
+    dplyr,
+    magrittr,
+    reshape2,
+    stringr,
+    Rtsne,
+    igraph,
+    metagenomeSeq,
+    ggdendro,
+    viridis,
+    scales,
+    gplots,
+    grid,
+    ggforce,
+    WGCNA,
+    anRichment,
+    anRichmentMethods,
+    GO.db,
+    org.Mm.eg.db
+Suggests:
+    rgl,
+    umap,
+    vegan,
+    biomaRt
+RoxygenNote: 7.1.1
