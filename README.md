@@ -72,3 +72,5 @@ library(mixOmics)
 ### Visualization of mixOmics Output
 
 ### WGCNA Analysis of Expression Data
+
+## Copyright
