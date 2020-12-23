@@ -13,7 +13,7 @@ Description: Provides a unified toolkit for the analysis and integration of mult
     It relies upon the mixOmics toolkit to provide implementations of many of the underlying projection to latent structures
     (PLS) methods used to analyse high-dimensional data. In addition to this, it includes custom implementations of
     data pre-processing, normalisation, collation, model validation, visualisation & output functions.
-License: Copyright (2020) AstraZeneca
+License: Copyright (2021) AstraZeneca
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.6.0)
