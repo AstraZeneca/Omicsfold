@@ -80,9 +80,9 @@ expected by `mixOmics`.  In other words, you should have samples in rows and
 features in columns, as either a data frame, matrix or other table like data
 structure.
 
-#### `low.count.removal`
+#### Low Count Removal
 
-Removes features from the data which are unlikely to contribute to the fit of a
+`low.count.removal()` removes features from the data which are unlikely to contribute to the fit of a
 model because they show low counts/expression relative to the rest of the data.
 The higher the percentage provided, the more features will be discarded.
 
@@ -96,9 +96,9 @@ dim(normalised)
 ## [1]  43 816
 ```
 
-#### `normalise.tss`
+#### Total Sum Scaling
 
-Normalises count data sample-by-sample, to a scale of 0..1, using Total Sum
+`normalise.tss()` normalises count data sample-by-sample, to a scale of 0..1, using Total Sum
 Scaling.  This accounts for sequencing differences between samples.  After this
 transformation, all samples will sum to 1.0 and values for each feature will be
 relative.  Values can be offset from zero by providing the optional `offset`
@@ -122,15 +122,13 @@ normalised[1:3, 3:5]
 ## Mouth599 0.0004083299 0.0002041650 0.0002041650
 ```
 
-#### `normalise.css`
+#### Cumulative Sum Scaling
 
-#### `normalise.logit.empirical`
+#### Logit
 
-#### `normalise.logit`
+#### Empirical Logit
 
-#### `normalise.clr`
-
-#### `normalise.clr.within.features`
+#### Centered Log Ratio
 
 ### Visualization of mixOmics Output
 
