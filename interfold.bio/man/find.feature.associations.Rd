@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_analysis.R
 \name{find.feature.associations}
 \alias{find.feature.associations}
-\title{Extract feature vs. feature association (mutual information) data for a multi-omics mixOmics (DIABLO) mode, and
+\title{Extract feature vs. feature association (mutual information) data for a multi-omics mixOmics (DIABLO) model, and
 plot this as a heatmap. This is the same data used to create the circos and network plots, but includes all
 interactions for the top twenty features from each block.}
 \usage{
@@ -18,7 +18,7 @@ Matrix including the association of all selected features across all blocks. E.g
 multi-omic model, this will include the top 20 features from each block, and so return a 60x60 covariance matrix
 }
 \description{
-Extract feature vs. feature association (mutual information) data for a multi-omics mixOmics (DIABLO) mode, and
+Extract feature vs. feature association (mutual information) data for a multi-omics mixOmics (DIABLO) model, and
 plot this as a heatmap. This is the same data used to create the circos and network plots, but includes all
 interactions for the top twenty features from each block.
 }

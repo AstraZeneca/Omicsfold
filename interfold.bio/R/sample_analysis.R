@@ -92,7 +92,7 @@ plot.predicted.projection <- function(prediction, classes.new) {
 }
 
 
-#' Extract feature vs. feature association (mutual information) data for a multi-omics mixOmics (DIABLO) mode, and
+#' Extract feature vs. feature association (mutual information) data for a multi-omics mixOmics (DIABLO) model, and
 #' plot this as a heatmap. This is the same data used to create the circos and network plots, but includes all
 #' interactions for the top twenty features from each block.
 #'
