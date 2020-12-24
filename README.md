@@ -2,7 +2,7 @@
 
 ![Maturity level-0](https://img.shields.io/badge/Maturity%20Level-ML--0-red)
 
-Multi-omics data normalisation, model fitting and visualization.
+Multi-omics data normalisation, model fitting and visualisation.
 
 ## Overview
 
@@ -39,7 +39,8 @@ Notable dependencies that will be installed if they are not already:
 - dplyr & magrittr
 - reshape2
 
-See `DESCRIPTION` for a complete dependency list
+See the [`DESCRIPTION`](interfold.bio/DESCRIPTION) file for a complete
+dependency list
 
 ### Installation
 
@@ -60,11 +61,14 @@ script.
 
 ### Usage
 
-Import the InterFold and the mixOmics package and you're ready to go.
+Import the `interfold.bio` and the `mixOmics` packages in R and you're ready to
+go.  Some functions also require `dplyr` to be loaded so it's a good idea to
+load it anyway.
 
 ```R
 library(interfold.bio)
 library(mixOmics)
+library(dplyr)
 ```
 
 ### Data Normalisation
@@ -84,6 +88,51 @@ functions also showing example code for how to use it.
 - `normalise.clr()`
 - `normalise.clr.within.features()`
 
-### Visualization of mixOmics Output
+### Analysis of mixOmics Output
+
+Once a `mixOmics` model has been fitted, InterFold can be used to perform a
+number of visualisation and data extraction functions.  Below is a brief list of
+the functionality provided.  While these are well documented in the R help
+system, descriptions of how to use each function can also be found in the
+[Getting Started with Model Analysis](docs/getting-started-model-analysis.md)
+document.
+
+- **Model variance analysis** - functions are provided to extract the percentage
+  contributions of each component to the model variance and the centroids of
+  variance across the blocks of a DIABLO model.
+- **Feature analysis for sPLS-DA models** - feature loadings on the fitted
+  singleomics model can be exported as a sorted table, while feature stability
+  across many sparse model fits can also be exported.  As there may be many
+  components to export stability for, another function lets you combine these
+  into a single table as well as a plotting function allowing you to plot
+  stability of the selected features as a visualisation.
+- **Feature analysis for DIABLO models** - similarly to the features for
+  singleomics models above, multiomics models can also have feature loadings and
+  stability exported.  Because stability is influenced by the number of model
+  iterations, the size of the block and the number of features being kept in
+  each component for that block, a ranking function is offered.  Associated
+  correlations between features of different blocks can be exported as either a
+  matrix and then also converted to a CSV file appropriate for importing into
+  Cytoscape where it can form a network graph.
+- **Model predictivity** - we provide a function to plot the predictivity of a
+  model from a confusion matrix.
+- **Utility functions** - offers a way to take long feature names being passed
+  to plots and truncate them for display.
 
 ### WGCNA Analysis of Expression Data
+
+Where the input data is expression data such as from RNASeq it may be desirable
+to make associations between the single-time-point expression data and the
+outcomes of subjects.  The `WGCNA` library lets you do this, but has a lot of
+inputs.  InterFold offers a suite of functions to try to simplify the process
+and integrate the functionality from `anRichment` to identify over-represented
+GO terms for genes clustered by `WGCNA`.  You can read more about the use of
+InterFold's suite of functions in the [Getting Started with
+WGCNA](docs/getting-started-wgcna.md) document.
+
+## Other Information
+
+To contact the maintainers or project director, please refer to the
+[Authors](AUTHORS.md) file.  If you are thinking of contributing to InterFold,
+all the information you will need is in the [Contributing](CONTRIBUTING.md)
+file.
