@@ -133,6 +133,6 @@ WGCNA](docs/getting-started-wgcna.md) document.
 ## Other Information
 
 To contact the maintainers or project director, please refer to the
-[Authors](AUTHORS.md) file.  If you are thinking of contributing to InterFold,
-all the information you will need is in the [Contributing](CONTRIBUTING.md)
+[`AUTHORS`](AUTHORS.md) file.  If you are thinking of contributing to InterFold,
+all the information you will need is in the [`CONTRIBUTING`](CONTRIBUTING.md)
 file.
