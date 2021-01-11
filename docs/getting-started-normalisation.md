@@ -11,9 +11,10 @@ functions.
 
 ## Low Count Removal
 
-`low.count.removal()` removes features from the data which are unlikely to contribute to the fit of a
-model because they show low counts/expression relative to the rest of the data.
-The higher the percentage provided, the more features will be discarded.
+`low.count.removal()` removes features from the data which are unlikely to
+contribute to the fit of a model because they show low counts/expression
+relative to the rest of the data. The higher the percentage provided, the more
+features will be discarded.
 
 ```R
 data(Koren.16S)
@@ -27,12 +28,12 @@ dim(normalised)
 
 ## Total Sum Scaling
 
-`normalise.tss()` normalises count data sample-by-sample, to a scale of 0..1, using Total Sum
-Scaling.  This accounts for sequencing differences between samples.  After this
-transformation, all samples will sum to 1.0 and values for each feature will be
-relative.  Values can be offset from zero by providing the optional `offset`
-argument.  In the example below, we compare the TSS function from InterFold with
-the pre-normalised TSS data in the Koren 16S data set.
+`normalise.tss()` normalises count data sample-by-sample, to a scale of 0..1,
+using Total Sum Scaling.  This accounts for sequencing differences between
+samples.  After this transformation, all samples will sum to 1.0 and values for
+each feature will be relative.  Values can be offset from zero by providing the
+optional `offset` argument.  In the example below, we compare the TSS function
+from InterFold with the pre-normalised TSS data in the Koren 16S data set.
 
 ```R
 data(Koren.16S)
@@ -53,10 +54,77 @@ normalised[1:3, 3:5]
 
 ## Cumulative Sum Scaling
 
+`normalise.css()` applies cumulative sum scaling normalisation to count data for
+inter-sample depth.  This is an alternative to using total sum scaling and
+relies on the implementation by `metagenomeSeq`.  It reformats `mixOmics` input
+data so that it can be processed by `metagenomeSeq` and then converts the CSS
+normalised output back to `mixOmics` input.  The definition for this
+normalisation approach according to `metagenomeSeq` is as follows:
+
+> Calculates each column's quantile and calculates the sum up to and including
+> that quantile.
+
+Below is an example of applying this normalisation to the same Koren 16S data
+set as was used in the TSS example above:
+
+```R
+data(Koren.16S)
+Koren.16S$data.raw[1:3, 3:5]
+##            410908   177792  4294607
+## Feces659        1       99        1
+## Feces309        1        1        1
+## Mouth599        2        1        1
+
+# Now apply our CSS normalisation to the raw data
+normalised <- normalise.css(Koren.16S$data.raw)
+normalised[1:3, 3:5]
+##            410908   177792  4294607
+## Feces659 1.187222 6.993638 1.187222
+## Feces309 1.179016 1.179016 1.179016
+## Mouth599 1.711633 1.096030 1.096030
+```
+
+Here we see that the lowest counts of 1 for each feature / sample have much less
+variance under CSS scaling, when compared to TSS scaling.
+
 ## Logit
 
-There is also a variant for applying the logit transformation in an empirical way.
+`normalise.logit()` provides normalisation based on the [logit
+function](https://en.wikipedia.org/wiki/Logit) which transforms 0.5 to zero,
+values below 0.5 become negative and above 0.5 become positive.  The scale of
+that negative or positive value is exponential and reaches negative/positive
+inifinity at 0.0 and 1.0 respectively.  This can be a useful transformation for
+values in the 0..1 scale, bringing them back into Euclidean space after TSS
+normalisation.  Below is an example of transforming values in this way.
+
+```R
+data(Koren.16S)
+Koren.16S$data.TSS[1:3, 3:5]
+##                410908       177792      4294607
+## Feces659 0.0002961208 0.0293159609 0.0002961208
+## Feces309 0.0003447087 0.0003447087 0.0003447087
+## Mouth599 0.0004083299 0.0002041650 0.0002041650
+
+# Now apply our logit normalisation to the TSS data
+normalised <- normalise.logit(Koren.16S$data.TSS)
+normalised[1:3, 3:5]
+##                410908       177792      4294607
+## Feces659    -8.124447    -3.499869    -8.124447
+## Feces309    -7.972466    -7.972466    -7.972466
+## Mouth599    -7.803027    -8.496378    -8.496378
+```
+
+As can be seen, this adds more distance between values, which can be more
+beneficial for the model fitting.  In addition, values which are virtually zero
+will be heavily modified towards a very negative value.  If any values to be
+transformed are actually at 0.0 or 1.0 the logit function will generate infinity
+values, which are inappropriate for modelling.  For this reason, a second
+empirical method is provided by InterFold, `normalise.logit.empirical()`, which
+moves measurements away from 0.0 and 1.0 on a per-feature basis, avoiding the
+generation of infinity values.
 
 ## Centered Log Ratio
 
-There is also a variant of the centered log ratio for within features normalisation.
+`normalise.clr()`
+
+There is also a variant of the centered log ratio for within features normalisation. `normalise.clr.within.features()`
