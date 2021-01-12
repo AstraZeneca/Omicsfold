@@ -136,3 +136,11 @@ To contact the maintainers or project director, please refer to the
 [`AUTHORS`](AUTHORS.md) file.  If you are thinking of contributing to InterFold,
 all the information you will need is in the [`CONTRIBUTING`](CONTRIBUTING.md)
 file.
+
+InterFold is licensed under the [Apache-2.0 software
+licence](https://www.apache.org/licenses/LICENSE-2.0) as documented in the
+[`LICENCE`](LICENCE.md) file.  Separately installed dependencies of InterFold
+may be licensed under different licence agreements.  If you plan to create
+derivative works from InterFold or use InterFold for commercial or profitable
+enterprises, please ensure you adhere to all the expectations of these
+dependencies and seek legal advice if you are unsure.
