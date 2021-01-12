@@ -93,7 +93,7 @@ variance under CSS scaling, when compared to TSS scaling.
 function](https://en.wikipedia.org/wiki/Logit) which transforms 0.5 to zero,
 values below 0.5 become negative and above 0.5 become positive.  The scale of
 that negative or positive value is exponential and reaches negative/positive
-inifinity at 0.0 and 1.0 respectively.  This can be a useful transformation for
+infinity at 0.0 and 1.0 respectively.  This can be a useful transformation for
 values in the 0..1 scale, bringing them back into Euclidean space after TSS
 normalisation.  Below is an example of transforming values in this way.
 
@@ -119,12 +119,56 @@ beneficial for the model fitting.  In addition, values which are virtually zero
 will be heavily modified towards a very negative value.  If any values to be
 transformed are actually at 0.0 or 1.0 the logit function will generate infinity
 values, which are inappropriate for modelling.  For this reason, a second
-empirical method is provided by InterFold, `normalise.logit.empirical()`, which
-moves measurements away from 0.0 and 1.0 on a per-feature basis, avoiding the
-generation of infinity values.
+empirical function is provided by InterFold, `normalise.logit.empirical()`,
+which moves measurements away from 0.0 and 1.0 on a per-feature basis, avoiding
+the generation of infinity values.
 
-## Centered Log Ratio
+## Centered Log-Ratio
 
-`normalise.clr()`
+`normalise.clr()` applies the centered log-ratio (CLR) transformation to the
+data, where each measurement is divided by the mean of all the measurements and
+the log of that ratio returned.  The ratio centers the mean of the data about
+zero after the log is applied.  This transformation can be used with sum scaled
+OTU data as an alternative to the logit transformation above.
 
-There is also a variant of the centered log ratio for within features normalisation. `normalise.clr.within.features()`
+This CLR function is a convenience wrapper around the
+[`logratio.transfo()`](https://www.rdocumentation.org/packages/mixOmics/versions/6.3.2/topics/logratio.transfo)
+function from the `mixOmics` package, maintaining the structure of the input
+data after the transformation is applied.  Logs of zero produce infinity values,
+so if the data being normalised contains zero values, a small offset can be
+provided to prevent this problem.  The following is an example of applying the
+CLR transformation with and without a small offset to the Koren 16S TSS data.
+The offset is unnecessary in this data as there are no zero values, but the
+results are similar for non-zero values.
+
+```R
+data(Koren.16S)
+Koren.16S$data.TSS[1:3, 3:5]
+##                410908       177792      4294607
+## Feces659 0.0002961208 0.0293159609 0.0002961208
+## Feces309 0.0003447087 0.0003447087 0.0003447087
+## Mouth599 0.0004083299 0.0002041650 0.0002041650
+
+# Now apply our CLR normalisation to the TSS data
+normalised.1 <- normalise.clr(Koren.16S$data.TSS)
+normalised.1[1:3, 3:5]
+##                410908       177792      4294607
+## Feces659   -0.3861923    4.2089276   -0.3861923
+## Feces309   -0.3387886   -0.3387886   -0.3387886
+## Mouth599    0.5184764   -0.1746708   -0.1746708
+
+# Re-apply the CLR normalisation with a small offset
+normalised.2 <- normalise.clr(Koren.16S$data.TSS, offset = 0.000001)
+normalised.2[1:3, 3:5]
+##                410908       177792      4294607
+## Feces659   -0.3856632    4.2061195   -0.3856632
+## Feces309   -0.3383694   -0.3383694   -0.3383694
+## Mouth599    0.5164012   -0.1743060   -0.1743060
+```
+
+Where the intention is to apply the centered log-ratio to non-OTU data, the
+function above should be avoided as it applies an inter-sample normalisation.
+For this purpose InterFold also provides a related function
+`normalise.clr.within.features()` which ensures that the means used to center
+the log-ratio are calculated within a feature instead.  This can be more
+appropriate for non-OTU data.
