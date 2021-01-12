@@ -65,7 +65,61 @@ diablo.perf <- perf(diablo.model, validation = 'Mfold', M = 10, nrepeat = 10,
 
 ## Model variance analysis
 
-InterFold provides the `get.block.centroids()` function to extract the centroids of variance across blocks in a DIABLO model and export them as a data frame and plot.  The `get.model.variance()` function is also provided which will take either an sPLS-DA model or a DIABLO model as input and creates a data frame showing the percentage contributions of each component to the model variance.
+InterFold provides the `get.block.centroids()` function to extract the centroids
+of variance across blocks in a DIABLO model and export them as a data frame and
+plot.  The `get.model.variance()` function is also provided which will take
+either an sPLS-DA model or a DIABLO model as input and creates a data frame
+showing the percentage contributions of each component to the model variance.
+
+Applying the `get.block.centroids()` function to the DIABLO model from above
+gives the following:
+
+```R
+get.block.centroids(diablo.model)
+## A tibble: 150 x 4
+## Groups:   sample [150]
+##    sample label comp1   comp2
+##     <int> <fct> <dbl>   <dbl>
+##  1      1 Basal  2.38  2.22  
+##  2      2 Basal  1.74  2.03  
+##  3      3 Basal  2.28 -0.0206
+##  4      4 Basal  1.54  1.46  
+##  5      5 Basal  1.93 -1.17  
+## ... with 145 more rows
+```
+
+In addition to the tibble provided, a plot is produced showing the centroid
+across the blocks in the first and second component for each sample in the data.
+Each point in the plot represents a sample and is the mean of the three blocks
+loaded for the DIABLO model.  The circles show the distribution of all the
+points sharing the same label and gives a good indication of the separation of
+classifications in each of the first two components.
+
+![Block Centroids Plot](imgs/block-centroids-plot.png)
+
+The `get.model.variance()` function can be applied to the model to identify how
+much variation each component captures in the model for a given block:
+
+```R
+get.model.variance(diablo.model, "mRNA")
+##        Proportion Cumulative
+## comp1 0.794465823  0.7944658
+## comp2 0.008624793  0.8030906
+
+get.model.variance(diablo.model, "miRNA")
+##        Proportion Cumulative
+## comp1 0.669987181  0.6699872
+## comp2 0.001283394  0.6712706
+
+get.model.variance(diablo.model, "proteomics")
+##        Proportion Cumulative
+## comp1 0.770439163  0.7704392
+## comp2 0.002689493  0.7731287
+```
+
+Here we can see that the first component captures the vast majority of the
+variance for all three blocks but that slightly less of the variance in `miRNA`
+was captured than in `mRNA` or `proteomics`.
 
 ## Feature analysis for sPLS-DA models
 
