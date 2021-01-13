@@ -247,17 +247,201 @@ merge.feature.stability(loadings.table, stability.comp3)
 
 ## Feature analysis for DIABLO models
 
-- get.diablo.top.loadings()
-- diablo.selection.stability()
-- get.diablo.top.loadings.with.stability()
-- get.diablo.top.features()
-- find.feature.associations()
-- export.matrix.as.network()
+InterFold provides a number of functions for analysing the output from DIABLO
+models produced in `mixOmics`.
+
+- [`get.diablo.top.loadings()`](#get-diablo-top-loadings) outputs a data frame
+  of feature loadings for a specified block in the DIABLO model.
+- [`diablo.selection.stability()`](#get-diablo-feature-selection-stability)
+  extracts a data frame of stability scores from a DIABLO model performance test
+  for features in a particular block and component.
+- [`get.diablo.top.loadings.with.stability()`](#get-diablo-top-loadings-with-stability)
+  provides a concatenated data frame of feature loadings and stability scores
+  for a given block in the DIABLO model.
+- [`get.diablo.top.features()`](#get-diablo-top-features) applies a correction
+  factor to stability scores so that features can be ranked across different
+  blocks and different components, returning a sorted data frame of features in
+  the model.
+- [`plot.feature.stability()`](#plot-feature-stability) provides a simple
+  histogram plot of the highest stability features in a single component and
+  block, allowing visual comparison of their stability scores.
+- [`find.feature.associations()`](#find-diablo-feature-associations)
+- [`export.matrix.as.network()`](#export-diablo-matrix-as-a-network)
+
+### Get DIABLO top loadings
+
+`get.diablo.top.loadings()`
+
+```R
+get.diablo.top.loadings(diablo.model$loadings$proteomics)
+##                   comp1       comp2
+## ER-alpha    -0.74995295          NA
+## GATA3       -0.62448770          NA
+## ASNS         0.16825721          NA
+## Cyclin_B1    0.12026614          NA
+## AR          -0.06842432 -0.11183919
+## JNK2        -0.01137347          NA
+## HER2                 NA -0.67182918
+## HER2_pY1248          NA -0.62130938
+## EGFR_pY1068          NA -0.33229248
+## c-Kit                NA  0.17791016
+## HER3_pY1289          NA -0.08706226
+## XRCC1                NA  0.02149536
+```
+
+### Get DIABLO feature selection stability
+
+`diablo.selection.stability()`
+
+```R
+diablo.selection.stability(diablo.perf, comp = 1, block = 'proteomics')
+##             feature stability
+## ER-alpha   ER-alpha      1.00
+## GATA3         GATA3      1.00
+## ASNS           ASNS      0.99
+## Cyclin_B1 Cyclin_B1      0.98
+## AR               AR      0.80
+## JNK2           JNK2      0.54
+## PR               PR      0.41
+## Cyclin_E1 Cyclin_E1      0.22
+## INPP4B       INPP4B      0.12
+```
+
+### Get DIABLO top loadings with stability
+
+`get.diablo.top.loadings.with.stability()`
+
+```R
+get.diablo.top.loadings.with.stability(diablo.model, diablo.perf, block = 'proteomics', feature.count = 50)
+##                   comp1       comp2 stability
+## ER-alpha    -0.74995295          NA      1.00
+## GATA3       -0.62448770          NA      1.00
+## ASNS         0.16825721          NA      0.99
+## Cyclin_B1    0.12026614          NA      0.98
+## AR          -0.06842432 -0.11183919      0.80
+## JNK2        -0.01137347          NA      0.54
+## HER2                 NA -0.67182918      1.00
+## HER2_pY1248          NA -0.62130938      1.00
+## EGFR_pY1068          NA -0.33229248      1.00
+## c-Kit                NA  0.17791016      1.00
+## HER3_pY1289          NA -0.08706226      0.95
+## XRCC1                NA  0.02149536      0.56
+```
+
+### Get DIABLO top features
+
+`get.diablo.top.features()`
+
+```R
+get.diablo.top.features(diablo.model, diablo.perf, feature.count = 150)
+## rank rank.score      block component         feature stability
+##    1 1.00000000      miRNA         1    hsa-mir-130b 1.0000000
+##    2 1.00000000      miRNA         1      hsa-mir-17 1.0000000
+##    3 1.00000000      miRNA         1     hsa-mir-505 1.0000000
+##    4 1.00000000      miRNA         1     hsa-mir-590 1.0000000
+##    5 1.00000000       mRNA         1           KDM4B 1.0000000
+##    6 1.00000000       mRNA         1          ZNF552 1.0000000
+##    7 1.00000000 proteomics         1        ER-alpha 1.0000000
+##    8 1.00000000 proteomics         1           GATA3 1.0000000
+##    9 1.00000000 proteomics         2           c-Kit 1.0000000
+##   10 1.00000000 proteomics         2     EGFR_pY1068 1.0000000
+## ...
+##  109 0.05698361      miRNA         2     hsa-mir-23b 0.1000000
+##  110 0.05698361      miRNA         2    hsa-let-7a-1 0.1000000
+##  111 0.05698361      miRNA         2     hsa-mir-30d 0.1000000
+##  112 0.05698361      miRNA         2     hsa-mir-451 0.1000000
+##  113 0.05698361      miRNA         2     hsa-mir-144 0.1000000
+```
+
+### Plot feature stability
+
+`plot.feature.stability()`
+
+```R
+stability <- diablo.selection.stability(diablo.perf, comp = 2, block = 'miRNA')
+plot.feature.stability(stability)
+```
+
+![Feature Stability Plot](img/../imgs/plot-feature-stability.png)
+
+### Find DIABLO feature associations
+
+`find.feature.associations()`
+
+```R
+find.feature.associations(diablo.model, block.count = 3)
+##                   KDM4B     ZNF552       FUT8      LRIG1      CCNA2      PREX1
+## KDM4B         1.0000000  0.8247985  0.5777819  0.6780996 -0.6194948  0.7235040
+## ZNF552        0.8247985  1.0000000  0.6428172  0.7072751 -0.6399958  0.7308222
+## FUT8          0.5777819  0.6428172  1.0000000  0.5162760 -0.4628657  0.5168250
+## LRIG1         0.6780996  0.7072751  0.5162760  1.0000000 -0.5223886  0.5995716
+## CCNA2        -0.6194948 -0.6399958 -0.4628657 -0.5223886  1.0000000 -0.5468418
+## PREX1         0.7235040  0.7308222  0.5168250  0.5995716 -0.5468418  1.0000000
+```
+
+![Feature Associations Plot](imgs/find-feature-associations.png)
+
+### Export DIABLO matrix as a network
+
+`export.matrix.as.network()`
+
+```R
+associations <- find.feature.associations(diablo.model, block.count = 3)
+export.matrix.as.network(associations, filename = "network.csv", cutoff = 0.7,
+                         block.feature.count = 17)
+##    feature.1    feature.2      value block
+##        KDM4B       ZNF552  0.8247985     1
+##        KDM4B        PREX1  0.7235040     1
+##       ZNF552        LRIG1  0.7072751     1
+##       ZNF552        PREX1  0.7308222     1
+```
 
 ## Model predictivity
 
-- plot.predicted.projection()
+`plot.predicted.projection()`
+
+```R
+# Prepare data
+data(srbct)
+all.X <- srbct$gene
+all.Y <- srbct$class
+all.index <- 1:length(all.Y)
+
+# Subset the data for a training set
+set.seed(1234) # for reproducibility of subsetting
+train.index <- sort(sample(all.index, length(all.index) * 0.8))
+train.X <- all.X[train.index,]
+train.Y <- all.Y[train.index]
+
+# Model fit with the training set
+predict.model <- splsda(train.X, train.Y, ncomp = 3, keepX = c(9, 280, 30))
+
+# Prepare the prediction set
+predict.index <- setdiff(all.index, train.index)
+predict.X <- all.X[predict.index,]
+predict.Y <- all.Y[predict.index]
+
+# Create a prediction for the predict set and plot using plot.predicted.projection()
+prediction <- predict(predict.model, predict.X)
+projection.plot <- plot.predicted.projection(prediction, predict.Y)
+print(projection.plot)
+```
+
+![Prediction Projection Plot](imgs/plot-predicted-projection.png)
 
 ## Utility functions
 
-- center.truncate()
+`center.truncate()`
+
+```R
+center.truncate("When a string is particularly long it will be truncated back to 43 characters")
+## "When a string is par...back to 43 characters"
+
+labels = c("Short name",
+           "Very long name would need truncating for plotting",
+           "Plots don't work well when the axis is forced over by long labels")
+unname(sapply(labels, center.truncate))
+## [1] "Short name"
+## [2] "Very long name would...uncating for plotting"
+## [3] "Plots don't work wel...d over by long labels"
+```

@@ -402,7 +402,7 @@ get.model.variance <- function(tuned.model, block = "X"){
   return(model.var)
 }
 
-#' Trancate a string to no longer than 43 characters.
+#' Truncate a string to no longer than 43 characters.
 #' Where a string is longer than 43 characters, the first and last 20 characters sandwich three periods.
 #' This can be useful for shortening long feature names before plotting.
 #'
