@@ -265,8 +265,13 @@ models produced in `mixOmics`.
 - [`plot.feature.stability()`](#plot-feature-stability) provides a simple
   histogram plot of the highest stability features in a single component and
   block, allowing visual comparison of their stability scores.
-- [`find.feature.associations()`](#find-diablo-feature-associations)
-- [`export.matrix.as.network()`](#export-diablo-matrix-as-a-network)
+- [`find.feature.associations()`](#find-diablo-feature-associations) outputs a
+  matrix of values indicating possible feature associations in the model based
+  on consistent feature measurement across samples.
+- [`export.matrix.as.network()`](#export-diablo-matrix-as-a-network) exports a
+  data frame showing relationships between features where feature association
+  strength exceeds a threshold.  The data frame is also written to a CSV file
+  which can be imported into a network plotting application such as Cytoscape.
 
 ### Get DIABLO top loadings
 
