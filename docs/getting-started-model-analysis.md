@@ -430,7 +430,26 @@ get.diablo.top.features(diablo.model, diablo.perf, feature.count = 150)
 
 ### Plot feature stability
 
-`plot.feature.stability()`
+`plot.feature.stability()` takes a single parameter with a table of stabilities,
+as obtained from
+[`diablo.selection.stability()`](#get-diablo-feature-selection-stability), and
+creates a bar-chart-style plot of stability for those features.  The shape of
+the plot will give and indication for how consistently the models choose the
+same features during the performance tests.  A plot that stays high for the
+first features and then drops sharply to a low level for the remainder shows
+that there is a clear preference for specific features and that those features
+should be of value to look at more closely in relation to the biological
+context.  If the curve is closer to a straight line and only a very small number
+of features achieve close to `1.0` stability, then the feature selection is less
+stable and it may be harder to draw conclusions about which are relevant to the
+biological context.
+
+The code below prepares a stability data frame for the DIABLO performance test
+for the `miRNA` block in component 2.  It then plots the stability scores as a
+bar-chart-style plot as shown below the code.  This plot shows a reasonably
+sharp drop off after about 10 features, which in turn means that the high
+stability features on the left are likely to have good relevance to the
+biological context.
 
 ```R
 stability <- diablo.selection.stability(diablo.perf, comp = 2, block = 'miRNA')
@@ -441,7 +460,34 @@ plot.feature.stability(stability)
 
 ### Find DIABLO feature associations
 
-`find.feature.associations()`
+`find.feature.associations()` generates both a matrix of associations between
+features and a heatmap of the same data alongside a dendrogram showing
+similarity in associations between features.  By passing the trained DIABLO
+model and the number of blocks it contains as parameters, a matrix will be
+created with fractions indicating the common trends in observations for each
+pair of features selected for the sparse model.  Only features which are
+returned by the [top loadings function](#get-diablo-top-loadings) will be
+compared.  If a feature has a pattern of measurement that is exactly consistent
+with another, when comparing across the samples, the association will be `1.0`.
+Where the trend is inverse, this can be just as informative since there may
+still be a biological link between the features.  These associations are
+represented by negative numbers up to `-1.0`.
+
+As well as providing this information as a matrix, a plot is generated with the
+same information presented as a heatmap where orange and yellow squares indicate
+a positive association and purple to violet squares indicate a negative
+association.  The ordering of features on the heatmap are according to the
+clustering of the association patterns.  Each axis contains the features in the
+same order, hence a strong diagonal correlation is shown where features are
+associated with themselves.  The heatmap is accompanied by a dendrogram showing
+similarity in the associations between features.  Those with branches furthest
+to the left of the dendrogram show the most similarity in their associations
+with other features.
+
+The following code example will generate the matrix of associations for our
+DIABLO model and create the heatmap and dendrogram plot as shown below.  Note
+that the output shown is a trimmed version of the full matrix for brevity.  The
+heatmap and dendrogram plot is the original.
 
 ```R
 find.feature.associations(diablo.model, block.count = 3)
@@ -458,17 +504,45 @@ find.feature.associations(diablo.model, block.count = 3)
 
 ### Export DIABLO matrix as a network
 
-`export.matrix.as.network()`
+`export.matrix.as.network()` takes the output of the associations function above
+and both filters and converts the matrix to a flat format as a data frame as
+well as writing that to a CSV file.  The data frame has one line per association
+and does not show reverse associations.  Only associations which meet or exceed
+the given cutoff threshold are included.  The association can be positive or
+negative to satisfy inclusion by the cutoff.  The data frame shows both sides of
+the association as two feature columns and the strength of the association as a
+value column.  The block column provides the name of the block containing the
+left hand feature.
+
+The CSV file specified is created and contains the same information as the data
+frame.  The format of the CSV file is importable into programs for plotting
+networks, such as [Cytoscape](https://cytoscape.org/), which makes it easier to
+visualise how the features in the model might be relevant to each other.
+
+The code example below prepares the association matrix and then prepares a
+vector of strings where the string names are the names of the blocks each of the
+features are present in.  It is also possible to provide the parameter
+`block.feature.count` instead of the `block.association` in the unlikely event
+that each block contains the same number of features.  The output shown has been
+truncated to only show the associations included from the matrix above. The
+actual list of associations is much longer.  A CSV file named `network.csv` is
+created and populated with the information shown in the data frame output.
 
 ```R
 associations <- find.feature.associations(diablo.model, block.count = 3)
+block.association <- character(0)
+for (block.name in names(diablo.model$keepX)) {
+  num.features.in.block <- diablo.model$keepX[[block.name]][1]
+  block.association <- append(block.association,
+                              rep(block.name, num.features.in.block))
+}
 export.matrix.as.network(associations, filename = "network.csv", cutoff = 0.7,
-                         block.feature.count = 17)
-##    feature.1    feature.2      value block
-##        KDM4B       ZNF552  0.8247985     1
-##        KDM4B        PREX1  0.7235040     1
-##       ZNF552        LRIG1  0.7072751     1
-##       ZNF552        PREX1  0.7308222     1
+                         block.association = block.association)
+##    feature.1    feature.2      value      block
+##        KDM4B       ZNF552  0.8247985       mRNA
+##        KDM4B        PREX1  0.7235040       mRNA
+##       ZNF552        LRIG1  0.7072751       mRNA
+##       ZNF552        PREX1  0.7308222       mRNA
 ```
 
 ## Model predictivity
