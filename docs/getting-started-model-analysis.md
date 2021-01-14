@@ -271,11 +271,27 @@ models produced in `mixOmics`.
 - [`export.matrix.as.network()`](#export-diablo-matrix-as-a-network) exports a
   data frame showing relationships between features where feature association
   strength exceeds a threshold.  The data frame is also written to a CSV file
-  which can be imported into a network plotting application such as Cytoscape.
+  which can be imported into a network plotting application such as
+  [Cytoscape](https://cytoscape.org/).
 
 ### Get DIABLO top loadings
 
-`get.diablo.top.loadings()`
+`get.diablo.top.loadings()` allows the export of loadings from a DIABLO model
+into a data frame.  The resulting data frame has columns for each component of
+the model containing loadings for the features selected in that component.  Rows
+are sorted according to the absolute value of the loadings so that the highest
+impact features are at the top of the table.  All features for the first
+component are listed before listing begins for features of the second and
+subsequent components.  If a feature is selected in more than one component,
+only one row is given for that feature but multiple columns will contain a
+loading for that feature.  Where a feature was not selected in a component, the
+`NA` value is shown for the loading.
+
+In the example below, the loadings for the `proteomics` block are being arranged
+in the data frame.  Note that feature `AR` has been selected in both components.
+Because its loading value in component 2 is `-0.11183919`, this would normally
+place `AR` below `c-Kit`, but features are sorted by lower numbered components
+first.
 
 ```R
 get.diablo.top.loadings(diablo.model$loadings$proteomics)
@@ -296,28 +312,53 @@ get.diablo.top.loadings(diablo.model$loadings$proteomics)
 
 ### Get DIABLO feature selection stability
 
-`diablo.selection.stability()`
+`diablo.selection.stability()` is very similar to the [equivalent function for
+sPLS-DA models](#get-spls-da-feature-selection-stability).  By passing the
+performance test result, a selected component and a selected block as
+parameters, a data frame will be generated for the features in that block and
+component, showing the stability scores for those features.  Stability is a
+fraction indicating the number of models in the performance test which selected
+this feature when being fitted.  100 models were fitted when running the DIABLO
+performance test (10 repeats with 10 folds), so the stability scores shown are
+an exact multiple of `0.01`.  Features are presented in the data frame in
+reverse stability score order so that the most stable features are shown first.
+Those with a score of `1.0` are essential for the model to achieve the best fit
+and are therefore also likely to be relevant to the discrimination of classes
+the model is trying to achieve.
+
+The code below outputs the feature selection stability for the `proteomics`
+block in component 1.
 
 ```R
 diablo.selection.stability(diablo.perf, comp = 1, block = 'proteomics')
-##             feature stability
-## ER-alpha   ER-alpha      1.00
-## GATA3         GATA3      1.00
-## ASNS           ASNS      0.99
-## Cyclin_B1 Cyclin_B1      0.98
-## AR               AR      0.80
-## JNK2           JNK2      0.54
-## PR               PR      0.41
-## Cyclin_E1 Cyclin_E1      0.22
-## INPP4B       INPP4B      0.12
+##   feature stability
+##  ER-alpha      1.00
+##     GATA3      1.00
+##      ASNS      0.99
+## Cyclin_B1      0.98
+##        AR      0.80
+##      JNK2      0.54
+##        PR      0.41
+## Cyclin_E1      0.22
+##    INPP4B      0.12
 ```
 
 ### Get DIABLO top loadings with stability
 
-`get.diablo.top.loadings.with.stability()`
+`get.diablo.top.loadings.with.stability()` allows the combination of information
+from both the previous functions.  By passing in the model, performance test and
+block name, a data frame is generated with loadings of the selected features for
+each component alongside stability scores for those features.  Where a feature
+exists in more than one component, the stability score shown is for the lowest
+numbered component.
+
+The code below generates a data frame containing loading values and stability
+scores for the selected features in the `proteomics` block.  Note that, unless
+specified, the number of features returned will be up to `20` by default.
 
 ```R
-get.diablo.top.loadings.with.stability(diablo.model, diablo.perf, block = 'proteomics', feature.count = 50)
+get.diablo.top.loadings.with.stability(diablo.model, diablo.perf,
+                                       block = 'proteomics', feature.count = 50)
 ##                   comp1       comp2 stability
 ## ER-alpha    -0.74995295          NA      1.00
 ## GATA3       -0.62448770          NA      1.00
@@ -335,7 +376,36 @@ get.diablo.top.loadings.with.stability(diablo.model, diablo.perf, block = 'prote
 
 ### Get DIABLO top features
 
-`get.diablo.top.features()`
+`get.diablo.top.features()` generates a data frame with an optimised version of
+stability scores for all blocks and all components in the model.  Raw stability
+scores, as output in the previous functions, are not directly comparable between
+different blocks, different components or between models.  The stability is
+influenced by the number of features being sparsely selected from in a block, by
+the number of features selected in each component and by the number of repeats
+when doing the performance test of the model.  As such we've provided an
+algorithm which uses information from the model and performance test,
+transforming stability scores using a binomial distribution curve, so that a
+rank score can be produced and used for ranking.  This allows all the features
+from all the blocks to be compared in a fair manner.
+
+After transforming stability scores, the features are arranged in a data frame
+such that the highest rank scores are at the top, with decreasing rank score as
+the table continues.  Features with the highest rank scores should also be the
+most important features in a biological context to distiguish the
+classifications the model was fitted to discriminate between.  Features with a
+matching rank score have equal importance to the model fitting process.  Each
+feature is shown alongside the block it belongs to, but also to a component
+number.  The number shown for the component is the component where this feature
+had the highest rank score.  The feature may also be present in the other
+component(s), but it would be of lesser or equal importance in those components.
+
+In the code example below, we are generating the rank score data frame for all
+the features in the DIABLO model.  The number of features will be lesser than or
+equal to the number provided in the `feature.count` parameter.  This can be
+useful if your model contains thousands of features.  We can see that the
+highest ranked features all have a raw stability of `1.0` and that the rank
+score is also `1.0` for these features.  By the end of the table, the rank score
+is lower than the stability score.
 
 ```R
 get.diablo.top.features(diablo.model, diablo.perf, feature.count = 150)
