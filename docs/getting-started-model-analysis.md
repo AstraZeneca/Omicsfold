@@ -607,7 +607,15 @@ print(projection.plot)
 
 ## Utility functions
 
-`center.truncate()`
+`center.truncate()` is a helper function for plot labels, though it may have
+other uses.  Where labels are long, as is typical for features of some -omics
+data, this can cause plots to be dominated by axis labels.  By passing a string
+to this function, it will be truncated to exactly 43 characters or fewer.
+Characters in the middle of the string will be replaced by `...` instead.
+
+The examples below show both a single string being truncated, as well as how to
+apply the truncation to a vector of strings using the built in R function
+`sapply()`.
 
 ```R
 center.truncate("When a string is particularly long it will be truncated back to 43 characters")
