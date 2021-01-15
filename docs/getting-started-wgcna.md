@@ -1,7 +1,8 @@
 # Getting Started with WGCNA
 
-All the functions below assume you've already arranged your data in the format
-expected by `mixOmics`.
+The following are a list of the methods provided for WGCNA analysis, in the
+order they can be used.  More detailed instructions on how to use these are a
+TODO item.
 
 - wgcna.calculate.correlation()
 - wgcna.create.blockwise.network()
