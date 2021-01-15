@@ -51,7 +51,7 @@ directory is the `OmicsFold` directory, then issuing the following commands:
 
 ```R
 source('install.R')
-install.OmicsFold()
+install.omicsfold()
 ```
 
 This should install all the dependencies and then finally the OmicsFold package
