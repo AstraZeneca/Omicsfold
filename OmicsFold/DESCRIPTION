@@ -1,4 +1,4 @@
-Package: interfold.bio
+Package: OmicsFold
 Type: Package
 Title: Toolkit containing Utilities for Integration of Multi-omic data
 Version: 1.0.1

@@ -33,7 +33,7 @@ using Total Sum Scaling.  This accounts for sequencing differences between
 samples.  After this transformation, all samples will sum to 1.0 and values for
 each feature will be relative.  Values can be offset from zero by providing the
 optional `offset` argument.  In the example below, we compare the TSS function
-from InterFold with the pre-normalised TSS data in the Koren 16S data set.
+from OmicsFold with the pre-normalised TSS data in the Koren 16S data set.
 
 ```R
 data(Koren.16S)
@@ -119,7 +119,7 @@ beneficial for the model fitting.  In addition, values which are virtually zero
 will be heavily modified towards a very negative value.  If any values to be
 transformed are actually at 0.0 or 1.0 the logit function will generate infinity
 values, which are inappropriate for modelling.  For this reason, a second
-empirical function is provided by InterFold, `normalise.logit.empirical()`,
+empirical function is provided by OmicsFold, `normalise.logit.empirical()`,
 which moves measurements away from 0.0 and 1.0 on a per-feature basis, avoiding
 the generation of infinity values.
 
@@ -168,7 +168,7 @@ normalised.2[1:3, 3:5]
 
 Where the intention is to apply the centered log-ratio to non-OTU data, the
 function above should be avoided as it applies an inter-sample normalisation.
-For this purpose InterFold also provides a related function
+For this purpose OmicsFold also provides a related function
 `normalise.clr.within.features()` which ensures that the means used to center
 the log-ratio are calculated within a feature instead.  This can be more
 appropriate for non-OTU data.

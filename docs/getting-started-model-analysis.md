@@ -9,7 +9,7 @@ type, which are then used to demonstrate the functions in the rest of this
 document.
 
 ```R
-library(interfold.bio)
+library(OmicsFold)
 library(mixOmics)
 library(dplyr)
 
@@ -65,7 +65,7 @@ diablo.perf <- perf(diablo.model, validation = 'Mfold', M = 10, nrepeat = 10,
 
 ## Model variance analysis
 
-InterFold provides the [`get.block.centroids()`](#get-block-centroids) function
+OmicsFold provides the [`get.block.centroids()`](#get-block-centroids) function
 to extract the centroids of variance across blocks in a DIABLO model and export
 them as a data frame and plot.  The
 [`get.model.variance()`](#get-model-variance) function is also provided which
@@ -129,7 +129,7 @@ was captured than in `mRNA` or `proteomics`.
 
 ## Feature analysis for sPLS-DA models
 
-InterFold provides functions for analysing the features selecting for fitting
+OmicsFold provides functions for analysing the features selecting for fitting
 sPLS-DA models.
 
 - [`get.loadings.table()`](#get-feature-loadings-as-a-table) outputs a data
@@ -247,7 +247,7 @@ merge.feature.stability(loadings.table, stability.comp3)
 
 ## Feature analysis for DIABLO models
 
-InterFold provides a number of functions for analysing the output from DIABLO
+OmicsFold provides a number of functions for analysing the output from DIABLO
 models produced in `mixOmics`.
 
 - [`get.diablo.top.loadings()`](#get-diablo-top-loadings) outputs a data frame

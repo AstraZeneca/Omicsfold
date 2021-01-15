@@ -44,8 +44,8 @@
   devtools::install_local(package.path, force = force, ...)
 }
 
-install.interfold.bio = function(interfold.path = '.', force = FALSE, ...) {
-  # Check the R version is high enough for InterFold.
+install.omicsfold <- function(omicsfold.path = '.', force = FALSE, ...) {
+  # Check the R version is high enough for OmicsFold.
   version = R.Version()
 
   major = as.numeric(version$major)
@@ -56,7 +56,7 @@ install.interfold.bio = function(interfold.path = '.', force = FALSE, ...) {
                "Please update R by visiting www.r-project.org."))
   }
 
-  # Install the dependencies of InterFold.bio
+  # Install the dependencies of OmicsFold
   .install.from.github('mixOmicsTeam/mixOmics', ref = '2c22e7f', ...)
   .install.from.bioconductor('org.Mm.eg.db', ...)
   .install.from.cran('rlang', ...)
@@ -71,6 +71,6 @@ install.interfold.bio = function(interfold.path = '.', force = FALSE, ...) {
   source("http://labs.genetics.ucla.edu/horvath/htdocs/CoexpressionNetwork/GeneAnnotation/installAnRichment.R")
   installAnRichment()
 
-  # Install InterFold itself
-  .install.from.local(interfold.path, force = force, ...)
+  # Install OmicsFold itself
+  .install.from.local(omicsfold.path, force = force, ...)
 }

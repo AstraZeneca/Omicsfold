@@ -1,8 +1,8 @@
-# Contributing to InterFold
+# Contributing to OmicsFold
 
-We welcome contributions to InterFold from the community.  If you have changes
+We welcome contributions to OmicsFold from the community.  If you have changes
 you wish to make, it would be worth [contacting the maintainers](AUTHORS.md)
-first to ensure it aligns with their roadmap for InterFold.  When you are ready
+first to ensure it aligns with their roadmap for OmicsFold.  When you are ready
 to proceed, make a Fork of the repository, create a new branch and push your
 changes onto it.  When you are ready to submit your changes, open a Pull Request
 back to the main repository and the maintainers will review your changes.  We

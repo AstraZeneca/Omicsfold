@@ -1,4 +1,4 @@
-# InterFold
+# OmicsFold
 
 ![Maturity level-0](https://img.shields.io/badge/Maturity%20Level-ML--0-red)
 
@@ -39,7 +39,7 @@ Notable dependencies that will be installed if they are not already:
 - dplyr & magrittr
 - reshape2
 
-See the [`DESCRIPTION`](interfold.bio/DESCRIPTION) file for a complete
+See the [`DESCRIPTION`](OmicsFold/DESCRIPTION) file for a complete
 dependency list
 
 ### Installation
@@ -47,26 +47,26 @@ dependency list
 Due to the number of dependencies and the number of places those dependencies
 come from, there is an installation script available.  This can be run by
 opening up an R session in your preferred environment, ensuring your working
-directory is the `interfold.bio` directory, then issuing the following commands:
+directory is the `OmicsFold` directory, then issuing the following commands:
 
 ```R
 source('install.R')
-install.interfold.bio()
+install.OmicsFold()
 ```
 
-This should install all the dependencies and then finally the InterFold package
+This should install all the dependencies and then finally the OmicsFold package
 itself.  If there are any issues due to versions changing or changes in which
 repository maintains the active version of a package, you may have to update the
 script.
 
 ### Usage
 
-Import the `interfold.bio` and the `mixOmics` packages in R and you're ready to
+Import the `OmicsFold` and the `mixOmics` packages in R and you're ready to
 go.  Some functions also require `dplyr` to be loaded so it's a good idea to
 load it anyway.
 
 ```R
-library(interfold.bio)
+library(OmicsFold)
 library(mixOmics)
 library(dplyr)
 ```
@@ -90,7 +90,7 @@ functions also showing example code for how to use it.
 
 ### Analysis of mixOmics Output
 
-Once a `mixOmics` model has been fitted, InterFold can be used to perform a
+Once a `mixOmics` model has been fitted, OmicsFold can be used to perform a
 number of visualisation and data extraction functions.  Below is a brief list of
 the functionality provided.  While these are well documented in the R help
 system, descriptions of how to use each function can also be found in the
@@ -124,23 +124,23 @@ document.
 Where the input data is expression data such as from RNASeq it may be desirable
 to make associations between the single-time-point expression data and the
 outcomes of subjects.  The `WGCNA` library lets you do this, but has a lot of
-inputs.  InterFold offers a suite of functions to try to simplify the process
+inputs.  OmicsFold offers a suite of functions to try to simplify the process
 and integrate the functionality from `anRichment` to identify over-represented
 GO terms for genes clustered by `WGCNA`.  You can read more about the use of
-InterFold's suite of functions in the [Getting Started with
+OmicsFold's suite of functions in the [Getting Started with
 WGCNA](docs/getting-started-wgcna.md) document.
 
 ## Other Information
 
 To contact the maintainers or project director, please refer to the
-[`AUTHORS`](AUTHORS.md) file.  If you are thinking of contributing to InterFold,
+[`AUTHORS`](AUTHORS.md) file.  If you are thinking of contributing to OmicsFold,
 all the information you will need is in the [`CONTRIBUTING`](CONTRIBUTING.md)
 file.
 
-InterFold is licensed under the [Apache-2.0 software
+OmicsFold is licensed under the [Apache-2.0 software
 licence](https://www.apache.org/licenses/LICENSE-2.0) as documented in the
-[`LICENCE`](LICENCE.md) file.  Separately installed dependencies of InterFold
+[`LICENCE`](LICENCE.md) file.  Separately installed dependencies of OmicsFold
 may be licensed under different licence agreements.  If you plan to create
-derivative works from InterFold or use InterFold for commercial or profitable
+derivative works from OmicsFold or use OmicsFold for commercial or profitable
 enterprises, please ensure you adhere to all the expectations of these
 dependencies and seek legal advice if you are unsure.
