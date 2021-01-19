@@ -12,7 +12,8 @@ wgcna.fit.soft.threshold(
 )
 }
 \arguments{
-\item{expr.data}{Filtered and normalised expression data for genes to cluster.}
+\item{expr.data}{Filtered and normalised expression data for genes to
+cluster.}
 
 \item{powers}{A vector of powers to trial when picking a soft threshold.}
 
