@@ -20,7 +20,8 @@
   col.idx <- match(module, colnames(gene.module.membership))
 
   if (is.na(col.idx)) {
-    stop("Selected module must exist in the column names of the gene.module.membership construct.")
+    stop("Selected module must exist in the column names of the ",
+         "gene.module.membership construct.")
   }
 
   genes.idx = which(module.colors == module)
@@ -62,11 +63,19 @@ module.membership.pie <- function(moduleColors) {
     )
 
   pie <- ggplot2::ggplot(pie.data, ggplot2::aes(label = moduleColors))
-  pie <- pie + ggforce::geom_arc_bar(ggplot2::aes(x0 = 0, y0 = 0, r0 = 0, r = 1, start = start, end = end, fill = moduleColors))
-  pie <- pie + ggplot2::scale_fill_manual(values=gplots::col2hex(moduleCounts$moduleColors))
-  pie <- pie + ggplot2::geom_text(ggplot2::aes(x = 1.05 * sin(middle), y = 1.05 * cos(middle), label = Freq, hjust = hjust, vjust = vjust)) + ggplot2::coord_fixed()
-  pie <- pie + ggplot2::scale_x_continuous(limits = c(-1.4, 1.4), name = "", breaks = NULL, labels = NULL)
-  pie <- pie + ggplot2::scale_y_continuous(limits = c(-1.1, 1.1), name = "", breaks = NULL, labels = NULL)
+  pie <- pie + ggforce::geom_arc_bar(
+      ggplot2::aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
+                   start = start, end = end, fill = moduleColors))
+  pie <- pie + ggplot2::scale_fill_manual(
+      values = gplots::col2hex(moduleCounts$moduleColors))
+  pie <- pie + ggplot2::geom_text(
+      ggplot2::aes(x = 1.05 * sin(middle), y = 1.05 * cos(middle),
+                   label = Freq, hjust = hjust, vjust = vjust))
+  pie <- pie + ggplot2::coord_fixed()
+  pie <- pie + ggplot2::scale_x_continuous(limits = c(-1.4, 1.4), name = "",
+                                           breaks = NULL, labels = NULL)
+  pie <- pie + ggplot2::scale_y_continuous(limits = c(-1.1, 1.1), name = "",
+                                           breaks = NULL, labels = NULL)
   pie <- pie + ggplot2::theme(panel.background = ggplot2::element_blank())
 
   return(pie)
@@ -88,8 +97,12 @@ module.membership.pie <- function(moduleColors) {
 #' @return A data frame containing only good samples and good genes to be
 #' analysed with the rest of WGCNA methods.
 #' @export
-wgcna.filter.data <- function(norm.expr.data, min.fraction = 0.75, verbosity = 1) {
-  gsg <- WGCNA::goodSamplesGenes(norm.expr.data, minFraction = min.fraction, verbose = verbosity)
+wgcna.filter.data <- function(norm.expr.data,
+                              min.fraction = 0.75,
+                              verbosity = 1) {
+  gsg <- WGCNA::goodSamplesGenes(norm.expr.data,
+                                 minFraction = min.fraction,
+                                 verbose = verbosity)
 
   cat("\nBad genes:\n")
   cat(sum(!gsg$goodGenes), "\n")
@@ -118,7 +131,8 @@ wgcna.initial.clustering <- function(filtered.data, plot.threshold = NULL) {
 
   old.cex <- par()$cex
   par(cex = 0.6)
-  plot(sample.tree, main = "Sample clustering to detect outliers", sub="", xlab="", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
+  plot(sample.tree, main = "Sample clustering to detect outliers", sub="",
+       xlab="", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
   par(cex = old.cex)
 
   if (!is.null(plot.threshold)) {
@@ -143,7 +157,8 @@ wgcna.initial.clustering <- function(filtered.data, plot.threshold = NULL) {
 #' sample tree after performing the cut.
 #' @export
 wgcna.cut.tree <- function(sample.tree, cut.threshold, filtered.data) {
-  clust <- WGCNA::cutreeStatic(sample.tree, cutHeight = cut.threshold, minSize = 10)
+  clust <-
+      WGCNA::cutreeStatic(sample.tree, cutHeight = cut.threshold, minSize = 10)
   largest.cluster <- names(sort(table(clust), decreasing = TRUE))[1]
 
   return(filtered.data[(clust == largest.cluster),,drop=F])
@@ -154,7 +169,8 @@ wgcna.cut.tree <- function(sample.tree, cut.threshold, filtered.data) {
 #' @description
 #' Find the soft threshold for forming the network of modules.
 #'
-#' @param expr.data Filtered and normalised expression data for genes to cluster.
+#' @param expr.data Filtered and normalised expression data for genes to
+#' cluster.
 #' @param powers A vector of powers to trial when picking a soft threshold.
 #' @param block.size The size of blocks to perform the analysis with. NULL
 #' indicates that the system should pick a block size. It is better to process
@@ -172,20 +188,39 @@ wgcna.fit.soft.threshold <- function(
     powers = c(1:10, seq(12, 20, 2)),
     block.size = NULL,
     marked.threshold = 0.90) {
-  sft <- WGCNA::pickSoftThreshold(expr.data, powerVector = powers, verbose = 5, corFnc = WGCNA::bicor, blockSize = block.size)
+  sft <- WGCNA::pickSoftThreshold(expr.data, powerVector = powers, verbose = 5,
+                                  corFnc = WGCNA::bicor, blockSize = block.size)
 
   par(mfrow = c(1,2))
   cex1 = 0.9
 
-  plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2], xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit,signed R^2",type="n",main = paste("Scale independence"))
-  text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2], labels=powers,cex=cex1,col="red")
+  plot(sft$fitIndices[,1],
+       -sign(sft$fitIndices[,3]) * sft$fitIndices[,2],
+       xlab = "Soft Threshold (power)",
+       ylab = "Scale Free Topology Model Fit,signed R^2",
+       type = "n",
+       main = "Scale independence")
+  text(sft$fitIndices[,1],
+       -sign(sft$fitIndices[,3]) * sft$fitIndices[,2],
+       labels = powers,
+       cex = cex1,
+       col = "red")
 
   if (is.numeric(marked.threshold)) {
     abline(h = marked.threshold, col="red")
   }
 
-  plot(sft$fitIndices[,1], sft$fitIndices[,5], xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n", main = paste("Mean connectivity"))
-  text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+  plot(sft$fitIndices[,1],
+       sft$fitIndices[,5],
+       xlab = "Soft Threshold (power)",
+       ylab = "Mean Connectivity",
+       type = "n",
+       main = "Mean connectivity")
+  text(sft$fitIndices[,1],
+       sft$fitIndices[,5],
+       labels = powers,
+       cex = cex1,
+       col = "red")
 
   par(mfrow = c(1,1))
 }
@@ -210,7 +245,11 @@ wgcna.fit.soft.threshold <- function(
 #'
 #' @return The constructed network object.
 #' @export
-wgcna.create.blockwise.network <- function(expr.data, power, max.block.size = 6000, TOM.file.path = NULL, verbosity = 1) {
+wgcna.create.blockwise.network <- function(expr.data,
+                                           power,
+                                           max.block.size = 6000,
+                                           TOM.file.path = NULL,
+                                           verbosity = 1) {
   save.TOMs <- FALSE
   save.TOM.file.base <- 'blockwiseTOM'
 
@@ -340,13 +379,16 @@ wgcna.plot.labelled.heatmap <- function(correlation) {
   x.labels <- colnames(correlation$correlation) %>%
     .var.names.to.title.case()
 
-  # Workaround bug where WGCNA doesn't handle single column input matrix for heatmap
+  # Workaround bug where WGCNA doesn't handle single column input matrix for
+  # heatmap
   if (ncol(data.matrix) == 1) {
     data.matrix <- cbind(data.matrix, data.matrix)
     x.labels <- c(x.labels, x.labels)
   }
 
-  text.matrix <- sprintf("%0.2f  (p = %g)", signif(data.matrix, 2), signif(correlation$p.values, 1))
+  text.matrix <- sprintf("%0.2f  (p = %g)",
+                         signif(data.matrix, 2),
+                         signif(correlation$p.values, 1))
   dim(text.matrix) <- dim(data.matrix)
 
   # Sort the modules by correlation value for a cleaner plot
@@ -409,7 +451,8 @@ wgcna.plot.module.membership.correlations <- function(
       module.colors,
       expr.module.correlation$correlation,
       expr.trait.correlation$correlation,
-      outcome = .var.names.to.title.case(colnames(expr.trait.correlation$correlation)))
+      outcome =
+        .var.names.to.title.case(colnames(expr.trait.correlation$correlation)))
   }
 }
 
@@ -450,7 +493,8 @@ enrich.modules <- function(
   # Prepare our reference collection of GO terms
   GO.collection <- anRichment::buildGOcollection(organism = organism)
   if (!is.null(sub.collections) & length(sub.collections) > 1) {
-    GO.collection <- anRichmentMethods::subsetCollection(GO.collection, tags = sub.collections)
+    GO.collection <- anRichmentMethods::subsetCollection(GO.collection,
+                                                         tags = sub.collections)
   }
 
   # Enrich the list of genes
