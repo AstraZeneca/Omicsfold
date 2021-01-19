@@ -36,8 +36,9 @@
 #' low.count.filter(raw.count)
 #' }
 low.count.removal = function(otu.counts, percent=0.01 ) {
-	keep.otu <- which(colSums(otu.counts)*100/(sum(colSums(otu.counts))) > percent)
-	data.filter <- otu.counts[,keep.otu]
+	keep.otu <-
+			which(colSums(otu.counts) * 100 / sum(colSums(otu.counts)) > percent)
+	data.filter <- otu.counts[, keep.otu]
 	return(data.filter)
 }
 
@@ -85,7 +86,10 @@ normalise.tss = function(otu.counts, offset=0) {
 #' normalise.css(otu.count)
 #' }
 normalise.css = function(otu.counts) {
-	data.metagenomeSeq <- metagenomeSeq::newMRexperiment(t(otu.counts), featureData=NULL, libSize=NULL, normFactors=NULL)
+	data.metagenomeSeq <- metagenomeSeq::newMRexperiment(t(otu.counts),
+																											 featureData=NULL,
+																											 libSize=NULL,
+																											 normFactors=NULL)
 	p <- metagenomeSeq::cumNormStat(data.metagenomeSeq)
 	data.cumnorm <- metagenomeSeq::cumNorm(data.metagenomeSeq, p=p)
 	otu.css <- t(metagenomeSeq::MRcounts(data.cumnorm, norm=TRUE, log=TRUE))
@@ -194,8 +198,11 @@ normalise.logit = function(input) {
 #' normalise.clr(otu.data.tss)
 #' }
 normalise.clr = function(input, offset=0) {
-  normalised.clr <- mixOmics::logratio.transfo(X = as.matrix(input), logratio = 'CLR', offset=offset)
-  # Annoyingly, the output object does not allow direct access the matrix of results. This is an easy way to return it.
+  normalised.clr <- mixOmics::logratio.transfo(X = as.matrix(input),
+																							 logratio = 'CLR',
+																							 offset = offset)
+  # Annoyingly, the output object does not allow direct access the matrix of
+  # results. This is an easy way to return it.
   return(normalised.clr[,])
 }
 
@@ -223,6 +230,8 @@ normalise.clr = function(input, offset=0) {
 #' normalise.clr.within.features(data.proportional)
 #' }
 normalise.clr.within.features = function(input, offset=0) {
-  normalised.clr <- mixOmics::logratio.transfo(X = t(as.matrix(input)), logratio = 'CLR', offset=offset)
+  normalised.clr <- mixOmics::logratio.transfo(X = t(as.matrix(input)),
+																							 logratio = 'CLR',
+																							 offset = offset)
   return(t(normalised.clr[,]))
 }
