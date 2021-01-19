@@ -23,12 +23,13 @@
 #' feature.selection.stability(splsda.analysis, perf.splsda.analysis, comp=1)
 #' }
 feature.selection.stability <- function(splsda.model, splsda.perf, comp) {
-	ind.match = match(selectVar(splsda.model, comp = comp)$name, names(splsda.perf$features$stable[[comp]]))
-	freq = as.numeric(splsda.perf$features$stable[[comp]][ind.match])
-	stability <- data.frame(selectVar(splsda.model, comp = comp)$value, freq)
+  ind.match = match(selectVar(splsda.model, comp = comp)$name,
+                    names(splsda.perf$features$stable[[comp]]))
+  freq = as.numeric(splsda.perf$features$stable[[comp]][ind.match])
+  stability <- data.frame(selectVar(splsda.model, comp = comp)$value, freq)
   colnames(stability) <- c("value", "stability")
 
-	return(stability)
+  return(stability)
 }
 
 
@@ -57,7 +58,9 @@ get.loadings.table <- function(splsda.analysis) {
 
   # Sort by components columns in reverse order
   for (column.id in rev(colnames(rna.loadings))) {
-    rna.loadings <- rna.loadings[order(abs(rna.loadings[,column.id]), decreasing = TRUE),,drop = FALSE]
+    rna.loadings <-
+        rna.loadings[order(abs(rna.loadings[, column.id]), decreasing = TRUE), ,
+                     drop = FALSE]
   }
 
   return(rna.loadings)
@@ -137,7 +140,9 @@ get.diablo.top.loadings <- function(diablo.loadings, feature.count = 20) {
   # Construct new data frame with each component's top features included
   loadings <- data.frame()
   for (col.index in 1:ncol(rna.loadings)) {
-    rna.loadings <- rna.loadings[order(abs(rna.loadings[,col.index]), decreasing = TRUE),, drop = FALSE]
+    rna.loadings <-
+        rna.loadings[order(abs(rna.loadings[, col.index]), decreasing = TRUE), ,
+                     drop = FALSE]
     col.name <- colnames(rna.loadings)[col.index]
     rows.to.copy <- min(feature.count, nrow(rna.loadings))
     for (row.index in 1:rows.to.copy) {
@@ -148,7 +153,9 @@ get.diablo.top.loadings <- function(diablo.loadings, feature.count = 20) {
 
   # Sort the columns, going from right to left
   for (column.id in rev(colnames(loadings))) {
-    loadings <- loadings[order(abs(loadings[,column.id]), decreasing = TRUE),, drop = FALSE]
+    loadings <-
+        loadings[order(abs(loadings[, column.id]), decreasing = TRUE), ,
+                 drop = FALSE]
   }
 
   return(loadings)
@@ -201,14 +208,19 @@ get.diablo.top.loadings.1comp <- function(diablo.loadings, feature.count = 20) {
 #' \dontrun{
 #' get.diablo.top.loadings.with.stability(diablo.model, diablo.perf.result, 'species', 100)
 #' }
-get.diablo.top.loadings.with.stability <- function(trained.model, perf.result, block, feature.count = 20) {
-  loadings <- get.diablo.top.loadings(trained.model$loadings[[block]], feature.count = feature.count)
+get.diablo.top.loadings.with.stability <- function(trained.model, perf.result,
+                                                   block, feature.count = 20) {
+  loadings <- get.diablo.top.loadings(trained.model$loadings[[block]],
+                                      feature.count = feature.count)
 
   # Bind on stability values in reverse component order
   for (comp in rev(colnames(loadings))) {
-    selection.stability <- diablo.selection.stability(perf.result, comp = comp, block = block)
-    component.features <- rownames(loadings[!is.na(loadings[comp]), comp, drop = FALSE])
-    loadings[component.features, "stability"] <- selection.stability[component.features, "stability"]
+    selection.stability <-
+        diablo.selection.stability(perf.result, comp = comp, block = block)
+    component.features <-
+        rownames(loadings[!is.na(loadings[comp]), comp, drop = FALSE])
+    loadings[component.features, "stability"] <-
+        selection.stability[component.features, "stability"]
   }
 
   # Remove any features with only NA values
@@ -338,7 +350,8 @@ get.diablo.top.features <- function(trained.model,
 #' merge.feature.stability(get.diablo.top.loadings(diablo.tuned.analysis$loadings$metab), diablo.selection.stability(perf.diablo.analysis, comp=1, block=1))
 #' }
 merge.feature.stability <- function(features, stability) {
-  merged <- merge(x = features, y = stability[, "stability", drop = FALSE], by.x="row.names", by.y="row.names", all.x=TRUE)
+  merged <- merge(x = features, y = stability[, "stability", drop = FALSE],
+                  by.x = "row.names", by.y = "row.names", all.x = TRUE)
   for (column.id in rev(colnames(features))) {
     merged <- merged[order(abs(merged[,column.id]), decreasing = TRUE),]
   }
@@ -395,7 +408,8 @@ merge.feature.stability.1comp <- function(features, stability) {
 #' }
 plot.feature.stability <- function(selection.stability) {
   return(
-    plot(selection.stability, type = 'h', ylab = 'Stability', xlab = 'Features', main = 'Selection stability')
+    plot(selection.stability, type = 'h', ylab = 'Stability', xlab = 'Features',
+         main = 'Selection stability')
   )
 }
 
@@ -425,7 +439,9 @@ plot.feature.stability <- function(selection.stability) {
 #' export.matrix.as.network(mat, "network.csv")
 #' export.matrix.as.network(find.feature.associations(diablo.trained.analysis, 3), filename="network.csv", cutoff=0.7)
 #' }
-export.matrix.as.network <- function(m, filename, cutoff=NA, block.association=NULL, block.feature.count=20) {
+export.matrix.as.network <- function(m, filename, cutoff=NA,
+                                     block.association=NULL,
+                                     block.feature.count=20) {
   block.labels <- as.data.frame(rownames(m))
 
   if (is.null(block.association)) {
@@ -436,7 +452,8 @@ export.matrix.as.network <- function(m, filename, cutoff=NA, block.association=N
   colnames(block.labels) <- c("feature", "block")
 
   melted <- reshape2::melt(replace(m, lower.tri(m, TRUE), NA), na.rm = TRUE)
-  melted <- merge(x = melted, y = block.labels, by.x="Var1", by.y="feature", all.x=TRUE)
+  melted <- merge(x = melted, y = block.labels,
+                  by.x = "Var1", by.y = "feature", all.x = TRUE)
   colnames(melted) <- c("feature.1", "feature.2", "value", "block")
 
   if (!is.na(cutoff)) {
@@ -469,7 +486,8 @@ export.matrix.as.network <- function(m, filename, cutoff=NA, block.association=N
 #' get.model.variance(diablo.model, block = 'transcriptomics')
 #' }
 get.model.variance <- function(tuned.model, block = "X"){
-  model.var <- cor(as.numeric(as.factor(tuned.model$Y)), tuned.model$variates[[block]][, 1:tuned.model$ncomp[block]])
+  model.var <- cor(as.numeric(as.factor(tuned.model$Y)),
+                   tuned.model$variates[[block]][, 1:tuned.model$ncomp[block]])
   model.var <- apply(model.var^2, 2, sum)
   model.var <- cbind(model.var, cumsum(model.var))
   colnames(model.var) <- c("Proportion", "Cumulative")
@@ -498,6 +516,8 @@ center.truncate <- function(x) {
   if (string.length < 43) {
     return(x)
   } else {
-    return(paste(substr(x, 1, 20), "...", substr(x, string.length - 20, string.length), sep=""))
+    return(paste0(substr(x, 1, 20),
+                  "...",
+                  substr(x, string.length - 20, string.length)))
   }
 }
