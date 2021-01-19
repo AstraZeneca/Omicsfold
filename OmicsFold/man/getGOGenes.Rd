@@ -2,8 +2,7 @@
 % Please edit documentation in R/identifier_mapping.R
 \name{getGOGenes}
 \alias{getGOGenes}
-\title{Utility method to retrieve all gene annotated with a particular GO term, or
-any of its children.}
+\title{Retrieve genes annotated with a GO term}
 \usage{
 getGOGenes(go.id)
 }
@@ -14,6 +13,6 @@ getGOGenes(go.id)
 Symbol of gene annotated with this term.
 }
 \description{
-Utility method to retrieve all gene annotated with a particular GO term, or
+Utility method to retrieve all genes annotated with a particular GO term, or
 any of its children.
 }

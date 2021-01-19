@@ -2,9 +2,7 @@
 % Please edit documentation in R/identifier_mapping.R
 \name{map.symbols.entrez.ids}
 \alias{map.symbols.entrez.ids}
-\title{Map a list of symbols to their corresponding Entrez IDs. This wraps the
-method from the anRichmentMethods library to convert a list of symbols to
-entrez IDs.}
+\title{Map gene symbols to Entrez IDs}
 \usage{
 map.symbols.entrez.ids(symbols, organism)
 }

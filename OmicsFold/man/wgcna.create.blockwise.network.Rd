@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.create.blockwise.network}
 \alias{wgcna.create.blockwise.network}
-\title{Construct a WGCNA network on the expression data using a specified power and
-block size.}
+\title{Construct a network of expression data}
 \usage{
 wgcna.create.blockwise.network(
   expr.data,

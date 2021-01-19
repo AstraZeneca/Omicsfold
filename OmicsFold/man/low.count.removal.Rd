@@ -2,11 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{low.count.removal}
 \alias{low.count.removal}
-\title{Prefilter omics analysis input data in count form (e.g. OTUs) to remove
-features which have a total count less than a (small) proportion of the total
-measured counts. The default threshold is one part in 10,000 (0.01\%) - this
-is usually sufficient to remove very low-count variables, which will be
-unreliable features for model prediction.}
+\title{Remove features with low counts across samples}
 \usage{
 low.count.removal(otu.counts, percent = 0.01)
 }

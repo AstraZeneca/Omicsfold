@@ -2,10 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.diablo.top.loadings.with.stability}
 \alias{get.diablo.top.loadings.with.stability}
-\title{Get a dataframe showing the top ranked loading factors for a trained mixOmics
-multi-omics DIABLO model along with selection stability values.  Where a
-feature appears in more than one component, the selection stability value
-shown is for the lowest numbered component.}
+\title{Get DIABLO top loadings and stabilities}
 \usage{
 get.diablo.top.loadings.with.stability(
   trained.model,

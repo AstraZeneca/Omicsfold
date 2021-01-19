@@ -2,14 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.logit.empirical}
 \alias{normalise.logit.empirical}
-\title{Apply the empirical logit normalisation to a data frame of omics input data.
-This is intended to convert compositional data, e.g. proportional data in the
-range 0..1, to Euclidean space which is most appropriate for the linear
-models. The empirical logit function differs for standard logit normalisation
-in that an epsilon factor is added to ensure that function does not tend to
-+/- infinity for input values close to 100\% and 0\% respectively. The logit
-or empirical logit function will be a more appropriate choice than centred
-log-ratio (CLR) for non-OTU data.}
+\title{Normalise using the logit function in an empirical manner}
 \usage{
 normalise.logit.empirical(input)
 }

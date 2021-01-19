@@ -2,9 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.model.variance}
 \alias{get.model.variance}
-\title{Get percent of variance explained by each component for a tuned model. Works
-with sPLS-DA models or DIABLO models as input, but the block parameter must
-be specified for DIABLO models.}
+\title{Get model variance}
 \usage{
 get.model.variance(tuned.model, block = "X")
 }

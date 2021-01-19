@@ -2,7 +2,7 @@
 % Please edit documentation in R/identifier_mapping.R
 \name{convertMouseGeneList}
 \alias{convertMouseGeneList}
-\title{Convert a list of mouse genes to their human orthologues.}
+\title{Convert mouse genes to human orthologues}
 \usage{
 convertMouseGeneList(mouse.genes)
 }

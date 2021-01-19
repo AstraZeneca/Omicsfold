@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.calculate.correlation}
 \alias{wgcna.calculate.correlation}
-\title{Calculate the biweight midcorrelation between two matrices of data for the
-same set of samples.}
+\title{Calculate correlation between matrices of data}
 \usage{
 wgcna.calculate.correlation(x, y)
 }

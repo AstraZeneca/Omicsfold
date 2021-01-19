@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.module.pie.plot}
 \alias{wgcna.module.pie.plot}
-\title{Plot a pie chart of module sizes given the module colors from a constructed
-network.}
+\title{Plot a pie chart of module membership}
 \usage{
 wgcna.module.pie.plot(module.colors)
 }

@@ -2,10 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{merge.feature.stability}
 \alias{merge.feature.stability}
-\title{Utility function to combine top loading factors extracted from a trained
-multi-omics mixOmics (DIABLO) model with the feature stability, previously
-retrieved from the performance evaluation using e.g.
-diablo.selection.stability and create a nicely formatted data frame.}
+\title{Merge DIABLO stability onto a data frame of features}
 \usage{
 \method{merge}{feature.stability}(features, stability)
 }

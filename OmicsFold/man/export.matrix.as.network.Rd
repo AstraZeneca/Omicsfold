@@ -2,11 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{export.matrix.as.network}
 \alias{export.matrix.as.network}
-\title{Export a covariance matrix, e.g. one generated using
-`find.feature.associations` as data describing the association network and
-suitable for e.g. loading into Cytoscape. The method can optionally take a
-cutoff value, which is used to threshold (absolute) association scores. The
-output is written to disk as a CSV file using the filename given.}
+\title{Export a covariance matrix as a network CSV file}
 \usage{
 export.matrix.as.network(
   m,

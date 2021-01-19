@@ -2,9 +2,7 @@
 % Please edit documentation in R/sample_analysis.R
 \name{permanova.clusters}
 \alias{permanova.clusters}
-\title{Perform a permanova significance testing using the adonis function (from
-vegan) upon consensus classes, as returned from the get.block.centroids
-method. Limited to first two components.}
+\title{Perform a permanova signficance test}
 \usage{
 permanova.clusters(consensus.summary)
 }

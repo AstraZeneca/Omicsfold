@@ -2,7 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{plot.feature.stability}
 \alias{plot.feature.stability}
-\title{Plot feature stability for a summary overview.}
+\title{Plot feature stability}
 \usage{
 \method{plot}{feature.stability}(selection.stability)
 }

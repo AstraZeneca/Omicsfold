@@ -2,8 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.css}
 \alias{normalise.css}
-\title{Alternate Cumulative Sum Scale (CSS) method for normalising count data for
-inter-sample depth. Relies upon the metagenomeSeq implementation.}
+\title{Apply Cumulative Sum Scaling normalisation}
 \usage{
 normalise.css(otu.counts)
 }

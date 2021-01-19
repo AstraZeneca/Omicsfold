@@ -2,11 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{feature.selection.stability}
 \alias{feature.selection.stability}
-\title{Extract feature selection stabilities for a given component from a
-performance validated mixOmics sPLS-DA model Feature stabilities are an
-important indicator of the confidence that a selected feature is predictive
-for the outcome classes in the model, and hence (in combination with the
-loading weight) is likely to be of biological significance.}
+\title{Extract sPLS-DA feature selection stability}
 \usage{
 feature.selection.stability(splsda.model, splsda.perf, comp)
 }

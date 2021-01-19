@@ -2,7 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.plot.labelled.heatmap}
 \alias{wgcna.plot.labelled.heatmap}
-\title{Plot a labelled heatmap of correlations, sorted by correlation value.}
+\title{Plot a labelled heatmap of correlations}
 \usage{
 wgcna.plot.labelled.heatmap(correlation)
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{enrich.modules}
 \alias{enrich.modules}
-\title{Provide GO term enrichment for modules identified in the network
-construction.}
+\title{Enrich modules with over-represented GO terms}
 \usage{
 enrich.modules(
   gene.list,

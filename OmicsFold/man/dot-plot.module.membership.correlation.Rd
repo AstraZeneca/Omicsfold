@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{.plot.module.membership.correlation}
 \alias{.plot.module.membership.correlation}
-\title{Make a scatter plot of the degree of module membership vs the correlation
-with an outcome variable.}
+\title{Make a scatter plot of module membership correlation}
 \usage{
 .plot.module.membership.correlation(
   module,

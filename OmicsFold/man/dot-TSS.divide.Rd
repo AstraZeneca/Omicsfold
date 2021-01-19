@@ -2,8 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{.TSS.divide}
 \alias{.TSS.divide}
-\title{Internal function for dividing over complete samples in Total Sum Scaling
-(TSS).}
+\title{Divide}
 \usage{
 .TSS.divide(x)
 }

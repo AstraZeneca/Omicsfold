@@ -2,9 +2,7 @@
 % Please edit documentation in R/permutation.R
 \name{quick.permuted.fit}
 \alias{quick.permuted.fit}
-\title{Perform a quick multi-omic model fit to data with permutated class labels.
-This does not perform the (slow) step of sparse variable or component number
-selection - so may be more approximate.}
+\title{Perform a fast model fit with permuted labels}
 \usage{
 quick.permuted.fit(data, design, data.labels, ncomp, list.keepX.permuted)
 }
@@ -20,7 +18,7 @@ quick.permuted.fit(data, design, data.labels, ncomp, list.keepX.permuted)
 \item{list.keepX.permuted}{Set number of variable to select from each block.}
 }
 \value{
-List containing a representation of the permuted lables, an estimate
+List containing a representation of the permuted labels, an estimate
 of the permutation degree (as stochastically permutation may scramble the
 labels more or less thoroughly) and the balanced error rate over one and two
 components.

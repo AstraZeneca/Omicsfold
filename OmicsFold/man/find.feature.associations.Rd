@@ -2,10 +2,7 @@
 % Please edit documentation in R/sample_analysis.R
 \name{find.feature.associations}
 \alias{find.feature.associations}
-\title{Extract feature vs. feature association (mutual information) data for a
-multi-omics mixOmics (DIABLO) model, and plot this as a heatmap. This is the
-same data used to create the circos and network plots, but includes all
-interactions for the top twenty features from each block.}
+\title{Extract and plot feature associations in a DIABLO model}
 \usage{
 find.feature.associations(diablo.tuned, block.count)
 }

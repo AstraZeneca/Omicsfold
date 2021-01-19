@@ -2,7 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.module.colors}
 \alias{wgcna.module.colors}
-\title{Extract module colors from a constructed network.}
+\title{Extract module colors from a constructed network}
 \usage{
 wgcna.module.colors(network)
 }
@@ -14,5 +14,5 @@ A vector of color names equal in length and order to the genes in the
 network.
 }
 \description{
-Extract module colors from a constructed network.
+Extract module colors from a constructed network
 }

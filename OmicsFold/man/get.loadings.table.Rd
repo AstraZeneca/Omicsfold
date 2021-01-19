@@ -2,8 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.loadings.table}
 \alias{get.loadings.table}
-\title{Get a dataframe indicating the loading factors for a trained mixOmics sPLS-DA
-model. Limited to two components.}
+\title{Get an sPLS-DA loadings table}
 \usage{
 get.loadings.table(splsda.analysis)
 }

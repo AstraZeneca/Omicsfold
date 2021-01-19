@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.cut.tree}
 \alias{wgcna.cut.tree}
-\title{Cut a sample tree at a specified height to remove outliers from an initial
-clustering.}
+\title{Cut a dendrogram tree at a specified height}
 \usage{
 wgcna.cut.tree(sample.tree, cut.threshold, filtered.data)
 }

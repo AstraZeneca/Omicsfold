@@ -2,12 +2,8 @@
 % Please edit documentation in R/feature_loadings.R
 \name{merge.feature.stability.1comp}
 \alias{merge.feature.stability.1comp}
-\title{Utility function to combine top loading factors extracted from a trained
-multi-omics mixOmics (DIABLO) model with the feature stability, previously
-retrieved from the performance evaluation using e.g.
-diablo.selection.stability and create a nicely formatted data frame.
-Specialised for DIABLO models with a single component, which otherwise
-behaves differently in R's data structures.}
+\title{Merge stability onto a data frame of features in a single component DIABLO
+model}
 \usage{
 \method{merge}{feature.stability.1comp}(features, stability)
 }

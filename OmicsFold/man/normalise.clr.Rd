@@ -2,11 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.clr}
 \alias{normalise.clr}
-\title{Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data.
-This is another method for converting the compositional data, i.e.
-proportional data in the range 0..1 to Euclidean space which is most
-appropriate for the linear models. Note that this should only be applied to
-OTU data, as it applies another inter-sample normalisation.}
+\title{Apply centered log-ratio normalisation}
 \usage{
 normalise.clr(input, offset = 0)
 }
@@ -22,7 +18,7 @@ small, e.g. 0.000001.}
 Data normalised by the CLR method.
 }
 \description{
-Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data.
+Apply centered log-ratio (CLR) normalisation to sum scaled OTU count data.
 This is another method for converting the compositional data, i.e.
 proportional data in the range 0..1 to Euclidean space which is most
 appropriate for the linear models. Note that this should only be applied to

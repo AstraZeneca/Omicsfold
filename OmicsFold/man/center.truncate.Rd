@@ -2,9 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{center.truncate}
 \alias{center.truncate}
-\title{Truncate a string to no longer than 43 characters. Where a string is longer
-than 43 characters, the first and last 20 characters sandwich three periods.
-This can be useful for shortening long feature names before plotting.}
+\title{Center truncate long strings}
 \usage{
 center.truncate(x)
 }

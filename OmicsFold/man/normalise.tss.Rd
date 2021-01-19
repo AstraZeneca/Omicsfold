@@ -2,12 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.tss}
 \alias{normalise.tss}
-\title{Apply Total Sum Scaling (TSS) normalisation to count data, to account for
-differences in count (e.g. sequencing) depths between samples. Giving
-proportion of total sample counts, this is the conventional way of
-normalising OTU count data. Optionally include an offset to avoid
-division/log zero problems - this defaults to zero, but 1 (count) is usually
-appropriate for any count data with totals of thousands of counts or more.}
+\title{Apply Total Sum Scaling normalisation}
 \usage{
 normalise.tss(otu.counts, offset = 0)
 }

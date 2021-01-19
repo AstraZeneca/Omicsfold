@@ -2,12 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.logit}
 \alias{normalise.logit}
-\title{Apply the standard logit normalisation to a data frame of omics input data.
-This is intended to convert compositional data, e.g. proportional data in the
-range 0..1, to Euclidean space which is most appropriate for the linear
-models. The logit function will tend to +/- infinity for input values close
-to 100% and 0% respectively. The logit or empirical logit function will be a
-more appropriate choice than centred log-ratio (CLR) for non-OTU data.}
+\title{Normalise using the logit function}
 \usage{
 normalise.logit(input)
 }

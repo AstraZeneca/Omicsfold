@@ -2,9 +2,7 @@
 % Please edit documentation in R/utils-pipe.R
 \name{bicor}
 \alias{bicor}
-\title{bicor correlation method from WGCNA.
-This is needed for WGCNA's internal functions to work properly.}
+\title{bicor correlation method from WGCNA.}
 \description{
-bicor correlation method from WGCNA.
 This is needed for WGCNA's internal functions to work properly.
 }

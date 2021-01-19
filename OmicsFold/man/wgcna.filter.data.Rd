@@ -2,8 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.filter.data}
 \alias{wgcna.filter.data}
-\title{Filter data for WGCNA analysis to remove genes with poor levels of expression
-or many missing values.}
+\title{Filter WGCNA input data to remove bad genes and samples}
 \usage{
 wgcna.filter.data(norm.expr.data, min.fraction = 0.75, verbosity = 1)
 }

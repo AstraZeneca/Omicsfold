@@ -2,7 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.fit.soft.threshold}
 \alias{wgcna.fit.soft.threshold}
-\title{Find the soft threshold for forming the network of modules.}
+\title{Find the soft threshold for a network of modules}
 \usage{
 wgcna.fit.soft.threshold(
   expr.data,

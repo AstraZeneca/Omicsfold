@@ -2,13 +2,7 @@
 % Please edit documentation in R/sample_analysis.R
 \name{plot.predicted.projection}
 \alias{plot.predicted.projection}
-\title{Function to plot a single-omics sPLS-DA prediction projected into the model
-space. While confusion matrices of predicted data can easily be obtained,
-there is no built-in function to plot the projection into the model space and
-hence give a visualisation of the quality of the prediction. The plot will
-show the centroids of the classes as large points, surrounded by the sample
-projection as small points, coloured according to class. A good prediction
-will cluster each class around the appropriate centroid.}
+\title{Plot projections for a prediction result}
 \usage{
 \method{plot}{predicted.projection}(prediction, classes.new)
 }

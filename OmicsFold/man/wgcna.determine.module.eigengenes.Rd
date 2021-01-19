@@ -2,7 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.determine.module.eigengenes}
 \alias{wgcna.determine.module.eigengenes}
-\title{Identify eigengenes that represent each module of genes.}
+\title{Identify eigengenes for gene modules}
 \usage{
 wgcna.determine.module.eigengenes(expr.data, module.colors)
 }

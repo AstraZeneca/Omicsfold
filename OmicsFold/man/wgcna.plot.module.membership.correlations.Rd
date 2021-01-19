@@ -2,7 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.plot.module.membership.correlations}
 \alias{wgcna.plot.module.membership.correlations}
-\title{Generate all the plots of module membership correlation for all modules.}
+\title{Generate plots of module membership for all modules}
 \usage{
 wgcna.plot.module.membership.correlations(
   module.colors,

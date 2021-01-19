@@ -2,8 +2,7 @@
 % Please edit documentation in R/permutation.R
 \name{train.permuted.model}
 \alias{train.permuted.model}
-\title{Perform a full multi-omics model fitting and performance assessment after
-permuting the labels associated with the classes. This can take some time.}
+\title{Perform a re-fit for a DIABLO model after permuting labels}
 \usage{
 train.permuted.model(data, design, data.labels, test.keepX)
 }
@@ -22,4 +21,6 @@ Model performance balanced error rate.
 \description{
 Perform a full multi-omics model fitting and performance assessment after
 permuting the labels associated with the classes. This can take some time.
+This is useful when you want to assess whether a model is capable of
+overfitting the data it was given.
 }

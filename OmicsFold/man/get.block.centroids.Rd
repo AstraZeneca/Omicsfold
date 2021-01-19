@@ -2,10 +2,7 @@
 % Please edit documentation in R/sample_analysis.R
 \name{get.block.centroids}
 \alias{get.block.centroids}
-\title{Function to get the centroids of samples transformed into the same model
-space across all blocks for a trained multi-omics mixOmics (DIABLO) model.
-Prepares plots and raw data of consensus sample classification, which (for
-some reason) isn't provided in the base package.}
+\title{Get block centroids for a DIABLO model}
 \usage{
 get.block.centroids(diablo.trained)
 }

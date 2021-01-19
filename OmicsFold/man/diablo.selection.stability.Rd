@@ -2,12 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{diablo.selection.stability}
 \alias{diablo.selection.stability}
-\title{Extract feature selection stabilities for a given component from a
-performance validated mixOmics multi-omics DIABLO model. Feature stabilities
-are an important indicator of the confidence that a selected feature is
-predictive for the outcome classes in the model, and hence (in combination
-with the loading weight) is likely to be of biological significance. Features
-are retrieved for a single specified block and component.}
+\title{Extract DIABLO feature selection stability}
 \usage{
 diablo.selection.stability(diablo.perf, comp, block)
 }

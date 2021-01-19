@@ -2,9 +2,7 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.initial.clustering}
 \alias{wgcna.initial.clustering}
-\title{Perform initial clustering of genes into a dendrogram to identify outliers. A
-horizontal red line can be added to the plot for reference where a cut point
-is being considered.}
+\title{Cluster genes into a dendrogram}
 \usage{
 wgcna.initial.clustering(filtered.data, plot.threshold = NULL)
 }

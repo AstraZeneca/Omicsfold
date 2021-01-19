@@ -2,13 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.clr.within.features}
 \alias{normalise.clr.within.features}
-\title{Apply centred log-ratio (CLR) normalisation to other compositional data, but
-restrict normalisation to *within* features only. This is another method for
-converting the compositional data, i.e. proportional data in the range 0..1
-to Euclidean space which is most appropriate for the linear models. The
-implementation is the same as CLR, but on transposed input data (which is
-then transposed back to the input orientation). Note this is experimental,
-though it does give a sensible normalisation.}
+\title{Apply centered log-ratio normalisation within features only}
 \usage{
 normalise.clr.within.features(input, offset = 0)
 }
@@ -23,7 +17,7 @@ small, e.g. 0.000001.}
 Data normalised by the within-feature CLR method
 }
 \description{
-Apply centred log-ratio (CLR) normalisation to other compositional data, but
+Apply centered log-ratio (CLR) normalisation to other compositional data, but
 restrict normalisation to *within* features only. This is another method for
 converting the compositional data, i.e. proportional data in the range 0..1
 to Euclidean space which is most appropriate for the linear models. The

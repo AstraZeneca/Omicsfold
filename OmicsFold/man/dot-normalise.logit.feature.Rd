@@ -2,11 +2,7 @@
 % Please edit documentation in R/MixMC.R
 \name{.normalise.logit.feature}
 \alias{.normalise.logit.feature}
-\title{Internal function for "empirical" logit normalisation of a feature (column)
-of data. The empirical logit function differs for standard logit
-normalisation in that an epsilon factor is added to ensure that function does
-not tend to +/- infinity for input values close to 100\% and 0\%
-respectively.}
+\title{Apply the logit function to a single feature}
 \usage{
 .normalise.logit.feature(feature)
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.diablo.top.loadings.1comp}
 \alias{get.diablo.top.loadings.1comp}
-\title{Get a dataframe indicating the top ranking loading factors for a trained
-mixOmics multi-omics DIABLO model for a provided block from the model.}
+\title{Get top loadings for a single component DIABLO model}
 \usage{
 get.diablo.top.loadings.1comp(diablo.loadings, feature.count = 20)
 }
