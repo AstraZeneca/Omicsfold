@@ -11,6 +11,8 @@
 NULL
 
 #' bicor correlation method from WGCNA.
+#'
+#' @description
 #' This is needed for WGCNA's internal functions to work properly.
 #'
 #' @name bicor

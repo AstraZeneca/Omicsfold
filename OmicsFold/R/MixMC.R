@@ -1,4 +1,6 @@
-
+#' Divide
+#'
+#' @description
 #' Internal function for dividing over complete samples in Total Sum Scaling
 #' (TSS).
 #'
@@ -13,6 +15,9 @@
 }
 
 
+#' Remove features with low counts across samples
+#'
+#' @description
 #' Prefilter omics analysis input data in count form (e.g. OTUs) to remove
 #' features which have a total count less than a (small) proportion of the total
 #' measured counts. The default threshold is one part in 10,000 (0.01\%) - this
@@ -37,6 +42,9 @@ low.count.removal = function(otu.counts, percent=0.01 ) {
 }
 
 
+#' Apply Total Sum Scaling normalisation
+#'
+#' @description
 #' Apply Total Sum Scaling (TSS) normalisation to count data, to account for
 #' differences in count (e.g. sequencing) depths between samples. Giving
 #' proportion of total sample counts, this is the conventional way of
@@ -61,6 +69,9 @@ normalise.tss = function(otu.counts, offset=0) {
 }
 
 
+#' Apply Cumulative Sum Scaling normalisation
+#'
+#' @description
 #' Alternate Cumulative Sum Scale (CSS) method for normalising count data for
 #' inter-sample depth. Relies upon the metagenomeSeq implementation.
 #'
@@ -81,6 +92,9 @@ normalise.css = function(otu.counts) {
 	return(otu.css)
 }
 
+#' Apply the logit function to a single feature
+#'
+#' @description
 #' Internal function for "empirical" logit normalisation of a feature (column)
 #' of data. The empirical logit function differs for standard logit
 #' normalisation in that an epsilon factor is added to ensure that function does
@@ -102,6 +116,9 @@ normalise.css = function(otu.counts) {
 	return(log((feature + epsilon)/(1 - feature + epsilon)))
 }
 
+#' Normalise using the logit function in an empirical manner
+#'
+#' @description
 #' Apply the empirical logit normalisation to a data frame of omics input data.
 #' This is intended to convert compositional data, e.g. proportional data in the
 #' range 0..1, to Euclidean space which is most appropriate for the linear
@@ -128,6 +145,9 @@ normalise.logit.empirical = function(input) {
 	return(normalised)
 }
 
+#' Normalise using the logit function
+#'
+#' @description
 #' Apply the standard logit normalisation to a data frame of omics input data.
 #' This is intended to convert compositional data, e.g. proportional data in the
 #' range 0..1, to Euclidean space which is most appropriate for the linear
@@ -151,7 +171,10 @@ normalise.logit = function(input) {
 }
 
 
-#' Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data.
+#' Apply centered log-ratio normalisation
+#'
+#' @description
+#' Apply centered log-ratio (CLR) normalisation to sum scaled OTU count data.
 #' This is another method for converting the compositional data, i.e.
 #' proportional data in the range 0..1 to Euclidean space which is most
 #' appropriate for the linear models. Note that this should only be applied to
@@ -176,7 +199,10 @@ normalise.clr = function(input, offset=0) {
   return(normalised.clr[,])
 }
 
-#' Apply centred log-ratio (CLR) normalisation to other compositional data, but
+#' Apply centered log-ratio normalisation within features only
+#'
+#' @description
+#' Apply centered log-ratio (CLR) normalisation to other compositional data, but
 #' restrict normalisation to *within* features only. This is another method for
 #' converting the compositional data, i.e. proportional data in the range 0..1
 #' to Euclidean space which is most appropriate for the linear models. The

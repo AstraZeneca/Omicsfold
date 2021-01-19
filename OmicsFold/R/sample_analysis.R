@@ -4,6 +4,9 @@
   do.call(type, args = list(nullfile()))
 }
 
+#' Get block centroids for a DIABLO model
+#'
+#' @description
 #' Function to get the centroids of samples transformed into the same model
 #' space across all blocks for a trained multi-omics mixOmics (DIABLO) model.
 #' Prepares plots and raw data of consensus sample classification, which (for
@@ -61,6 +64,9 @@ get.block.centroids <- function(diablo.trained) {
 }
 
 
+#' Plot projections for a prediction result
+#'
+#' @description
 #' Function to plot a single-omics sPLS-DA prediction projected into the model
 #' space. While confusion matrices of predicted data can easily be obtained,
 #' there is no built-in function to plot the projection into the model space and
@@ -97,6 +103,9 @@ plot.predicted.projection <- function(prediction, classes.new) {
 }
 
 
+#' Extract and plot feature associations in a DIABLO model
+#'
+#' @description
 #' Extract feature vs. feature association (mutual information) data for a
 #' multi-omics mixOmics (DIABLO) model, and plot this as a heatmap. This is the
 #' same data used to create the circos and network plots, but includes all
@@ -171,6 +180,9 @@ find.feature.associations <- function(diablo.tuned, block.count) {
 	return(circos.ordered)
 }
 
+#' Perform a permanova signficance test
+#'
+#' @description
 #' Perform a permanova significance testing using the adonis function (from
 #' vegan) upon consensus classes, as returned from the get.block.centroids
 #' method. Limited to first two components.

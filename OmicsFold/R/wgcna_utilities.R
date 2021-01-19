@@ -1,3 +1,6 @@
+#' Make a scatter plot of module membership correlation
+#'
+#' @description
 #' Make a scatter plot of the degree of module membership vs the correlation
 #' with an outcome variable.
 #'
@@ -37,6 +40,9 @@
   )
 }
 
+#' Create a pie chart of gene module membership
+#'
+#' @description
 #' Creates a well-presented pie chart of gene module membership, with the
 #' modules represented by their actual colours.
 #'
@@ -66,6 +72,9 @@ module.membership.pie <- function(moduleColors) {
   return(pie)
 }
 
+#' Filter WGCNA input data to remove bad genes and samples
+#'
+#' @description
 #' Filter data for WGCNA analysis to remove genes with poor levels of expression
 #' or many missing values.
 #'
@@ -91,6 +100,9 @@ wgcna.filter.data <- function(norm.expr.data, min.fraction = 0.75, verbosity = 1
   return(norm.expr.data[gsg$goodSamples, gsg$goodGenes])
 }
 
+#' Cluster genes into a dendrogram
+#'
+#' @description
 #' Perform initial clustering of genes into a dendrogram to identify outliers. A
 #' horizontal red line can be added to the plot for reference where a cut point
 #' is being considered.
@@ -116,6 +128,9 @@ wgcna.initial.clustering <- function(filtered.data, plot.threshold = NULL) {
   return(sample.tree)
 }
 
+#' Cut a dendrogram tree at a specified height
+#'
+#' @description
 #' Cut a sample tree at a specified height to remove outliers from an initial
 #' clustering.
 #'
@@ -134,6 +149,9 @@ wgcna.cut.tree <- function(sample.tree, cut.threshold, filtered.data) {
   return(filtered.data[(clust == largest.cluster),,drop=F])
 }
 
+#' Find the soft threshold for a network of modules
+#'
+#' @description
 #' Find the soft threshold for forming the network of modules.
 #'
 #' @param expr.data Filtered and normalised expression data for genes to cluster.
@@ -172,6 +190,9 @@ wgcna.fit.soft.threshold <- function(
   par(mfrow = c(1,1))
 }
 
+#' Construct a network of expression data
+#'
+#' @description
 #' Construct a WGCNA network on the expression data using a specified power and
 #' block size.
 #'
@@ -215,7 +236,7 @@ wgcna.create.blockwise.network <- function(expr.data, power, max.block.size = 60
   ))
 }
 
-#' Extract module colors from a constructed network.
+#' Extract module colors from a constructed network
 #'
 #' @param network A constructed network to extract module colors from.
 #'
@@ -242,6 +263,9 @@ wgcna.plot.network.dendro <- function(network) {
   )
 }
 
+#' Plot a pie chart of module membership
+#'
+#' @description
 #' Plot a pie chart of module sizes given the module colors from a constructed
 #' network.
 #'
@@ -254,6 +278,9 @@ wgcna.module.pie.plot <- function(module.colors) {
   return(module.membership.pie(module.colors))
 }
 
+#' Identify eigengenes for gene modules
+#'
+#' @description
 #' Identify eigengenes that represent each module of genes.
 #'
 #' @param expr.data Filtered and normalised expression data for genes to
@@ -271,6 +298,9 @@ wgcna.determine.module.eigengenes <- function(expr.data, module.colors) {
   return(MEs)
 }
 
+#' Calculate correlation between matrices of data
+#'
+#' @description
 #' Calculate the biweight midcorrelation between two matrices of data for the
 #' same set of samples.
 #'
@@ -293,6 +323,9 @@ wgcna.calculate.correlation <- function(x, y) {
     tools::toTitleCase()
 }
 
+#' Plot a labelled heatmap of correlations
+#'
+#' @description
 #' Plot a labelled heatmap of correlations, sorted by correlation value.
 #'
 #' @param correlation A list containing the correlation values and p values for
@@ -337,6 +370,9 @@ wgcna.plot.labelled.heatmap <- function(correlation) {
   )
 }
 
+#' Generate plots of module membership for all modules
+#'
+#' @description
 #' Generate all the plots of module membership correlation for all modules.
 #'
 #' @param module.colors A list of module color names the same length as the
@@ -377,6 +413,9 @@ wgcna.plot.module.membership.correlations <- function(
   }
 }
 
+#' Enrich modules with over-represented GO terms
+#'
+#' @description
 #' Provide GO term enrichment for modules identified in the network
 #' construction.
 #'

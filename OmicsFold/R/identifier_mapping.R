@@ -1,3 +1,6 @@
+#' Map gene symbols to Entrez IDs
+#'
+#' @description
 #' Map a list of symbols to their corresponding Entrez IDs. This wraps the
 #' method from the anRichmentMethods library to convert a list of symbols to
 #' entrez IDs.
@@ -22,7 +25,10 @@ map.symbols.entrez.ids <- function(symbols, organism) {
   return(gene.symbols)
 }
 
-#' Utility method to retrieve all gene annotated with a particular GO term, or
+#' Retrieve genes annotated with a GO term
+#'
+#' @description
+#' Utility method to retrieve all genes annotated with a particular GO term, or
 #' any of its children.
 #'
 #' @param go.id GO term.
@@ -33,7 +39,8 @@ map.symbols.entrez.ids <- function(symbols, organism) {
 getGOGenes <- function(go.id) {
   go.ids <- GOBPOFFSPRING[[go.id]]
   go.ids <- append(go.ids, go.id)
-  allegs <- sapply(go.ids, function (x) try(get(x, org.Mm.egGO2ALLEGS), silent = TRUE) )
+  allegs <- sapply(go.ids,
+                   function (x) try(get(x, org.Mm.egGO2ALLEGS), silent = TRUE) )
   allegs <- unlist(allegs, recursive = TRUE)
   allegs <- allegs[!str_detect(allegs, "Error", negate = FALSE)]
   genes = unlist(mget(allegs, org.Mm.egSYMBOL))
@@ -41,6 +48,9 @@ getGOGenes <- function(go.id) {
 }
 
 
+#' Convert mouse genes to human orthologues
+#'
+#' @description
 #' Convert a list of mouse genes to their human orthologues.
 #'
 #' @param mouse.genes List of mouse gene symbols.
@@ -49,9 +59,19 @@ getGOGenes <- function(go.id) {
 #' @export
 #'
 convertMouseGeneList <- function(mouse.genes) {
-  human = biomaRt::useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = "useast")
-  mouse = biomaRt::useEnsembl("ensembl", dataset = "mmusculus_gene_ensembl", mirror = "useast")
-  genesV2 = biomaRt::getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = mouse.genes , mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T)
+  human = biomaRt::useEnsembl("ensembl",
+                              dataset = "hsapiens_gene_ensembl",
+                              mirror = "useast")
+  mouse = biomaRt::useEnsembl("ensembl",
+                              dataset = "mmusculus_gene_ensembl",
+                              mirror = "useast")
+  genesV2 = biomaRt::getLDS(attributes = c("mgi_symbol"),
+                            filters = "mgi_symbol",
+                            values = mouse.genes,
+                            mart = mouse,
+                            attributesL = c("hgnc_symbol"),
+                            martL = human,
+                            uniqueRows=T)
   humanx <- unique(genesV2[, 2])
   return(humanx)
 }

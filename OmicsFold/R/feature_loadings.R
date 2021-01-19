@@ -1,3 +1,6 @@
+#' Extract sPLS-DA feature selection stability
+#'
+#' @description
 #' Extract feature selection stabilities for a given component from a
 #' performance validated mixOmics sPLS-DA model Feature stabilities are an
 #' important indicator of the confidence that a selected feature is predictive
@@ -29,6 +32,9 @@ feature.selection.stability <- function(splsda.model, splsda.perf, comp) {
 }
 
 
+#' Get an sPLS-DA loadings table
+#'
+#' @description
 #' Get a dataframe indicating the loading factors for a trained mixOmics sPLS-DA
 #' model. Limited to two components.
 #'
@@ -58,6 +64,9 @@ get.loadings.table <- function(splsda.analysis) {
 }
 
 
+#' Extract DIABLO feature selection stability
+#'
+#' @description
 #' Extract feature selection stabilities for a given component from a
 #' performance validated mixOmics multi-omics DIABLO model. Feature stabilities
 #' are an important indicator of the confidence that a selected feature is
@@ -101,6 +110,9 @@ diablo.selection.stability <- function(diablo.perf, comp, block) {
 }
 
 
+#' Get a DIABLO loadings table
+#'
+#' @description
 #' Get a dataframe indicating the top ranking loading factors for a trained
 #' mixOmics multi-omics DIABLO model for a provided block from the model.
 #'
@@ -143,6 +155,9 @@ get.diablo.top.loadings <- function(diablo.loadings, feature.count = 20) {
 }
 
 
+#' Get top loadings for a single component DIABLO model
+#'
+#' @description
 #' Get a dataframe indicating the top ranking loading factors for a trained
 #' mixOmics multi-omics DIABLO model for a provided block from the model.
 #'
@@ -163,6 +178,9 @@ get.diablo.top.loadings.1comp <- function(diablo.loadings, feature.count = 20) {
 }
 
 
+#' Get DIABLO top loadings and stabilities
+#'
+#' @description
 #' Get a dataframe showing the top ranked loading factors for a trained mixOmics
 #' multi-omics DIABLO model along with selection stability values.  Where a
 #' feature appears in more than one component, the selection stability value
@@ -200,6 +218,9 @@ get.diablo.top.loadings.with.stability <- function(trained.model, perf.result, b
 }
 
 
+#' Get DIABLO top features by normalised stability
+#'
+#' @description
 #' Get a data frame which shows the highest ranking features across blocks and
 #' components in a perf result from a DIABLO model. This uses the stability of
 #' features in each block / component as a ranking factor but these are not
@@ -296,6 +317,9 @@ get.diablo.top.features <- function(trained.model,
 }
 
 
+#' Merge DIABLO stability onto a data frame of features
+#'
+#' @description
 #' Utility function to combine top loading factors extracted from a trained
 #' multi-omics mixOmics (DIABLO) model with the feature stability, previously
 #' retrieved from the performance evaluation using e.g.
@@ -325,6 +349,10 @@ merge.feature.stability <- function(features, stability) {
 }
 
 
+#' Merge stability onto a data frame of features in a single component DIABLO
+#' model
+#'
+#' @description
 #' Utility function to combine top loading factors extracted from a trained
 #' multi-omics mixOmics (DIABLO) model with the feature stability, previously
 #' retrieved from the performance evaluation using e.g.
@@ -350,6 +378,9 @@ merge.feature.stability.1comp <- function(features, stability) {
   )
 }
 
+#' Plot feature stability
+#'
+#' @description
 #' Plot feature stability for a summary overview.
 #'
 #' @param selection.stability Stability data for features selected for a
@@ -368,6 +399,9 @@ plot.feature.stability <- function(selection.stability) {
   )
 }
 
+#' Export a covariance matrix as a network CSV file
+#'
+#' @description
 #' Export a covariance matrix, e.g. one generated using
 #' `find.feature.associations` as data describing the association network and
 #' suitable for e.g. loading into Cytoscape. The method can optionally take a
@@ -414,6 +448,9 @@ export.matrix.as.network <- function(m, filename, cutoff=NA, block.association=N
   return(melted)
 }
 
+#' Get model variance
+#'
+#' @description
 #' Get percent of variance explained by each component for a tuned model. Works
 #' with sPLS-DA models or DIABLO models as input, but the block parameter must
 #' be specified for DIABLO models.
@@ -440,6 +477,9 @@ get.model.variance <- function(tuned.model, block = "X"){
   return(model.var)
 }
 
+#' Center truncate long strings
+#'
+#' @description
 #' Truncate a string to no longer than 43 characters. Where a string is longer
 #' than 43 characters, the first and last 20 characters sandwich three periods.
 #' This can be useful for shortening long feature names before plotting.

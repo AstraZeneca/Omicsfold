@@ -29,8 +29,13 @@
 }
 
 
+#' Perform a re-fit for a DIABLO model after permuting labels
+#'
+#' @description
 #' Perform a full multi-omics model fitting and performance assessment after
 #' permuting the labels associated with the classes. This can take some time.
+#' This is useful when you want to assess whether a model is capable of
+#' overfitting the data it was given.
 #'
 #' @param data Object containing input data blocks.
 #' @param design DIABLO block relation design matrix.
@@ -41,24 +46,24 @@
 #' @export
 #'
 train.permuted.model <- function(data, design, data.labels, test.keepX) {
-	permuted.data.lables <- .permute.data.labels(data.labels)
+	permuted.data.labels <- .permute.data.labels(data.labels)
 	print ("Permuted data labels: ")
-	print (permuted.data.lables)
+	print (permuted.data.labels)
 
 	print ("Evaluating error rate over 6 components")
-	sgccda.res.permuted <- mixOmics::block.splsda(X = data, Y = permuted.data.lables, ncomp = 6, design = design)
+	sgccda.res.permuted <- mixOmics::block.splsda(X = data, Y = permuted.data.labels, ncomp = 6, design = design)
 	perf.diablo.permuted <- mixOmics::perf(sgccda.res.permuted, validation = 'Mfold', folds = 8, nrepeat = 50, cpus=4, progressBar=TRUE)
 	ncomp = perf.diablo.permuted$choice.ncomp$WeightedVote["Overall.BER", "centroids.dist"]
 	print (paste("Optimal components: ", ncomp, sep=""))
 
 	print ("Tuning variable penalization")
-	tune.diablo.permuted <- mixOmics::tune.block.splsda(X = data, Y = permuted.data.lables, ncomp = ncomp, test.keepX = test.keepX, design = design, validation = 'Mfold', folds = 8, nrepeat = 2, cpus = 4, dist = "centroids.dist", progressBar=TRUE)
+	tune.diablo.permuted <- mixOmics::tune.block.splsda(X = data, Y = permuted.data.labels, ncomp = ncomp, test.keepX = test.keepX, design = design, validation = 'Mfold', folds = 8, nrepeat = 2, cpus = 4, dist = "centroids.dist", progressBar=TRUE)
 	list.keepX.permuted <- tune.diablo.permuted$choice.keepX
 	print ("Optimal selection: ")
 	print (list.keepX.permuted)
 
 	print ("Evaluating model mfold error rate")
-	sgccda.trained.permuted <- mixOmics::block.splsda(X = data, Y = permuted.data.lables, ncomp = ncomp, keepX = list.keepX.permuted, design = design)
+	sgccda.trained.permuted <- mixOmics::block.splsda(X = data, Y = permuted.data.labels, ncomp = ncomp, keepX = list.keepX.permuted, design = design)
 	perf.diablo.permuted <- mixOmics::perf(sgccda.trained.permuted, validation = 'Mfold', M = 8, nrepeat = 200, dist = 'centroids.dist', cpus=4, progressBar=TRUE)
 	print ("MFold error rate: ")
 	print (perf.diablo.permuted$WeightedVote.error.rate)
@@ -67,6 +72,9 @@ train.permuted.model <- function(data, design, data.labels, test.keepX) {
 }
 
 
+#' Perform a fast model fit with permuted labels
+#'
+#' @description
 #' Perform a quick multi-omic model fit to data with permutated class labels.
 #' This does not perform the (slow) step of sparse variable or component number
 #' selection - so may be more approximate.
@@ -77,7 +85,7 @@ train.permuted.model <- function(data, design, data.labels, test.keepX) {
 #' @param ncomp Number of components to use in the model.
 #' @param list.keepX.permuted Set number of variable to select from each block.
 #'
-#' @return List containing a representation of the permuted lables, an estimate
+#' @return List containing a representation of the permuted labels, an estimate
 #' of the permutation degree (as stochastically permutation may scramble the
 #' labels more or less thoroughly) and the balanced error rate over one and two
 #' components.
