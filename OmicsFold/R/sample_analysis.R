@@ -29,7 +29,8 @@ get.block.centroids <- function(diablo.trained) {
   sample.count <- length(diablo.trained$Y)
   comp.count <- diablo.trained$ncomp[1]
 
-  # Perform the same analysis as the arrow plot -- sending graphics output to the null device
+  # Perform the same analysis as the arrow plot -- sending graphics output to
+  # the null device
   .nulldev()
 
   # Set up the initial columns
@@ -50,13 +51,16 @@ get.block.centroids <- function(diablo.trained) {
   consensus <- subset(consensus, !(arrow.Block == "Block: Y"))
 
   # Perform a group by on each sample, finding the centroid of each
-  consensus.summary <- consensus %>% dplyr::group_by(sample, arrow.group) %>% dplyr::summarise_at(comp.col.names, mean)
+  consensus.summary <- consensus %>%
+      dplyr::group_by(sample, arrow.group) %>%
+      dplyr::summarise_at(comp.col.names, mean)
   colnames(consensus.summary)[2] <- "label"
 
   dev.off()
 
   # Plot the consensus plot
-  p <- ggplot2::ggplot(consensus.summary, ggplot2::aes(comp1, comp2, color = label))
+  p <- ggplot2::ggplot(consensus.summary,
+                       ggplot2::aes(comp1, comp2, color = label))
   p <- p + ggplot2::geom_point() + ggplot2::stat_ellipse()
 
   # Return the consensus values
@@ -88,18 +92,21 @@ get.block.centroids <- function(diablo.trained) {
 #' print(prediction.projection)
 #' }
 plot.predicted.projection <- function(prediction, classes.new) {
-	variates <- as.data.frame(prediction$variates[,1:2])
-	variates$label <- classes.new
-	colnames(variates) <- c("Component1", "Component2", "label")
+  variates <- as.data.frame(prediction$variates[,1:2])
+  variates$label <- classes.new
+  colnames(variates) <- c("Component1", "Component2", "label")
 
-	p <- ggplot2::ggplot(variates, ggplot2::aes(x=Component1, y=Component2)) + ggplot2::geom_point(ggplot2::aes(color=label)) + ggplot2::theme_bw()
+  p <- ggplot2::ggplot(variates, ggplot2::aes(x=Component1, y=Component2)) +
+       ggplot2::geom_point(ggplot2::aes(color=label)) +
+       ggplot2::theme_bw()
 
-	classes.count <- length(levels(classes.new))
-	pal <- scales::hue_pal()(classes.count)
-	for (i in seq(1, classes.count)) {
-		p <- p + annotate("point", x = prediction$centroids[i,1], y = prediction$centroids[i,2], color=pal[[i]], cex=6)
-	}
-	return(p)
+  classes.count <- length(levels(classes.new))
+  pal <- scales::hue_pal()(classes.count)
+  for (i in seq(1, classes.count)) {
+    p <- p + annotate("point", x = prediction$centroids[i,1],
+                      y = prediction$centroids[i,2], color = pal[[i]], cex = 6)
+  }
+  return(p)
 }
 
 
@@ -124,60 +131,70 @@ plot.predicted.projection <- function(prediction, classes.new) {
 #' find.feature.associations(diablo.trained.analysis, 3)
 #' }
 find.feature.associations <- function(diablo.tuned, block.count) {
-  # Extract the covariance matrix from the circosPlot function. Disable graphical output to avoid it being overwhelmed
-	pdf(file = NULL)
-	circos <- mixOmics::circosPlot(diablo.tuned, cutoff = 0.7, line = TRUE, size.labels = 1.5)
-	dev.off()
+  # Extract the covariance matrix from the circosPlot function. Disable
+  # graphical output to avoid it being overwhelmed
+  pdf(file = NULL)
+  circos <- mixOmics::circosPlot(diablo.tuned, cutoff = 0.7,
+                                 line = TRUE, size.labels = 1.5)
+  dev.off()
 
-	# Find the top factors across all blocks
-	selected.factors <- list()
+  # Find the top factors across all blocks
+  selected.factors <- list()
   for (i in 1:block.count) {
     dev.new(width = 3000, height = 3000, unit = "px")
-    loadings <- mixOmics::plotLoadings(diablo.tuned, block=i, comp = 1, contrib = 'max', method = 'median', ndisplay=20)
+    loadings <- mixOmics::plotLoadings(diablo.tuned, block=i, comp = 1,
+                                       contrib = 'max', method = 'median',
+                                       ndisplay=20)
     dev.off()
     selected.factors <- c(selected.factors, rownames(loadings))
   }
 
-	# Filter the covariance matrix for the top factors
-	circos.selected <- circos[rownames(circos) %in% selected.factors, colnames(circos) %in% selected.factors]
-	diag(circos.selected) <- 1
+  # Filter the covariance matrix for the top factors
+  circos.selected <- circos[rownames(circos) %in% selected.factors,
+                            colnames(circos) %in% selected.factors]
+  diag(circos.selected) <- 1
 
-	# Prepare dendrograms
-	circos.selected.long <- reshape2::melt(circos.selected)
-	circos.dendro <- stats::as.dendrogram(hclust(d = dist(x = circos.selected)))
-	dendro.plot <- ggdendro::ggdendrogram(data = circos.dendro, rotate = TRUE)
-	dendro.plot <- dendro.plot + ggplot2::theme(axis.text.y = element_blank())
+  # Prepare dendrograms
+  circos.selected.long <- reshape2::melt(circos.selected)
+  circos.dendro <- stats::as.dendrogram(hclust(d = dist(x = circos.selected)))
+  dendro.plot <- ggdendro::ggdendrogram(data = circos.dendro, rotate = TRUE)
+  dendro.plot <- dendro.plot + ggplot2::theme(axis.text.y = element_blank())
 
-	# Order the covariance matrix according to clustering in the dendrograms
-	circos.order <- stats::order.dendrogram(circos.dendro)
-	circos.selected.long$Var1 <- factor(x = circos.selected.long$Var1,
-		levels = rownames(circos.selected)[circos.order],
-		ordered = TRUE)
-	circos.selected.long$Var2 <- factor(x = circos.selected.long$Var2,
-		levels = rownames(circos.selected)[circos.order],
-		ordered = TRUE)
+  # Order the covariance matrix according to clustering in the dendrograms
+  circos.order <- stats::order.dendrogram(circos.dendro)
+  circos.selected.long$Var1 <- factor(x = circos.selected.long$Var1,
+    levels = rownames(circos.selected)[circos.order],
+    ordered = TRUE)
+  circos.selected.long$Var2 <- factor(x = circos.selected.long$Var2,
+    levels = rownames(circos.selected)[circos.order],
+    ordered = TRUE)
 
-	# Prepare the ordered heatmap plot
-	heatmap.plot <- ggplot2::ggplot(data = circos.selected.long, ggplot2::aes(x = Var1, y = Var2)) +
-	  ggplot2::geom_tile(ggplot2::aes(fill = value)) +
-	  viridis::scale_fill_viridis(option="plasma") +
-	  ggplot2::theme(legend.position = "top")
+  # Prepare the ordered heatmap plot
+  heatmap.plot <- ggplot2::ggplot(data = circos.selected.long,
+                                  ggplot2::aes(x = Var1, y = Var2)) +
+    ggplot2::geom_tile(ggplot2::aes(fill = value)) +
+    viridis::scale_fill_viridis(option="plasma") +
+    ggplot2::theme(legend.position = "top")
 
-	# Make the plot
-	grDevices::windows()
-	grid::grid.newpage()
-	print(heatmap.plot, vp = grid::viewport(x = 0.4, y = 0.5, width = 0.8, height = 1.0))
-	print(dendro.plot, vp = grid::viewport(x = 0.90, y = 0.465, width = 0.2, height = 0.99))
+  # Make the plot
+  grDevices::windows()
+  grid::grid.newpage()
+  print(heatmap.plot,
+        vp = grid::viewport(x = 0.4, y = 0.5, width = 0.8, height = 1.0))
+  print(dendro.plot,
+        vp = grid::viewport(x = 0.90, y = 0.465, width = 0.2, height = 0.99))
 
-	# Return the covariance matrix
-	return(circos.selected)
+  # Return the covariance matrix
+  return(circos.selected)
 }
 
 
 .order.circos.selected <- function(circos.selected, circos.order) {
-	circos.order.vars <- rownames(circos.selected)[circos.order]
-	circos.ordered <- circos.selected[match(rownames(circos.selected), circos.order.vars), match(colnames(circos.selected), circos.order.vars)]
-	return(circos.ordered)
+  circos.order.vars <- rownames(circos.selected)[circos.order]
+  circos.ordered <-
+      circos.selected[match(rownames(circos.selected), circos.order.vars),
+                      match(colnames(circos.selected), circos.order.vars)]
+  return(circos.ordered)
 }
 
 #' Perform a permanova signficance test
@@ -193,6 +210,8 @@ find.feature.associations <- function(diablo.tuned, block.count) {
 #' @return Measurement of p-value for separation of clusters.
 #' @export
 permanova.clusters <- function(consensus.summary) {
-	consensus.points <- data.frame(consensus.summary$comp1, consensus.summary$comp2)
-	return(vegan::adonis(consensus.points ~ sample(consensus.summary$arrow.group), method='euclidean'))
+  consensus.points <- data.frame(consensus.summary$comp1,
+                                 consensus.summary$comp2)
+  return(vegan::adonis(consensus.points ~ sample(consensus.summary$arrow.group),
+                       method='euclidean'))
 }
