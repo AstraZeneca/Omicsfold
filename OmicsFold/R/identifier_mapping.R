@@ -25,9 +25,10 @@ map.symbols.entrez.ids <- function(symbols, organism) {
 #' Utility method to retrieve all gene annotated with a particular GO term, or
 #' any of its children.
 #'
-#' @param go.id GO term
+#' @param go.id GO term.
 #'
-#' @return Symbol of gene annotated with this term @export
+#' @return Symbol of gene annotated with this term.
+#' @export
 #'
 getGOGenes <- function(go.id) {
   go.ids <- GOBPOFFSPRING[[go.id]]
@@ -44,7 +45,7 @@ getGOGenes <- function(go.id) {
 #'
 #' @param mouse.genes List of mouse gene symbols.
 #'
-#' @return Human orthologue gene symbols (not necessarily ordered)
+#' @return Human orthologue gene symbols (not necessarily ordered).
 #' @export
 #'
 convertMouseGeneList <- function(mouse.genes) {

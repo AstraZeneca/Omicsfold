@@ -1,4 +1,5 @@
-#' Make a scatter plot of the degree of module membership vs the correlation with an outcome variable
+#' Make a scatter plot of the degree of module membership vs the correlation
+#' with an outcome variable.
 #'
 #' @param module Module name to plot.
 #' @param module.colors List of gene module colours.
@@ -6,7 +7,7 @@
 #' @param gene.trait.significance Previously calculated gene trait significance.
 #' @param outcome.name Name of the outcome being correlated.
 #'
-#' @return Scatter plot
+#' @return Scatter plot.
 .plot.module.membership.correlation <- function(
     module,
     module.colors,
@@ -36,11 +37,12 @@
   )
 }
 
-#' Creates a well-presented pie chart of gene module membership, with the modules represented by their actual colours
+#' Creates a well-presented pie chart of gene module membership, with the
+#' modules represented by their actual colours.
 #'
 #' @param moduleColors Module colours per gene.
 #'
-#' @return ggplot2 pie chart
+#' @return ggplot2 pie chart.
 #' @export
 module.membership.pie <- function(moduleColors) {
   moduleCounts <- as.data.frame(table(moduleColors))
@@ -64,13 +66,18 @@ module.membership.pie <- function(moduleColors) {
   return(pie)
 }
 
-#' Filter data for WGCNA analysis to remove genes with poor levels of expression or many missing values.
+#' Filter data for WGCNA analysis to remove genes with poor levels of expression
+#' or many missing values.
 #'
-#' @param norm.expr.data Normalised expression data for the genes, with genes in columns and samples in rows.
-#' @param min.fraction The minimum fraction of samples that each gene must have data for to be considered good.
-#' @param verbosity An integer level of verbosity passed to WGCNA where higher numbers create more output.
+#' @param norm.expr.data Normalised expression data for the genes, with genes in
+#' columns and samples in rows.
+#' @param min.fraction The minimum fraction of samples that each gene must have
+#' data for to be considered good.
+#' @param verbosity An integer level of verbosity passed to WGCNA where higher
+#' numbers create more output.
 #'
-#' @return A data frame containing only good samples and good genes to be analysed with the rest of WGCNA methods.
+#' @return A data frame containing only good samples and good genes to be
+#' analysed with the rest of WGCNA methods.
 #' @export
 wgcna.filter.data <- function(norm.expr.data, min.fraction = 0.75, verbosity = 1) {
   gsg <- WGCNA::goodSamplesGenes(norm.expr.data, minFraction = min.fraction, verbose = verbosity)
@@ -84,10 +91,12 @@ wgcna.filter.data <- function(norm.expr.data, min.fraction = 0.75, verbosity = 1
   return(norm.expr.data[gsg$goodSamples, gsg$goodGenes])
 }
 
-#' Perform initial clustering of genes into a dendrogram to identify outliers.
-#' A horizontal red line can be added to the plot for reference where a cut point is being considered.
+#' Perform initial clustering of genes into a dendrogram to identify outliers. A
+#' horizontal red line can be added to the plot for reference where a cut point
+#' is being considered.
 #'
-#' @param filtered.data Filtered and normalised expression data for genes to cluster.
+#' @param filtered.data Filtered and normalised expression data for genes to
+#' cluster.
 #' @param plot.threshold An optional height to plot a horizontal red line.
 #'
 #' @return The sample tree for the clustered genes.
@@ -107,13 +116,16 @@ wgcna.initial.clustering <- function(filtered.data, plot.threshold = NULL) {
   return(sample.tree)
 }
 
-#' Cut a sample tree at a specified height to remove outliers from an initial clustering.
+#' Cut a sample tree at a specified height to remove outliers from an initial
+#' clustering.
 #'
 #' @param sample.tree A sample tree to cut outliers from.
 #' @param cut.threshold The height in the tree to perform the cut.
-#' @param filtered.data The original expression data represented by the sample tree.
+#' @param filtered.data The original expression data represented by the sample
+#' tree.
 #'
-#' @return Expression data containing the largest subset of genes from the sample tree after performing the cut.
+#' @return Expression data containing the largest subset of genes from the
+#' sample tree after performing the cut.
 #' @export
 wgcna.cut.tree <- function(sample.tree, cut.threshold, filtered.data) {
   clust <- WGCNA::cutreeStatic(sample.tree, cutHeight = cut.threshold, minSize = 10)
@@ -126,14 +138,15 @@ wgcna.cut.tree <- function(sample.tree, cut.threshold, filtered.data) {
 #'
 #' @param expr.data Filtered and normalised expression data for genes to cluster.
 #' @param powers A vector of powers to trial when picking a soft threshold.
-#' @param block.size The size of blocks to perform the analysis with.
-#'                   NULL indicates that the system should pick a block size.
-#'                   It is better to process all genes simultaneously if memory allows.
-#' @param marked.threshold An optional value to mark a horizontal red line on the output plot.
+#' @param block.size The size of blocks to perform the analysis with. NULL
+#' indicates that the system should pick a block size. It is better to process
+#' all genes simultaneously if memory allows.
+#' @param marked.threshold An optional value to mark a horizontal red line on
+#' the output plot.
 #'
-#' @details A plot is generated showing the scale free topology fit index for each provided power value.
-#'          The highest peak at the lowest power value should be selected for network construction.
-#'          Ideally this will be above 0.90.
+#' @details A plot is generated showing the scale free topology fit index for
+#' each provided power value. The highest peak at the lowest power value should
+#' be selected for network construction. Ideally this will be above 0.90.
 #'
 #' @export
 wgcna.fit.soft.threshold <- function(
@@ -159,14 +172,20 @@ wgcna.fit.soft.threshold <- function(
   par(mfrow = c(1,1))
 }
 
-#' Construct a WGCNA network on the expression data using a specified power and block size.
+#' Construct a WGCNA network on the expression data using a specified power and
+#' block size.
 #'
-#' @param expr.data Filtered and normalised expression data for genes to cluster.
-#' @param power The soft-thresholding power to use. This is usually fitted using `wgcna.fit.soft.threshold`.
-#' @param max.block.size The maximum size for a block during network construction.
-#'                       Ideally this will equal the number of genes, but will be restricted by RAM availability.
-#' @param TOM.file.path An optional file path to save the TOM file(s) to. One file will be generated per block.
-#' @param verbosity An integer indicating the verbosity of the WGCNA library when creating the network.
+#' @param expr.data Filtered and normalised expression data for genes to
+#' cluster.
+#' @param power The soft-thresholding power to use. This is usually fitted using
+#' `wgcna.fit.soft.threshold`.
+#' @param max.block.size The maximum size for a block during network
+#' construction. Ideally this will equal the number of genes, but will be
+#' restricted by RAM availability.
+#' @param TOM.file.path An optional file path to save the TOM file(s) to. One
+#' file will be generated per block.
+#' @param verbosity An integer indicating the verbosity of the WGCNA library
+#' when creating the network.
 #'
 #' @return The constructed network object.
 #' @export
@@ -200,13 +219,15 @@ wgcna.create.blockwise.network <- function(expr.data, power, max.block.size = 60
 #'
 #' @param network A constructed network to extract module colors from.
 #'
-#' @return A vector of color names equal in length and order to the genes in the network.
+#' @return A vector of color names equal in length and order to the genes in the
+#' network.
 #' @export
 wgcna.module.colors <- function(network) {
   WGCNA::labels2colors(network$colors)
 }
 
-#' Plot a dendrogram for a constructed network with module colors plotted as a horizontal stripe beneath.
+#' Plot a dendrogram for a constructed network with module colors plotted as a
+#' horizontal stripe beneath.
 #'
 #' @param network A constructed network to plot a dendrogram from.
 #'
@@ -221,9 +242,11 @@ wgcna.plot.network.dendro <- function(network) {
   )
 }
 
-#' Plot a pie chart of module sizes given the module colors from a constructed network.
+#' Plot a pie chart of module sizes given the module colors from a constructed
+#' network.
 #'
-#' @param module.colors A vector or colors matching the genes from a constructed network.
+#' @param module.colors A vector or colors matching the genes from a constructed
+#' network.
 #'
 #' @return A plot object to render the pie chart with.
 #' @export
@@ -233,8 +256,10 @@ wgcna.module.pie.plot <- function(module.colors) {
 
 #' Identify eigengenes that represent each module of genes.
 #'
-#' @param expr.data Filtered and normalised expression data for genes to calculate eigengenes for.
-#' @param module.colors A vector of color names identifying modules of genes, the length of which matches the number of columns in `expr.data`.
+#' @param expr.data Filtered and normalised expression data for genes to
+#' calculate eigengenes for.
+#' @param module.colors A vector of color names identifying modules of genes,
+#' the length of which matches the number of columns in `expr.data`.
 #'
 #' @return The eigengenes for each module, one per input sample.
 #' @export
@@ -246,12 +271,14 @@ wgcna.determine.module.eigengenes <- function(expr.data, module.colors) {
   return(MEs)
 }
 
-#' Calculate the biweight midcorrelation between two matrices of data for the same set of samples.
+#' Calculate the biweight midcorrelation between two matrices of data for the
+#' same set of samples.
 #'
 #' @param x Matrix x for the correlation.
 #' @param y Matrix y for the correlation.
 #'
-#' @return A list containing the correlation values and the p values for each correlation between the two matrices.
+#' @return A list containing the correlation values and the p values for each
+#' correlation between the two matrices.
 #' @export
 wgcna.calculate.correlation <- function(x, y) {
   correlation <- WGCNA::bicor(x, y, use = "p")
@@ -268,7 +295,8 @@ wgcna.calculate.correlation <- function(x, y) {
 
 #' Plot a labelled heatmap of correlations, sorted by correlation value.
 #'
-#' @param correlation A list containing the correlation values and p values for the correlations.
+#' @param correlation A list containing the correlation values and p values for
+#' the correlations.
 #'
 #' @export
 wgcna.plot.labelled.heatmap <- function(correlation) {
@@ -311,13 +339,19 @@ wgcna.plot.labelled.heatmap <- function(correlation) {
 
 #' Generate all the plots of module membership correlation for all modules.
 #'
-#' @param module.colors A list of module color names the same length as the number of gene expression data in the correlations.
-#' @param expr.module.correlation A correlation between the gene expression data and the module eigengenes.
-#' @param expr.trait.correlation A correlation between the gene expression data and a trait from the sample metadata.
-#' @param include.modules A list of module to include in the plots, or NULL for all modules.
+#' @param module.colors A list of module color names the same length as the
+#' number of gene expression data in the correlations.
+#' @param expr.module.correlation A correlation between the gene expression data
+#' and the module eigengenes.
+#' @param expr.trait.correlation A correlation between the gene expression data
+#' and a trait from the sample metadata.
+#' @param include.modules A list of module to include in the plots, or NULL for
+#' all modules.
 #' @param ignore.modules A list of module names to ignore when creating plots.
 #'
-#' @return A GO enrichment object which contains objects such as the `enrichmentTable` which can be exported for later analysis of associated GO terms for each module.
+#' @return A GO enrichment object which contains objects such as the
+#' `enrichmentTable` which can be exported for later analysis of associated GO
+#' terms for each module.
 #' @export
 wgcna.plot.module.membership.correlations <- function(
     module.colors,
@@ -343,17 +377,25 @@ wgcna.plot.module.membership.correlations <- function(
   }
 }
 
-#' Provide GO term enrichment for modules identified in the network construction.
+#' Provide GO term enrichment for modules identified in the network
+#' construction.
 #'
-#' @param gene.list A vector listing the names of genes included in modules to find GO terms for.
-#' @param module.labels A vector of labels the same length as `gene.list` identifying the module each gene belongs to.
+#' @param gene.list A vector listing the names of genes included in modules to
+#' find GO terms for.
+#' @param module.labels A vector of labels the same length as `gene.list`
+#' identifying the module each gene belongs to.
 #' @param organism The name of the source organism (e.g. mouse).
-#' @param sub.collections An optional list of sub-collections for GO terms to be included in the analysis (e.g. GO.BP for biological pathways).
-#' @param threshold.type The thershold type to use for multiple testing p-value correction. FDR is the recommended type, but bonferroni can also be chosen.
+#' @param sub.collections An optional list of sub-collections for GO terms to be
+#' included in the analysis (e.g. GO.BP for biological pathways).
+#' @param threshold.type The thershold type to use for multiple testing p-value
+#' correction. FDR is the recommended type, but bonferroni can also be chosen.
 #' @param ignore.labels A list of module labels to ignore during the analysis.
-#' @param best.data.sets.count The number of best GO terms to report in the output for each module.
+#' @param best.data.sets.count The number of best GO terms to report in the
+#' output for each module.
 #'
-#' @return A GO enrichment object which contains objects such as the `enrichmentTable` which can be exported for later analysis of associated GO terms for each module.
+#' @return A GO enrichment object which contains objects such as the
+#' `enrichmentTable` which can be exported for later analysis of associated GO
+#' terms for each module.
 #' @export
 enrich.modules <- function(
     gene.list,

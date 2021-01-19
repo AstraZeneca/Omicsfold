@@ -29,15 +29,15 @@
 }
 
 
-#' Perform a full multi-omics model fitting and performance assessment after permuting the labels associated with the
-#' classes. This can take some time.
+#' Perform a full multi-omics model fitting and performance assessment after
+#' permuting the labels associated with the classes. This can take some time.
 #'
-#' @param data Object containing input data blocks
-#' @param design DIABLO block relation design matrix
-#' @param data.labels Unpermuted data class labels
-#' @param test.keepX Array of values to test for sparse model training
+#' @param data Object containing input data blocks.
+#' @param design DIABLO block relation design matrix.
+#' @param data.labels Unpermuted data class labels.
+#' @param test.keepX Array of values to test for sparse model training.
 #'
-#' @return Model performance balanced error rate
+#' @return Model performance balanced error rate.
 #' @export
 #'
 train.permuted.model <- function(data, design, data.labels, test.keepX) {
@@ -67,18 +67,20 @@ train.permuted.model <- function(data, design, data.labels, test.keepX) {
 }
 
 
-#' Perform a quick multi-omic model fit to data with permutated class labels. This does not perform the (slow) step
-#' of sparse variable or component number selection - so may be more approximate.
+#' Perform a quick multi-omic model fit to data with permutated class labels.
+#' This does not perform the (slow) step of sparse variable or component number
+#' selection - so may be more approximate.
 #'
-#' @param data Object containing input data blocks
-#' @param design DIABLO block relation design matrix
-#' @param data.labels Unpermuted data class labels
-#' @param ncomp Number of components to use in the model
-#' @param list.keepX.permuted Set number of variable to select from each block
+#' @param data Object containing input data blocks.
+#' @param design DIABLO block relation design matrix.
+#' @param data.labels Unpermuted data class labels.
+#' @param ncomp Number of components to use in the model.
+#' @param list.keepX.permuted Set number of variable to select from each block.
 #'
-#' @return List containing a representation of the permuted lables, an estimate of the permutation degree (as
-#' stochastically permutation may scramble the labels more or less thoroughly) and the balanced error rate over
-#' one and two components
+#' @return List containing a representation of the permuted lables, an estimate
+#' of the permutation degree (as stochastically permutation may scramble the
+#' labels more or less thoroughly) and the balanced error rate over one and two
+#' components.
 #' @export
 #'
 quick.permuted.fit <- function(data, design, data.labels, ncomp, list.keepX.permuted) {
