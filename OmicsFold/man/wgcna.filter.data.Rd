@@ -2,20 +2,26 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.filter.data}
 \alias{wgcna.filter.data}
-\title{Filter data for WGCNA analysis to remove genes with poor levels of expression or many missing values.}
+\title{Filter data for WGCNA analysis to remove genes with poor levels of expression
+or many missing values.}
 \usage{
 wgcna.filter.data(norm.expr.data, min.fraction = 0.75, verbosity = 1)
 }
 \arguments{
-\item{norm.expr.data}{Normalised expression data for the genes, with genes in columns and samples in rows.}
+\item{norm.expr.data}{Normalised expression data for the genes, with genes in
+columns and samples in rows.}
 
-\item{min.fraction}{The minimum fraction of samples that each gene must have data for to be considered good.}
+\item{min.fraction}{The minimum fraction of samples that each gene must have
+data for to be considered good.}
 
-\item{verbosity}{An integer level of verbosity passed to WGCNA where higher numbers create more output.}
+\item{verbosity}{An integer level of verbosity passed to WGCNA where higher
+numbers create more output.}
 }
 \value{
-A data frame containing only good samples and good genes to be analysed with the rest of WGCNA methods.
+A data frame containing only good samples and good genes to be
+analysed with the rest of WGCNA methods.
 }
 \description{
-Filter data for WGCNA analysis to remove genes with poor levels of expression or many missing values.
+Filter data for WGCNA analysis to remove genes with poor levels of expression
+or many missing values.
 }

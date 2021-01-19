@@ -2,13 +2,15 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.initial.clustering}
 \alias{wgcna.initial.clustering}
-\title{Perform initial clustering of genes into a dendrogram to identify outliers.
-A horizontal red line can be added to the plot for reference where a cut point is being considered.}
+\title{Perform initial clustering of genes into a dendrogram to identify outliers. A
+horizontal red line can be added to the plot for reference where a cut point
+is being considered.}
 \usage{
 wgcna.initial.clustering(filtered.data, plot.threshold = NULL)
 }
 \arguments{
-\item{filtered.data}{Filtered and normalised expression data for genes to cluster.}
+\item{filtered.data}{Filtered and normalised expression data for genes to
+cluster.}
 
 \item{plot.threshold}{An optional height to plot a horizontal red line.}
 }
@@ -16,6 +18,7 @@ wgcna.initial.clustering(filtered.data, plot.threshold = NULL)
 The sample tree for the clustered genes.
 }
 \description{
-Perform initial clustering of genes into a dendrogram to identify outliers.
-A horizontal red line can be added to the plot for reference where a cut point is being considered.
+Perform initial clustering of genes into a dendrogram to identify outliers. A
+horizontal red line can be added to the plot for reference where a cut point
+is being considered.
 }

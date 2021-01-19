@@ -2,16 +2,18 @@
 % Please edit documentation in R/MixMC.R
 \name{.TSS.divide}
 \alias{.TSS.divide}
-\title{Internal function for dividing over complete samples in Total Sum Scaling (TSS)}
+\title{Internal function for dividing over complete samples in Total Sum Scaling
+(TSS).}
 \usage{
 .TSS.divide(x)
 }
 \arguments{
-\item{x}{Row to divide over}
+\item{x}{Row to divide over.}
 }
 \value{
-TSS scaled row
+TSS scaled row.
 }
 \description{
-Internal function for dividing over complete samples in Total Sum Scaling (TSS)
+Internal function for dividing over complete samples in Total Sum Scaling
+(TSS).
 }

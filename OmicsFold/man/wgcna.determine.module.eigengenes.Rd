@@ -7,9 +7,11 @@
 wgcna.determine.module.eigengenes(expr.data, module.colors)
 }
 \arguments{
-\item{expr.data}{Filtered and normalised expression data for genes to calculate eigengenes for.}
+\item{expr.data}{Filtered and normalised expression data for genes to
+calculate eigengenes for.}
 
-\item{module.colors}{A vector of color names identifying modules of genes, the length of which matches the number of columns in `expr.data`.}
+\item{module.colors}{A vector of color names identifying modules of genes,
+the length of which matches the number of columns in `expr.data`.}
 }
 \value{
 The eigengenes for each module, one per input sample.

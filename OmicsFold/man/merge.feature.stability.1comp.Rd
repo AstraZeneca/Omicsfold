@@ -2,26 +2,32 @@
 % Please edit documentation in R/feature_loadings.R
 \name{merge.feature.stability.1comp}
 \alias{merge.feature.stability.1comp}
-\title{Utility function to combine top loading factors extracted from a trained multi-omics mixOmics (DIABLO) model
-with the feature stability, previously retrieved from the performance evaluation using e.g. diablo.selection.stability
-and create a nicely formatted data frame. Specialised for DIABLO models with a single component, which otherwise behaves
-differently in R's data structures.}
+\title{Utility function to combine top loading factors extracted from a trained
+multi-omics mixOmics (DIABLO) model with the feature stability, previously
+retrieved from the performance evaluation using e.g.
+diablo.selection.stability and create a nicely formatted data frame.
+Specialised for DIABLO models with a single component, which otherwise
+behaves differently in R's data structures.}
 \usage{
 \method{merge}{feature.stability.1comp}(features, stability)
 }
 \arguments{
-\item{features}{Data frame of top features, e.g. provided by get.diablo.top.loadings.1comp}
+\item{features}{Data frame of top features, e.g. provided by
+get.diablo.top.loadings.1comp().}
 
-\item{stability}{Data frame of feature stability, e.g. provided by diablo.selection.stability}
+\item{stability}{Data frame of feature stability, e.g. provided by
+diablo.selection.stability().}
 }
 \value{
-Data frame combining top features with their measured stability
+Data frame combining top features with their measured stability.
 }
 \description{
-Utility function to combine top loading factors extracted from a trained multi-omics mixOmics (DIABLO) model
-with the feature stability, previously retrieved from the performance evaluation using e.g. diablo.selection.stability
-and create a nicely formatted data frame. Specialised for DIABLO models with a single component, which otherwise behaves
-differently in R's data structures.
+Utility function to combine top loading factors extracted from a trained
+multi-omics mixOmics (DIABLO) model with the feature stability, previously
+retrieved from the performance evaluation using e.g.
+diablo.selection.stability and create a nicely formatted data frame.
+Specialised for DIABLO models with a single component, which otherwise
+behaves differently in R's data structures.
 }
 \examples{
 \dontrun{

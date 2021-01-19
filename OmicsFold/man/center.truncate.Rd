@@ -2,8 +2,8 @@
 % Please edit documentation in R/feature_loadings.R
 \name{center.truncate}
 \alias{center.truncate}
-\title{Trancate a string to no longer than 43 characters.
-Where a string is longer than 43 characters, the first and last 20 characters sandwich three periods.
+\title{Truncate a string to no longer than 43 characters. Where a string is longer
+than 43 characters, the first and last 20 characters sandwich three periods.
 This can be useful for shortening long feature names before plotting.}
 \usage{
 center.truncate(x)
@@ -15,8 +15,8 @@ center.truncate(x)
 A string where each has been reduced to 43 characters or left as is.
 }
 \description{
-Trancate a string to no longer than 43 characters.
-Where a string is longer than 43 characters, the first and last 20 characters sandwich three periods.
+Truncate a string to no longer than 43 characters. Where a string is longer
+than 43 characters, the first and last 20 characters sandwich three periods.
 This can be useful for shortening long feature names before plotting.
 }
 \examples{

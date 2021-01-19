@@ -2,26 +2,31 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.tss}
 \alias{normalise.tss}
-\title{Apply Total Sum Scaling (TSS) normalisation to count data, to account for differences in count (e.g. sequencing)
-depths between samples. Giving proportion of total sample counts, this is the conventional way of normalising OTU
-count data. Optionally include an offset to avoid division/log zero problems - this defaults to zero, but 1 (count)
-is usually appropriate for any count data with totals of thousands of counts or more.}
+\title{Apply Total Sum Scaling (TSS) normalisation to count data, to account for
+differences in count (e.g. sequencing) depths between samples. Giving
+proportion of total sample counts, this is the conventional way of
+normalising OTU count data. Optionally include an offset to avoid
+division/log zero problems - this defaults to zero, but 1 (count) is usually
+appropriate for any count data with totals of thousands of counts or more.}
 \usage{
 normalise.tss(otu.counts, offset = 0)
 }
 \arguments{
-\item{otu.counts}{OTU count data frame of size n (sample) x p (OTU)}
+\item{otu.counts}{OTU count data frame of size n (sample) x p (OTU).}
 
-\item{offset}{Offset to apply, defaulting to zero}
+\item{offset}{Offset to apply, defaulting to zero.}
 }
 \value{
-Data frame containing count data normalised as proportion of total sample counts
+Data frame containing count data normalised as proportion of total
+sample counts.
 }
 \description{
-Apply Total Sum Scaling (TSS) normalisation to count data, to account for differences in count (e.g. sequencing)
-depths between samples. Giving proportion of total sample counts, this is the conventional way of normalising OTU
-count data. Optionally include an offset to avoid division/log zero problems - this defaults to zero, but 1 (count)
-is usually appropriate for any count data with totals of thousands of counts or more.
+Apply Total Sum Scaling (TSS) normalisation to count data, to account for
+differences in count (e.g. sequencing) depths between samples. Giving
+proportion of total sample counts, this is the conventional way of
+normalising OTU count data. Optionally include an offset to avoid
+division/log zero problems - this defaults to zero, but 1 (count) is usually
+appropriate for any count data with totals of thousands of counts or more.
 }
 \examples{
 \dontrun{

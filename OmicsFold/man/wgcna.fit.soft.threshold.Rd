@@ -16,17 +16,18 @@ wgcna.fit.soft.threshold(
 
 \item{powers}{A vector of powers to trial when picking a soft threshold.}
 
-\item{block.size}{The size of blocks to perform the analysis with.
-NULL indicates that the system should pick a block size.
-It is better to process all genes simultaneously if memory allows.}
+\item{block.size}{The size of blocks to perform the analysis with. NULL
+indicates that the system should pick a block size. It is better to process
+all genes simultaneously if memory allows.}
 
-\item{marked.threshold}{An optional value to mark a horizontal red line on the output plot.}
+\item{marked.threshold}{An optional value to mark a horizontal red line on
+the output plot.}
 }
 \description{
 Find the soft threshold for forming the network of modules.
 }
 \details{
-A plot is generated showing the scale free topology fit index for each provided power value.
-         The highest peak at the lowest power value should be selected for network construction.
-         Ideally this will be above 0.90.
+A plot is generated showing the scale free topology fit index for
+each provided power value. The highest peak at the lowest power value should
+be selected for network construction. Ideally this will be above 0.90.
 }

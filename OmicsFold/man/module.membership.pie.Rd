@@ -2,7 +2,8 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{module.membership.pie}
 \alias{module.membership.pie}
-\title{Creates a well-presented pie chart of gene module membership, with the modules represented by their actual colours}
+\title{Creates a well-presented pie chart of gene module membership, with the
+modules represented by their actual colours.}
 \usage{
 module.membership.pie(moduleColors)
 }
@@ -10,8 +11,9 @@ module.membership.pie(moduleColors)
 \item{moduleColors}{Module colours per gene.}
 }
 \value{
-ggplot2 pie chart
+ggplot2 pie chart.
 }
 \description{
-Creates a well-presented pie chart of gene module membership, with the modules represented by their actual colours
+Creates a well-presented pie chart of gene module membership, with the
+modules represented by their actual colours.
 }

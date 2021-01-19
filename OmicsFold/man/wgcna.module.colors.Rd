@@ -10,7 +10,8 @@ wgcna.module.colors(network)
 \item{network}{A constructed network to extract module colors from.}
 }
 \value{
-A vector of color names equal in length and order to the genes in the network.
+A vector of color names equal in length and order to the genes in the
+network.
 }
 \description{
 Extract module colors from a constructed network.

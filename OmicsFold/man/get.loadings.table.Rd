@@ -2,7 +2,8 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.loadings.table}
 \alias{get.loadings.table}
-\title{Get a dataframe indicating the loading factors for a trained mixOmics sPLS-DA model. Limited to two components.}
+\title{Get a dataframe indicating the loading factors for a trained mixOmics sPLS-DA
+model. Limited to two components.}
 \usage{
 get.loadings.table(splsda.analysis)
 }
@@ -10,10 +11,13 @@ get.loadings.table(splsda.analysis)
 \item{splsda.analysis}{Trained mixOmics sPLS-DA model}
 }
 \value{
-Data frame including ordered loadings over the first two components of the model. Selected features are ordered by component one followed by component two, and then from highest to lowest (in absolute terms)
+Data frame including ordered loadings over the first two components
+of the model. Selected features are ordered by component one followed by
+component two, and then from highest to lowest (in absolute terms).
 }
 \description{
-Get a dataframe indicating the loading factors for a trained mixOmics sPLS-DA model. Limited to two components.
+Get a dataframe indicating the loading factors for a trained mixOmics sPLS-DA
+model. Limited to two components.
 }
 \examples{
 \dontrun{

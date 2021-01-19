@@ -2,16 +2,19 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.module.pie.plot}
 \alias{wgcna.module.pie.plot}
-\title{Plot a pie chart of module sizes given the module colors from a constructed network.}
+\title{Plot a pie chart of module sizes given the module colors from a constructed
+network.}
 \usage{
 wgcna.module.pie.plot(module.colors)
 }
 \arguments{
-\item{module.colors}{A vector or colors matching the genes from a constructed network.}
+\item{module.colors}{A vector or colors matching the genes from a constructed
+network.}
 }
 \value{
 A plot object to render the pie chart with.
 }
 \description{
-Plot a pie chart of module sizes given the module colors from a constructed network.
+Plot a pie chart of module sizes given the module colors from a constructed
+network.
 }

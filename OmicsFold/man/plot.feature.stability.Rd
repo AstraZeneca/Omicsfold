@@ -2,18 +2,19 @@
 % Please edit documentation in R/feature_loadings.R
 \name{plot.feature.stability}
 \alias{plot.feature.stability}
-\title{Plot feature stability for a summary overview}
+\title{Plot feature stability for a summary overview.}
 \usage{
 \method{plot}{feature.stability}(selection.stability)
 }
 \arguments{
-\item{selection.stability}{Stability data for features selected for a component}
+\item{selection.stability}{Stability data for features selected for a
+component.}
 }
 \value{
-Plotted stability data
+Plotted stability data.
 }
 \description{
-Plot feature stability for a summary overview
+Plot feature stability for a summary overview.
 }
 \examples{
 \dontrun{

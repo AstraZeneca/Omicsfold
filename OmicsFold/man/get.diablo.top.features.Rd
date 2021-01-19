@@ -23,7 +23,7 @@ data frame.}
 }
 \value{
 A data frame containing the top features from the model across all
-        blocks and component.
+blocks and component.
 }
 \description{
 A correction factor is therefore applied here for ranking purposes. The

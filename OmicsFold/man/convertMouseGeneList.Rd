@@ -10,7 +10,7 @@ convertMouseGeneList(mouse.genes)
 \item{mouse.genes}{List of mouse gene symbols.}
 }
 \value{
-Human orthologue gene symbols (not necessarily ordered)
+Human orthologue gene symbols (not necessarily ordered).
 }
 \description{
 Convert a list of mouse genes to their human orthologues.

@@ -2,20 +2,20 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.css}
 \alias{normalise.css}
-\title{Alternate Cumulative Sum Scale (CSS) method for normalising count data for inter-sample depth. Relies upon the
-metagenomeSeq implementation.}
+\title{Alternate Cumulative Sum Scale (CSS) method for normalising count data for
+inter-sample depth. Relies upon the metagenomeSeq implementation.}
 \usage{
 normalise.css(otu.counts)
 }
 \arguments{
-\item{otu.counts}{OTU count data frame of size n (sample) x p (OTU)}
+\item{otu.counts}{OTU count data frame of size n (sample) x p (OTU).}
 }
 \value{
-Data frame containing count data normalised cumulatively
+Data frame containing count data normalised cumulatively.
 }
 \description{
-Alternate Cumulative Sum Scale (CSS) method for normalising count data for inter-sample depth. Relies upon the
-metagenomeSeq implementation.
+Alternate Cumulative Sum Scale (CSS) method for normalising count data for
+inter-sample depth. Relies upon the metagenomeSeq implementation.
 }
 \examples{
 \dontrun{

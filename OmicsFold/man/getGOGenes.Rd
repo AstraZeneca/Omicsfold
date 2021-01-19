@@ -8,10 +8,10 @@ any of its children.}
 getGOGenes(go.id)
 }
 \arguments{
-\item{go.id}{GO term}
+\item{go.id}{GO term.}
 }
 \value{
-Symbol of gene annotated with this term @export
+Symbol of gene annotated with this term.
 }
 \description{
 Utility method to retrieve all gene annotated with a particular GO term, or

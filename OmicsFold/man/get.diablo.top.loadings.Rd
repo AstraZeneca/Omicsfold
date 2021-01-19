@@ -2,22 +2,24 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.diablo.top.loadings}
 \alias{get.diablo.top.loadings}
-\title{Get a dataframe indicating the top ranking loading factors for a trained mixOmics multi-omics DIABLO model for a
-provided block from the model.}
+\title{Get a dataframe indicating the top ranking loading factors for a trained
+mixOmics multi-omics DIABLO model for a provided block from the model.}
 \usage{
 get.diablo.top.loadings(diablo.loadings, feature.count = 20)
 }
 \arguments{
-\item{diablo.loadings}{Loadings from the trained model}
+\item{diablo.loadings}{Loadings from the trained model.}
 
-\item{feature.count}{The number of top loadings from each component to include.}
+\item{feature.count}{The number of top loadings from each component to
+include.}
 }
 \value{
-A data frame containing the top (by absolute magnitude) factor loadings for the first, then second component, ordered by absolute weight.
+A data frame containing the top (by absolute magnitude) factor
+loadings for the first, then second component, ordered by absolute weight.
 }
 \description{
-Get a dataframe indicating the top ranking loading factors for a trained mixOmics multi-omics DIABLO model for a
-provided block from the model.
+Get a dataframe indicating the top ranking loading factors for a trained
+mixOmics multi-omics DIABLO model for a provided block from the model.
 }
 \examples{
 \dontrun{

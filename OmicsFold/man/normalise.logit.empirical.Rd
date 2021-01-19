@@ -2,26 +2,34 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.logit.empirical}
 \alias{normalise.logit.empirical}
-\title{Apply the empirical logit normalisation to a data frame of omics input data. This is intended to convert compositional
-data, e.g. proportional data in the range 0..1, to Euclidean space which is most appropriate for the linear models.
-The empirical logit function differs for standard logit normalisation in that an epsilon factor is added to ensure
-that function does not tend to +/- infinity for input values close to 100\% and 0\% respectively. The logit or empirical
-logit function will be a more appropriate choice than centred log-ratio (CLR) for non-OTU data.}
+\title{Apply the empirical logit normalisation to a data frame of omics input data.
+This is intended to convert compositional data, e.g. proportional data in the
+range 0..1, to Euclidean space which is most appropriate for the linear
+models. The empirical logit function differs for standard logit normalisation
+in that an epsilon factor is added to ensure that function does not tend to
++/- infinity for input values close to 100\% and 0\% respectively. The logit
+or empirical logit function will be a more appropriate choice than centred
+log-ratio (CLR) for non-OTU data.}
 \usage{
 normalise.logit.empirical(input)
 }
 \arguments{
-\item{input}{Data frame of input compositional data to normalise. Input data should be proportions 0-1}
+\item{input}{Data frame of input compositional data to normalise. Input data
+should be proportions 0-1.}
 }
 \value{
-Data normalised using empirical logit. Proportions below 0.5 will be negative, but output will not tend to infinity for zero or 1 input
+Data normalised using empirical logit. Proportions below 0.5 will be
+negative, but output will not tend to infinity for zero or 1 input.
 }
 \description{
-Apply the empirical logit normalisation to a data frame of omics input data. This is intended to convert compositional
-data, e.g. proportional data in the range 0..1, to Euclidean space which is most appropriate for the linear models.
-The empirical logit function differs for standard logit normalisation in that an epsilon factor is added to ensure
-that function does not tend to +/- infinity for input values close to 100\% and 0\% respectively. The logit or empirical
-logit function will be a more appropriate choice than centred log-ratio (CLR) for non-OTU data.
+Apply the empirical logit normalisation to a data frame of omics input data.
+This is intended to convert compositional data, e.g. proportional data in the
+range 0..1, to Euclidean space which is most appropriate for the linear
+models. The empirical logit function differs for standard logit normalisation
+in that an epsilon factor is added to ensure that function does not tend to
++/- infinity for input values close to 100\% and 0\% respectively. The logit
+or empirical logit function will be a more appropriate choice than centred
+log-ratio (CLR) for non-OTU data.
 }
 \examples{
 \dontrun{

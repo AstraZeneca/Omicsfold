@@ -2,24 +2,28 @@
 % Please edit documentation in R/feature_loadings.R
 \name{merge.feature.stability}
 \alias{merge.feature.stability}
-\title{Utility function to combine top loading factors extracted from a trained multi-omics mixOmics (DIABLO) model
-with the feature stability, previously retrieved from the performance evaluation using e.g. diablo.selection.stability
-and create a nicely formatted data frame}
+\title{Utility function to combine top loading factors extracted from a trained
+multi-omics mixOmics (DIABLO) model with the feature stability, previously
+retrieved from the performance evaluation using e.g.
+diablo.selection.stability and create a nicely formatted data frame.}
 \usage{
 \method{merge}{feature.stability}(features, stability)
 }
 \arguments{
-\item{features}{Data frame of top features, e.g. provided by get.diablo.top.loadings}
+\item{features}{Data frame of top features, e.g. provided by
+get.diablo.top.loadings().}
 
-\item{stability}{Data frame of feature stability, e.g. provided by diablo.selection.stability}
+\item{stability}{Data frame of feature stability, e.g. provided by
+diablo.selection.stability().}
 }
 \value{
-Data frame combining top features with their measured stability
+Data frame combining top features with their measured stability.
 }
 \description{
-Utility function to combine top loading factors extracted from a trained multi-omics mixOmics (DIABLO) model
-with the feature stability, previously retrieved from the performance evaluation using e.g. diablo.selection.stability
-and create a nicely formatted data frame
+Utility function to combine top loading factors extracted from a trained
+multi-omics mixOmics (DIABLO) model with the feature stability, previously
+retrieved from the performance evaluation using e.g.
+diablo.selection.stability and create a nicely formatted data frame.
 }
 \examples{
 \dontrun{

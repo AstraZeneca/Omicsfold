@@ -2,7 +2,8 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{enrich.modules}
 \alias{enrich.modules}
-\title{Provide GO term enrichment for modules identified in the network construction.}
+\title{Provide GO term enrichment for modules identified in the network
+construction.}
 \usage{
 enrich.modules(
   gene.list,
@@ -15,23 +16,31 @@ enrich.modules(
 )
 }
 \arguments{
-\item{gene.list}{A vector listing the names of genes included in modules to find GO terms for.}
+\item{gene.list}{A vector listing the names of genes included in modules to
+find GO terms for.}
 
-\item{module.labels}{A vector of labels the same length as `gene.list` identifying the module each gene belongs to.}
+\item{module.labels}{A vector of labels the same length as `gene.list`
+identifying the module each gene belongs to.}
 
 \item{organism}{The name of the source organism (e.g. mouse).}
 
-\item{sub.collections}{An optional list of sub-collections for GO terms to be included in the analysis (e.g. GO.BP for biological pathways).}
+\item{sub.collections}{An optional list of sub-collections for GO terms to be
+included in the analysis (e.g. GO.BP for biological pathways).}
 
-\item{threshold.type}{The thershold type to use for multiple testing p-value correction. FDR is the recommended type, but bonferroni can also be chosen.}
+\item{threshold.type}{The thershold type to use for multiple testing p-value
+correction. FDR is the recommended type, but bonferroni can also be chosen.}
 
 \item{ignore.labels}{A list of module labels to ignore during the analysis.}
 
-\item{best.data.sets.count}{The number of best GO terms to report in the output for each module.}
+\item{best.data.sets.count}{The number of best GO terms to report in the
+output for each module.}
 }
 \value{
-A GO enrichment object which contains objects such as the `enrichmentTable` which can be exported for later analysis of associated GO terms for each module.
+A GO enrichment object which contains objects such as the
+`enrichmentTable` which can be exported for later analysis of associated GO
+terms for each module.
 }
 \description{
-Provide GO term enrichment for modules identified in the network construction.
+Provide GO term enrichment for modules identified in the network
+construction.
 }

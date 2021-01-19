@@ -2,24 +2,24 @@
 % Please edit documentation in R/permutation.R
 \name{train.permuted.model}
 \alias{train.permuted.model}
-\title{Perform a full multi-omics model fitting and performance assessment after permuting the labels associated with the
-classes. This can take some time.}
+\title{Perform a full multi-omics model fitting and performance assessment after
+permuting the labels associated with the classes. This can take some time.}
 \usage{
 train.permuted.model(data, design, data.labels, test.keepX)
 }
 \arguments{
-\item{data}{Object containing input data blocks}
+\item{data}{Object containing input data blocks.}
 
-\item{design}{DIABLO block relation design matrix}
+\item{design}{DIABLO block relation design matrix.}
 
-\item{data.labels}{Unpermuted data class labels}
+\item{data.labels}{Unpermuted data class labels.}
 
-\item{test.keepX}{Array of values to test for sparse model training}
+\item{test.keepX}{Array of values to test for sparse model training.}
 }
 \value{
-Model performance balanced error rate
+Model performance balanced error rate.
 }
 \description{
-Perform a full multi-omics model fitting and performance assessment after permuting the labels associated with the
-classes. This can take some time.
+Perform a full multi-omics model fitting and performance assessment after
+permuting the labels associated with the classes. This can take some time.
 }

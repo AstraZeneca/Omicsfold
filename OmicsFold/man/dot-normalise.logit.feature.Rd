@@ -2,20 +2,24 @@
 % Please edit documentation in R/MixMC.R
 \name{.normalise.logit.feature}
 \alias{.normalise.logit.feature}
-\title{Internal function for "empirical" logit normalisation of a feature (column) of data. The empirical logit function
-differs for standard logit normalisation in that an epsilon factor is added to ensure that function does not tend
-to +/- infinity for input values close to 100\% and 0\% respectively.}
+\title{Internal function for "empirical" logit normalisation of a feature (column)
+of data. The empirical logit function differs for standard logit
+normalisation in that an epsilon factor is added to ensure that function does
+not tend to +/- infinity for input values close to 100\% and 0\%
+respectively.}
 \usage{
 .normalise.logit.feature(feature)
 }
 \arguments{
-\item{feature}{Feature column}
+\item{feature}{Feature column.}
 }
 \value{
-Normalised feature column
+Normalised feature column.
 }
 \description{
-Internal function for "empirical" logit normalisation of a feature (column) of data. The empirical logit function
-differs for standard logit normalisation in that an epsilon factor is added to ensure that function does not tend
-to +/- infinity for input values close to 100\% and 0\% respectively.
+Internal function for "empirical" logit normalisation of a feature (column)
+of data. The empirical logit function differs for standard logit
+normalisation in that an epsilon factor is added to ensure that function does
+not tend to +/- infinity for input values close to 100\% and 0\%
+respectively.
 }

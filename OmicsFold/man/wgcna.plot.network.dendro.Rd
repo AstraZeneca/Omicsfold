@@ -2,7 +2,8 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.plot.network.dendro}
 \alias{wgcna.plot.network.dendro}
-\title{Plot a dendrogram for a constructed network with module colors plotted as a horizontal stripe beneath.}
+\title{Plot a dendrogram for a constructed network with module colors plotted as a
+horizontal stripe beneath.}
 \usage{
 wgcna.plot.network.dendro(network)
 }
@@ -10,5 +11,6 @@ wgcna.plot.network.dendro(network)
 \item{network}{A constructed network to plot a dendrogram from.}
 }
 \description{
-Plot a dendrogram for a constructed network with module colors plotted as a horizontal stripe beneath.
+Plot a dendrogram for a constructed network with module colors plotted as a
+horizontal stripe beneath.
 }

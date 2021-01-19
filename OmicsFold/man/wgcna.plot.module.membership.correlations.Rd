@@ -13,18 +13,24 @@ wgcna.plot.module.membership.correlations(
 )
 }
 \arguments{
-\item{module.colors}{A list of module color names the same length as the number of gene expression data in the correlations.}
+\item{module.colors}{A list of module color names the same length as the
+number of gene expression data in the correlations.}
 
-\item{expr.module.correlation}{A correlation between the gene expression data and the module eigengenes.}
+\item{expr.module.correlation}{A correlation between the gene expression data
+and the module eigengenes.}
 
-\item{expr.trait.correlation}{A correlation between the gene expression data and a trait from the sample metadata.}
+\item{expr.trait.correlation}{A correlation between the gene expression data
+and a trait from the sample metadata.}
 
-\item{include.modules}{A list of module to include in the plots, or NULL for all modules.}
+\item{include.modules}{A list of module to include in the plots, or NULL for
+all modules.}
 
 \item{ignore.modules}{A list of module names to ignore when creating plots.}
 }
 \value{
-A GO enrichment object which contains objects such as the `enrichmentTable` which can be exported for later analysis of associated GO terms for each module.
+A GO enrichment object which contains objects such as the
+`enrichmentTable` which can be exported for later analysis of associated GO
+terms for each module.
 }
 \description{
 Generate all the plots of module membership correlation for all modules.

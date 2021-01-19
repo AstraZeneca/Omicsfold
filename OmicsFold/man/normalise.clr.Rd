@@ -2,24 +2,31 @@
 % Please edit documentation in R/MixMC.R
 \name{normalise.clr}
 \alias{normalise.clr}
-\title{Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data. This is another method for converting the
-compositional data, i.e. proportional data in the range 0..1 to Euclidean space which is most appropriate for the linear models.
-Note that this should only be applied to OTU data, as it applies another inter-sample normalisation.}
+\title{Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data.
+This is another method for converting the compositional data, i.e.
+proportional data in the range 0..1 to Euclidean space which is most
+appropriate for the linear models. Note that this should only be applied to
+OTU data, as it applies another inter-sample normalisation.}
 \usage{
 normalise.clr(input, offset = 0)
 }
 \arguments{
-\item{input}{Scaled OTU data as proportion 0-1, e.g. output by normalise.TSS}
+\item{input}{Scaled OTU data as proportions 0-1, e.g. output by
+normalise.TSS().}
 
-\item{offset}{Optional offset to apply to raw data to avoid logging of zero values. Only needed if any zeroes are present - should generally be set very small, e.g. 0.000001.}
+\item{offset}{Optional offset to apply to raw data to avoid logging of zero
+values. Only needed if any zeroes are present - should generally be set very
+small, e.g. 0.000001.}
 }
 \value{
-Data normalised by the CLR method
+Data normalised by the CLR method.
 }
 \description{
-Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data. This is another method for converting the
-compositional data, i.e. proportional data in the range 0..1 to Euclidean space which is most appropriate for the linear models.
-Note that this should only be applied to OTU data, as it applies another inter-sample normalisation.
+Apply centred log-ratio (CLR) normalisation to sum scaled OTU count data.
+This is another method for converting the compositional data, i.e.
+proportional data in the range 0..1 to Euclidean space which is most
+appropriate for the linear models. Note that this should only be applied to
+OTU data, as it applies another inter-sample normalisation.
 }
 \examples{
 \dontrun{

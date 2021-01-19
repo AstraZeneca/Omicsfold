@@ -2,28 +2,31 @@
 % Please edit documentation in R/permutation.R
 \name{quick.permuted.fit}
 \alias{quick.permuted.fit}
-\title{Perform a quick multi-omic model fit to data with permutated class labels. This does not perform the (slow) step
-of sparse variable or component number selection - so may be more approximate.}
+\title{Perform a quick multi-omic model fit to data with permutated class labels.
+This does not perform the (slow) step of sparse variable or component number
+selection - so may be more approximate.}
 \usage{
 quick.permuted.fit(data, design, data.labels, ncomp, list.keepX.permuted)
 }
 \arguments{
-\item{data}{Object containing input data blocks}
+\item{data}{Object containing input data blocks.}
 
-\item{design}{DIABLO block relation design matrix}
+\item{design}{DIABLO block relation design matrix.}
 
-\item{data.labels}{Unpermuted data class labels}
+\item{data.labels}{Unpermuted data class labels.}
 
-\item{ncomp}{Number of components to use in the model}
+\item{ncomp}{Number of components to use in the model.}
 
-\item{list.keepX.permuted}{Set number of variable to select from each block}
+\item{list.keepX.permuted}{Set number of variable to select from each block.}
 }
 \value{
-List containing a representation of the permuted lables, an estimate of the permutation degree (as
-stochastically permutation may scramble the labels more or less thoroughly) and the balanced error rate over
-one and two components
+List containing a representation of the permuted lables, an estimate
+of the permutation degree (as stochastically permutation may scramble the
+labels more or less thoroughly) and the balanced error rate over one and two
+components.
 }
 \description{
-Perform a quick multi-omic model fit to data with permutated class labels. This does not perform the (slow) step
-of sparse variable or component number selection - so may be more approximate.
+Perform a quick multi-omic model fit to data with permutated class labels.
+This does not perform the (slow) step of sparse variable or component number
+selection - so may be more approximate.
 }

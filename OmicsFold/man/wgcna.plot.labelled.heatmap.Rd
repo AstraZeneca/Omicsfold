@@ -7,7 +7,8 @@
 wgcna.plot.labelled.heatmap(correlation)
 }
 \arguments{
-\item{correlation}{A list containing the correlation values and p values for the correlations.}
+\item{correlation}{A list containing the correlation values and p values for
+the correlations.}
 }
 \description{
 Plot a labelled heatmap of correlations, sorted by correlation value.

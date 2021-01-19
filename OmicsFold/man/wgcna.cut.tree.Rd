@@ -2,7 +2,8 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.cut.tree}
 \alias{wgcna.cut.tree}
-\title{Cut a sample tree at a specified height to remove outliers from an initial clustering.}
+\title{Cut a sample tree at a specified height to remove outliers from an initial
+clustering.}
 \usage{
 wgcna.cut.tree(sample.tree, cut.threshold, filtered.data)
 }
@@ -11,11 +12,14 @@ wgcna.cut.tree(sample.tree, cut.threshold, filtered.data)
 
 \item{cut.threshold}{The height in the tree to perform the cut.}
 
-\item{filtered.data}{The original expression data represented by the sample tree.}
+\item{filtered.data}{The original expression data represented by the sample
+tree.}
 }
 \value{
-Expression data containing the largest subset of genes from the sample tree after performing the cut.
+Expression data containing the largest subset of genes from the
+sample tree after performing the cut.
 }
 \description{
-Cut a sample tree at a specified height to remove outliers from an initial clustering.
+Cut a sample tree at a specified height to remove outliers from an initial
+clustering.
 }

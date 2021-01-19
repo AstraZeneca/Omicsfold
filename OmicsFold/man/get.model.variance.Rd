@@ -2,22 +2,26 @@
 % Please edit documentation in R/feature_loadings.R
 \name{get.model.variance}
 \alias{get.model.variance}
-\title{Get percent of variance explained by each component for a tuned model.
-Works with sPLS-DA models or DIABLO models as input, but the block parameter must be specified for DIABLO models.}
+\title{Get percent of variance explained by each component for a tuned model. Works
+with sPLS-DA models or DIABLO models as input, but the block parameter must
+be specified for DIABLO models.}
 \usage{
 get.model.variance(tuned.model, block = "X")
 }
 \arguments{
-\item{tuned.model}{Either an sPLS-DA model from singleomics or a DIABLO model from multiomics.}
+\item{tuned.model}{Either an sPLS-DA model from singleomics or a DIABLO model
+from multiomics.}
 
-\item{block}{Where the model type is DIABLO, the block to get model variance for.}
+\item{block}{Where the model type is DIABLO, the block to get model variance
+for.}
 }
 \value{
 A data frame with the model variance for the specified block.
 }
 \description{
-Get percent of variance explained by each component for a tuned model.
-Works with sPLS-DA models or DIABLO models as input, but the block parameter must be specified for DIABLO models.
+Get percent of variance explained by each component for a tuned model. Works
+with sPLS-DA models or DIABLO models as input, but the block parameter must
+be specified for DIABLO models.
 }
 \examples{
 \dontrun{

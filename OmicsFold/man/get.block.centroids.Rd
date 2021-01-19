@@ -2,21 +2,24 @@
 % Please edit documentation in R/sample_analysis.R
 \name{get.block.centroids}
 \alias{get.block.centroids}
-\title{Function to get the centroids of samples transformed into the same model space across all blocks for a trained
-multi-omics mixOmics (DIABLO) model. Prepares plots and raw data of consensus sample classification, which (for
+\title{Function to get the centroids of samples transformed into the same model
+space across all blocks for a trained multi-omics mixOmics (DIABLO) model.
+Prepares plots and raw data of consensus sample classification, which (for
 some reason) isn't provided in the base package.}
 \usage{
 get.block.centroids(diablo.trained)
 }
 \arguments{
-\item{diablo.trained}{Trained multi-omics mixOmics DIABLO model}
+\item{diablo.trained}{Trained multi-omics mixOmics DIABLO model.}
 }
 \value{
-Simple object containing consensus data (as `consensus.summary`) and a ggplot plot of the distribution in the first two components (as `plot`)
+Simple object containing consensus data (as `consensus.summary`) and
+a ggplot plot of the distribution in the first two components (as `plot`).
 }
 \description{
-Function to get the centroids of samples transformed into the same model space across all blocks for a trained
-multi-omics mixOmics (DIABLO) model. Prepares plots and raw data of consensus sample classification, which (for
+Function to get the centroids of samples transformed into the same model
+space across all blocks for a trained multi-omics mixOmics (DIABLO) model.
+Prepares plots and raw data of consensus sample classification, which (for
 some reason) isn't provided in the base package.
 }
 \examples{

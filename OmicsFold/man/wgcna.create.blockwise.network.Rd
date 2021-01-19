@@ -2,7 +2,8 @@
 % Please edit documentation in R/wgcna_utilities.R
 \name{wgcna.create.blockwise.network}
 \alias{wgcna.create.blockwise.network}
-\title{Construct a WGCNA network on the expression data using a specified power and block size.}
+\title{Construct a WGCNA network on the expression data using a specified power and
+block size.}
 \usage{
 wgcna.create.blockwise.network(
   expr.data,
@@ -13,20 +14,26 @@ wgcna.create.blockwise.network(
 )
 }
 \arguments{
-\item{expr.data}{Filtered and normalised expression data for genes to cluster.}
+\item{expr.data}{Filtered and normalised expression data for genes to
+cluster.}
 
-\item{power}{The soft-thresholding power to use. This is usually fitted using `wgcna.fit.soft.threshold`.}
+\item{power}{The soft-thresholding power to use. This is usually fitted using
+`wgcna.fit.soft.threshold`.}
 
-\item{max.block.size}{The maximum size for a block during network construction.
-Ideally this will equal the number of genes, but will be restricted by RAM availability.}
+\item{max.block.size}{The maximum size for a block during network
+construction. Ideally this will equal the number of genes, but will be
+restricted by RAM availability.}
 
-\item{TOM.file.path}{An optional file path to save the TOM file(s) to. One file will be generated per block.}
+\item{TOM.file.path}{An optional file path to save the TOM file(s) to. One
+file will be generated per block.}
 
-\item{verbosity}{An integer indicating the verbosity of the WGCNA library when creating the network.}
+\item{verbosity}{An integer indicating the verbosity of the WGCNA library
+when creating the network.}
 }
 \value{
 The constructed network object.
 }
 \description{
-Construct a WGCNA network on the expression data using a specified power and block size.
+Construct a WGCNA network on the expression data using a specified power and
+block size.
 }
