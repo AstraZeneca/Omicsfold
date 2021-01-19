@@ -8,10 +8,10 @@
 #'
 #' @return TSS scaled row.
 .TSS.divide = function(x){
-	if (sum(x) > 0)
-		return (x/sum(x))
-	else
-		return (x)
+  if (sum(x) > 0)
+    return (x/sum(x))
+  else
+    return (x)
 }
 
 
@@ -36,10 +36,10 @@
 #' low.count.filter(raw.count)
 #' }
 low.count.removal = function(otu.counts, percent=0.01 ) {
-	keep.otu <-
-			which(colSums(otu.counts) * 100 / sum(colSums(otu.counts)) > percent)
-	data.filter <- otu.counts[, keep.otu]
-	return(data.filter)
+  keep.otu <-
+      which(colSums(otu.counts) * 100 / sum(colSums(otu.counts)) > percent)
+  data.filter <- otu.counts[, keep.otu]
+  return(data.filter)
 }
 
 
@@ -65,8 +65,8 @@ low.count.removal = function(otu.counts, percent=0.01 ) {
 #' normalise.tss(otu.count, offset=1)
 #' }
 normalise.tss = function(otu.counts, offset=0) {
-	offset <- otu.counts + offset
-	return(t(apply(offset, 1, .TSS.divide)))
+  offset <- otu.counts + offset
+  return(t(apply(offset, 1, .TSS.divide)))
 }
 
 
@@ -86,14 +86,14 @@ normalise.tss = function(otu.counts, offset=0) {
 #' normalise.css(otu.count)
 #' }
 normalise.css = function(otu.counts) {
-	data.metagenomeSeq <- metagenomeSeq::newMRexperiment(t(otu.counts),
-																											 featureData=NULL,
-																											 libSize=NULL,
-																											 normFactors=NULL)
-	p <- metagenomeSeq::cumNormStat(data.metagenomeSeq)
-	data.cumnorm <- metagenomeSeq::cumNorm(data.metagenomeSeq, p=p)
-	otu.css <- t(metagenomeSeq::MRcounts(data.cumnorm, norm=TRUE, log=TRUE))
-	return(otu.css)
+  data.metagenomeSeq <- metagenomeSeq::newMRexperiment(t(otu.counts),
+                                                       featureData=NULL,
+                                                       libSize=NULL,
+                                                       normFactors=NULL)
+  p <- metagenomeSeq::cumNormStat(data.metagenomeSeq)
+  data.cumnorm <- metagenomeSeq::cumNorm(data.metagenomeSeq, p=p)
+  otu.css <- t(metagenomeSeq::MRcounts(data.cumnorm, norm=TRUE, log=TRUE))
+  return(otu.css)
 }
 
 #' Apply the logit function to a single feature
@@ -109,15 +109,15 @@ normalise.css = function(otu.counts) {
 #'
 #' @return Normalised feature column.
 .normalise.logit.feature = function(feature) {
-	epsilon.min <- min(feature)
-	epsilon.max <- 1-max(feature)
-	epsilon <- min(epsilon.min, epsilon.max)
+  epsilon.min <- min(feature)
+  epsilon.max <- 1-max(feature)
+  epsilon <- min(epsilon.min, epsilon.max)
 
-	# Set minimum and maximum values for the smoothing factor epsilon
-	epsilon <- max(epsilon, 0.01)
-	epsilon <- min(epsilon, 0.1)
+  # Set minimum and maximum values for the smoothing factor epsilon
+  epsilon <- max(epsilon, 0.01)
+  epsilon <- min(epsilon, 0.1)
 
-	return(log((feature + epsilon)/(1 - feature + epsilon)))
+  return(log((feature + epsilon)/(1 - feature + epsilon)))
 }
 
 #' Normalise using the logit function in an empirical manner
@@ -144,9 +144,9 @@ normalise.css = function(otu.counts) {
 #' normalise.logit.empirical(data.proportional)
 #' }
 normalise.logit.empirical = function(input) {
-	normalised <- apply(input, 2, .normalise.logit.feature)
-	rownames(normalised) <- rownames(input)
-	return(normalised)
+  normalised <- apply(input, 2, .normalise.logit.feature)
+  rownames(normalised) <- rownames(input)
+  return(normalised)
 }
 
 #' Normalise using the logit function
@@ -171,7 +171,7 @@ normalise.logit.empirical = function(input) {
 #' normalise.logit(data.proportional)
 #' }
 normalise.logit = function(input) {
-	return(log(input/(1 - input)))
+  return(log(input/(1 - input)))
 }
 
 
@@ -199,8 +199,8 @@ normalise.logit = function(input) {
 #' }
 normalise.clr = function(input, offset=0) {
   normalised.clr <- mixOmics::logratio.transfo(X = as.matrix(input),
-																							 logratio = 'CLR',
-																							 offset = offset)
+                                               logratio = 'CLR',
+                                               offset = offset)
   # Annoyingly, the output object does not allow direct access the matrix of
   # results. This is an easy way to return it.
   return(normalised.clr[,])
@@ -231,7 +231,7 @@ normalise.clr = function(input, offset=0) {
 #' }
 normalise.clr.within.features = function(input, offset=0) {
   normalised.clr <- mixOmics::logratio.transfo(X = t(as.matrix(input)),
-																							 logratio = 'CLR',
-																							 offset = offset)
+                                               logratio = 'CLR',
+                                               offset = offset)
   return(t(normalised.clr[,]))
 }
