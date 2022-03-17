@@ -43,5 +43,7 @@ Suggests:
     rgl,
     umap,
     vegan,
-    biomaRt
-RoxygenNote: 7.1.1
+    biomaRt,
+    testthat (>= 3.0.0)
+RoxygenNote: 7.1.2
+Config/testthat/edition: 3
