@@ -2,7 +2,9 @@
 
 ![Maturity level-0](https://img.shields.io/badge/Maturity%20Level-ML--0-red)
 
-Multi-omics data normalisation, model fitting and visualisation.
+![](omicsfold_id.png)
+
+### Multi-omics data normalisation, model fitting and visualisation.
 
 ## Overview
 
@@ -63,12 +65,13 @@ script.
 
 Import the `OmicsFold` and the `mixOmics` packages in R and you're ready to
 go.  Some functions also require `dplyr` to be loaded so it's a good idea to
-load it anyway.
+load it anyway. Certain plotting functions also may require ggplot2 to be loaded.
 
 ```R
 library(OmicsFold)
 library(mixOmics)
 library(dplyr)
+library (ggplot2) #(optional)
 ```
 
 ### Data Normalisation
@@ -118,17 +121,10 @@ document.
   model from a confusion matrix.
 - **Utility functions** - offers a way to take long feature names being passed
   to plots and truncate them for display.
+- **BlockRank** - implements a novel approach to analysing feature importance 
+  between blocks of data.
 
-### WGCNA Analysis of Expression Data
 
-Where the input data is expression data such as from RNASeq it may be desirable
-to make associations between the single-time-point expression data and the
-outcomes of subjects.  The `WGCNA` library lets you do this, but has a lot of
-inputs.  OmicsFold offers a suite of functions to try to simplify the process
-and integrate the functionality from `anRichment` to identify over-represented
-GO terms for genes clustered by `WGCNA`.  You can read more about the use of
-OmicsFold's suite of functions in the [Getting Started with
-WGCNA](docs/getting-started-wgcna.md) document.
 
 ## Other Information
 
