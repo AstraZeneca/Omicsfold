@@ -111,12 +111,10 @@ document.
   stability of the selected features as a visualisation.
 - **Feature analysis for DIABLO models** - similarly to the features for
   singleomics models above, multiomics models can also have feature loadings and
-  stability exported.  Because stability is influenced by the number of model
-  iterations, the size of the block and the number of features being kept in
-  each component for that block, a ranking function is offered.  Associated
-  correlations between features of different blocks can be exported as either a
-  matrix and then also converted to a CSV file appropriate for importing into
-  Cytoscape where it can form a network graph.
+  stability exported. Associated correlations between features of different 
+  blocks can be exported as either a matrix and then also converted to a CSV 
+  file appropriate for importing into Cytoscape where it can form a network 
+  graph.
 - **Model predictivity** - we provide a function to plot the predictivity of a
   model from a confusion matrix.
 - **Utility functions** - offers a way to take long feature names being passed
