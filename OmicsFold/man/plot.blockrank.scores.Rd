@@ -4,12 +4,20 @@
 \alias{plot.blockrank.scores}
 \title{BlockRank Plotting Function}
 \usage{
-\method{plot}{blockrank.scores}(blockrank.i, nscores = 20, model = "", data_source = "")
+\method{plot}{blockrank.scores}(
+  blockrank.i,
+  nscores = 20,
+  feature.font.size = 8,
+  model = "",
+  data_source = ""
+)
 }
 \arguments{
 \item{blockrank.i}{A list of numeric vectors containing BlockRank scores. One list item per data block}
 
 \item{nscores}{The number of scores to display. Default 20.}
+
+\item{feature.font.size}{Size of font of feature labels on y axis}
 
 \item{model}{The type of model, used only in plot title.}
 
