@@ -6,7 +6,6 @@
 
 ## OmicsFold Team
 
-* Carlos Roca (Project Maintainer)
 * [Vancheswaran Gopalakrishnan](https://github.com/vgopalakrishnan1) (Project
-  Co-Maintainer)
+  Maintainer)
 * [Shameer Khader](https://github.com/shameer) (Project Director)
