@@ -249,7 +249,7 @@ merge.feature.stability(loadings.table, stability.comp3)
 
 ### Measure variable importance
 
-With a trained model object `blockrank.splsda()` will create a single item list containing a vector of BlockRank scores for that model. For more detail see section 'BlockRank' below.
+With a trained model object `blockrank.splsda()` will create a single item list containing a vector of BlockRank scores for that model. For more detail see section [BlockRank](#blockrank) below.
 
 
 ## Feature analysis for DIABLO models
@@ -381,7 +381,7 @@ get.diablo.top.loadings.with.stability(diablo.model, diablo.perf,
 
 ### Measure feature importance
 
-With a trained model object `blockrank.diablo()` will create a list of vectors of BlockRank scores for each feature. For more detail see section 'BlockRank' below.
+With a trained model object `blockrank.diablo()` will create a list of vectors of BlockRank scores for each feature. For more detail see section [BlockRank](#blockrank) below.
 
 ### Plot feature stability
 
