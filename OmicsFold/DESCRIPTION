@@ -5,7 +5,7 @@ Version: 1.0.1
 Authors@R: c(
     person("Shameer", "Khader", email = "shameer.khader@astrazeneca.com", role = c("own", "pdr")),
     person("Carlos", "Roca", email = "carlos.roca@astrazeneca.com", role = c("cre")),
-    person("Deepak", "Gopalakrishnan", email = "vancheswaran.gopalakrishnan@astrazeneca.com", role = c("ctb")),
+    person("Vancheswaran", "Gopalakrishnan", email = "vancheswaran.gopalakrishnan@astrazeneca.com", role = c("ctb")),
     person("Stuart", "McHattie", email = "stuart.mchattie@tessella.com", role = c("aut")),
     person("Jonathan", "Ayling", email = "aylj@tessella.com", role = c("aut")),
     person("Tilly", "Softly", email = "tilly.softly@capgemini.com", role = c("aut")),
