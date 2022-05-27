@@ -109,83 +109,176 @@ plot.predicted.projection <- function(prediction, classes.new) {
   return(p)
 }
 
-
 #' Extract and plot feature associations in a DIABLO model
 #'
 #' @description
 #' Extract feature vs. feature association (mutual information) data for a
 #' multi-omics mixOmics (DIABLO) model, and plot this as a heatmap. This is the
 #' same data used to create the circos and network plots, but includes all
-#' interactions for the top twenty features from each block.
+#' interactions for the top features according to blockrank scores
 #'
-#' @param diablo Trained mixOmics multi-omics (DIABLO) model.
-#' @param block.count Number of blocks used in the model.
+#' @param diablo.tuned Trained mixOmics multi-omics (DIABLO) model.
+#' @param nscores Number of top features to select
 #'
-#' @return Matrix including the association of all selected features across all
-#' blocks. E.g. for a three block multi-omic model, this will include the top 20
-#' features from each block, and so return a 60x60 covariance matrix.
+#' @return Matrix including the associations of top selected features according 
+#' to blockrank scores
+#'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' find.feature.associations(diablo.trained.analysis, 3)
+#' blockrank.find.feature.associations(diablo.tuned, 50)
 #' }
-find.feature.associations <- function(diablo.tuned, block.count) {
-  # Extract the covariance matrix from the circosPlot function. Disable
-  # graphical output to avoid it being overwhelmed
-  pdf(file = NULL)
-  circos <- mixOmics::circosPlot(diablo.tuned, cutoff = 0.7,
+
+blockrank.find.feature.associations <- function(diablo.tuned, nscores) {
+  
+   #Extract the covariance matrix from the circosPlot function. Disable
+   #graphical output to avoid it being overwhelmed
+   pdf(file = NULL)
+   circos <- mixOmics::circosPlot(diablo.tuned, cutoff = 0.7,
                                  line = TRUE, size.labels = 1.5)
-  dev.off()
+   dev.off()
 
-  # Find the top factors across all blocks
-  selected.factors <- list()
-  for (i in 1:block.count) {
-    dev.new(width = 3000, height = 3000, unit = "px")
-    loadings <- mixOmics::plotLoadings(diablo.tuned, block=i, comp = 1,
-                                       contrib = 'max', method = 'median',
-                                       ndisplay=20)
-    dev.off()
-    selected.factors <- c(selected.factors, rownames(loadings))
-  }
-
-  # Filter the covariance matrix for the top factors
-  circos.selected <- circos[rownames(circos) %in% selected.factors,
-                            colnames(circos) %in% selected.factors]
-  diag(circos.selected) <- 1
-
-  # Prepare dendrograms
-  circos.selected.long <- reshape2::melt(circos.selected)
-  circos.dendro <- stats::as.dendrogram(hclust(d = dist(x = circos.selected)))
-  dendro.plot <- ggdendro::ggdendrogram(data = circos.dendro, rotate = TRUE)
-  dendro.plot <- dendro.plot + ggplot2::theme(axis.text.y = element_blank())
-
-  # Order the covariance matrix according to clustering in the dendrograms
-  circos.order <- stats::order.dendrogram(circos.dendro)
-  circos.selected.long$Var1 <- factor(x = circos.selected.long$Var1,
-    levels = rownames(circos.selected)[circos.order],
-    ordered = TRUE)
-  circos.selected.long$Var2 <- factor(x = circos.selected.long$Var2,
-    levels = rownames(circos.selected)[circos.order],
-    ordered = TRUE)
-
-  # Prepare the ordered heatmap plot
-  heatmap.plot <- ggplot2::ggplot(data = circos.selected.long,
+   #find top features across all blocks by ranking blockrank scores high to low
+  
+   #run blockrank
+   blockrank.i <- blockrank.diablo(diablo.tuned)
+    
+   #compile blockrank results
+   plot.data <- vector(mode = "list", length = length(blockrank.i))
+    for (q in seq_along(blockrank.i)){
+      block <- names(blockrank.i)[q]
+      feature <- names(blockrank.i[[q]])
+      blockrank.score <- blockrank.i[[q]]
+      plot.data[[q]] <- data.frame(block, feature, blockrank.score)
+    }
+   plot.data <- bind_rows(plot.data)
+   plot.data <- arrange(plot.data, desc(blockrank.score))
+    
+   #filter to desired number of features
+   plot.data <- head(plot.data,n=nscores)
+    
+   #Find the top factors across all blocks
+   selected.features <- plot.data$feature
+    
+  
+  
+   #Filter the covariance matrix for the top features based on blockrank scores
+   circos.selected <- circos[rownames(circos) %in% selected.features,
+                            colnames(circos) %in% selected.features]
+   diag(circos.selected) <- 1
+  
+   #Prepare dendrograms
+   circos.selected.long <- reshape2::melt(circos.selected)
+   circos.dendro <- stats::as.dendrogram(hclust(d = dist(x = circos.selected)))
+   dendro.plot <- ggdendro::ggdendrogram(data = circos.dendro, rotate = TRUE)
+   dendro.plot <- dendro.plot + ggplot2::theme(axis.text.y = element_blank())
+  
+   #Order the covariance matrix according to clustering in the dendrograms
+   circos.order <- stats::order.dendrogram(circos.dendro)
+   circos.selected.long$Var1 <- factor(x = circos.selected.long$Var1,
+                                      levels = rownames(circos.selected)[circos.order],
+                                      ordered = TRUE)
+   circos.selected.long$Var2 <- factor(x = circos.selected.long$Var2,
+                                      levels = rownames(circos.selected)[circos.order],
+                                      ordered = TRUE)
+  
+   #Prepare the ordered heatmap plot
+   heatmap.plot <- ggplot2::ggplot(data = circos.selected.long,
                                   ggplot2::aes(x = Var1, y = Var2)) +
     ggplot2::geom_tile(ggplot2::aes(fill = value)) +
     viridis::scale_fill_viridis(option="plasma") +
     ggplot2::theme(legend.position = "top")
-
-  # Make the plot
-  grDevices::windows()
-  grid::grid.newpage()
-  print(heatmap.plot,
+  
+   #Make the plot
+   grid::grid.newpage()
+   print(heatmap.plot,
         vp = grid::viewport(x = 0.4, y = 0.5, width = 0.8, height = 1.0))
-  print(dendro.plot,
+   print(dendro.plot,
         vp = grid::viewport(x = 0.90, y = 0.465, width = 0.2, height = 0.99))
+  
+   # Return the covariance matrix
+   return(circos.selected)
+}
 
-  # Return the covariance matrix
-  return(circos.selected)
+
+#' Filter feature association matrix by correlation cutoff and reformat with
+#' respect to features of interest for feature interaction network visualization in Cystoscape
+#'
+#' @description
+#' Filter feature association matrix to remove associations that do not meet a given correlation cut off.
+#' Manipulate feature association matrix to identify associations with 
+#' features of interest to use as source nodes in Cytoscape network visualization. Removes intrablock associations.
+#'
+#' @param diablo.tuned Trained mixOmics multi-omics (DIABLO) model
+#' @param associations Matrix including the associations of top selected features according to blockrank scores
+#' @param source_node_features List of features of interest to use as source nodes in final network
+#' @param cutoff Correlation cut off to filter association matrix by
+#'
+#' @return Dataframe describing correlations with features of interest and their associated blocks
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' filter_network(diablo.model, associations, c("Alistipes_putredinis", "Streptococcus_parasanguinis"), 0.5)
+#' }
+
+filter_network <- function(diablo.model, associations, source_node_features, cutoff){
+
+#generate block names for all features in model
+feature_block_names <- data.frame()
+number_of_blocks <- length(diablo.model$loadings)-1
+for (i in 1:number_of_blocks) {
+  active.block <- diablo.model$loadings[[i]]
+  active.block.names <- data.frame(rownames(active.block), names(diablo.model$loadings[i]))
+  feature_block_names <- rbind(feature_block_names, active.block.names)
+}
+
+#identify blocks for top features
+block_association <- feature_block_names[feature_block_names$rownames.active.block. %in% rownames(associations),]$names.diablo.model.loadings.i..
+
+#export network file with correlation cut off
+network <- export.matrix.as.network(associations, cutoff= cutoff, 
+                                    filename = "network_test.csv", block.association = block_association)
+
+#subset features of interest with correct blocks for target nodes
+network_subset <- network[network$feature.1 %in% 
+                            source_node_features | network$feature.2 %in% source_node_features,]
+
+#convert data into appropriate format for visualization of network in cytoscape 
+
+#conditionally switch values where the target node is in the first column
+network_subset_switch <-network_subset
+names(network_subset_switch)[1]<-"target_node"
+names(network_subset_switch)[2]<-"source_node"
+names(network_subset_switch)[4]<-"source_node_block"
+#identify which rows need to be switched and do not have the correct source node
+i <- which(!network_subset_switch$source_node %in% source_node_features)
+#create vectors with new row values
+new_source <- network_subset_switch$target_node[i]
+new_target <- network_subset_switch$source_node[i]
+#change row values for the rows that need to be switched
+network_subset_switch$source_node[i] <- new_source
+network_subset_switch$target_node[i] <- new_target
+#merge in block names for target nodes
+network_subset_merged <- merge(network_subset_switch, feature_block_names, by.x="target_node", by.y="rownames.active.block.", all.x = TRUE)
+names(network_subset_merged)[5] <- "target_node_block"
+
+#remove intrablock connections
+'%!in%' <- function(x,y)!('%in%'(x,y))
+#create primary key for each id
+network_subset_merged$id <- rownames(network_subset_merged)
+#identify intrablock connections to remove
+network_to_remove <- network_subset_merged[network_subset_merged$source_node_block == network_subset_merged$target_node_block 
+              & network_subset_merged$target_node %!in% source_node_features,]
+#remove the unwanted intrablock connections
+network_filtered <- network_subset_merged[network_subset_merged$id %!in% network_to_remove$id,]
+#remove primary key
+network_filtered$id <- NULL
+
+return(network_filtered)
+
 }
 
 
