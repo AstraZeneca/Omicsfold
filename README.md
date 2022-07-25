@@ -62,17 +62,18 @@ repository maintains the active version of a package, you may have to update the
 script.
 
 If you are having issues installing OmicsFold in a conda environment, please try
-the following steps:
+the following steps: 
 
+First, create the conda environment:
 ```Shell
 conda create --name OmicsFold 
 source activate OmicsFold
 conda install r=3.6.0
 conda update -n base -c defaults conda
 conda install -c conda-forge boost-cpp
-R
 ```
 
+Second, launch R in the conda environment and manually install the following packages:
 ```R
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
