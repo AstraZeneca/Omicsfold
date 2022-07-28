@@ -61,6 +61,32 @@ itself.  If there are any issues due to versions changing or changes in which
 repository maintains the active version of a package, you may have to update the
 script.
 
+If you are having issues installing OmicsFold in a conda environment, please try
+the following steps: 
+
+First, create the conda environment:
+```Shell
+conda create --name OmicsFold 
+source activate OmicsFold
+conda install r=3.6.0
+conda update -n base -c defaults conda
+conda install -c conda-forge boost-cpp
+```
+
+Second, launch R in the conda environment and manually install the following packages (or if you are installing directly in a local instance of R):
+```R
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("metagenomeSeq")
+BiocManager::install("org.Mm.eg.db")
+install.packages("XML", repos = "http://www.omegahat.net/R")
+source("http://labs.genetics.ucla.edu/horvath/htdocs/CoexpressionNetwork/GeneAnnotation/installAnRichment.R")
+installAnRichment()
+source('install.R')
+install.omicsfold()
+```
+
+
 ### Usage
 
 Import the `OmicsFold` and the `mixOmics` packages in R and you're ready to

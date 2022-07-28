@@ -109,83 +109,285 @@ plot.predicted.projection <- function(prediction, classes.new) {
   return(p)
 }
 
-
-#' Extract and plot feature associations in a DIABLO model
+#' Extract feature associations from a multi-omics DIABLO model
 #'
 #' @description
-#' Extract feature vs. feature association (mutual information) data for a
-#' multi-omics mixOmics (DIABLO) model, and plot this as a heatmap. This is the
+#' Extract feature vs. feature association (mutual information) data from a
+#' multi-omics mixOmics (DIABLO) model. This is the
 #' same data used to create the circos and network plots, but includes all
-#' interactions for the top twenty features from each block.
+#' interactions for the top features according to either blockrank or loading scores.
 #'
-#' @param diablo Trained mixOmics multi-omics (DIABLO) model.
-#' @param block.count Number of blocks used in the model.
+#' @param diablo.model Trained mixOmics multi-omics (DIABLO) model.
+#' @param nscores Number of top features to select (default set to 20). If using loading scores,
+#' top features will be evenly divided across the number of blocks.
+#' @param score_type Type of score to select top features by. Accepted options: "blockrank" or "loading" 
+#' (default set to "blockrank")
 #'
-#' @return Matrix including the association of all selected features across all
-#' blocks. E.g. for a three block multi-omic model, this will include the top 20
-#' features from each block, and so return a 60x60 covariance matrix.
+#' @return Matrix including the associations of top selected features in DIABLO model according 
+#' to either blockrank scores or loading values
+#'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' find.feature.associations(diablo.trained.analysis, 3)
+#' find.feature.associations(diablo.model, nscores=50, score_type="blockrank")
 #' }
-find.feature.associations <- function(diablo.tuned, block.count) {
-  # Extract the covariance matrix from the circosPlot function. Disable
-  # graphical output to avoid it being overwhelmed
-  pdf(file = NULL)
-  circos <- mixOmics::circosPlot(diablo.tuned, cutoff = 0.7,
-                                 line = TRUE, size.labels = 1.5)
-  dev.off()
 
-  # Find the top factors across all blocks
-  selected.factors <- list()
-  for (i in 1:block.count) {
-    dev.new(width = 3000, height = 3000, unit = "px")
-    loadings <- mixOmics::plotLoadings(diablo.tuned, block=i, comp = 1,
-                                       contrib = 'max', method = 'median',
-                                       ndisplay=20)
-    dev.off()
-    selected.factors <- c(selected.factors, rownames(loadings))
+find.feature.associations <- function(diablo.model, nscores=20, score_type="blockrank") {
+  
+   #Extract the covariance matrix from the circosPlot function. Disable
+   #graphical output to avoid it being overwhelmed
+   circos <- mixOmics::circosPlot(diablo.model, cutoff=0.7,
+                                 line = TRUE, size.labels = 1.5)
+   dev.off()
+   if (score_type == "blockrank"){
+   #find top features across all blocks by ranking blockrank scores high to low
+  
+   #run diablo blockrank
+   blockrank.i <- blockrank.diablo(diablo.model)
+    
+   #compile blockrank results
+   plot.data <- vector(mode = "list", length = length(blockrank.i))
+    for (q in seq_along(blockrank.i)){
+      block <- names(blockrank.i)[q]
+      feature <- names(blockrank.i[[q]])
+      blockrank.score <- blockrank.i[[q]]
+      plot.data[[q]] <- data.frame(block, feature, blockrank.score)
+    }
+   plot.data <- bind_rows(plot.data)
+   plot.data <- arrange(plot.data, desc(blockrank.score))
+    
+   #filter to desired number of features
+   plot.data <- head(plot.data,n=nscores)
+    
+   #Find the top factors across all blocks
+   selected.features <- plot.data$feature
+   
+   } else if (score_type == "loading") {
+     #Find the top n features across all blocks according to loading score. 
+     #Divide by nscores number of blocks to evenly attain number of scores per block 
+     blocks <- length(diablo.model$loadings)-1
+     nscores_per_block <- round(nscores/blocks, digits = 0)
+     loading_scores <- vector(mode = "list", length = length(blocks))
+     for (i in 1:blocks){
+       dev.new(width = 3000, height = 3000, unit = "px")
+       loadings <- mixOmics::plotLoadings(diablo.model, block=i, comp = 1,
+                                          contrib = 'max', method = 'median',
+                                          ndisplay=nscores_per_block)
+       loading_scores[[i]] <- data.frame(rownames(loadings))
+       dev.off()
+       }
+     loading_scores <- bind_rows(loading_scores)
+     selected.features <- loading_scores$rownames.loadings.
+
+   } else{
+     stop("score_type must be one of the following: blockrank, loading", call.=FALSE)
+     
+   }
+  
+  
+   #Filter the covariance matrix for the top features based on blockrank scores
+   circos.selected <- circos[rownames(circos) %in% selected.features,
+                            colnames(circos) %in% selected.features]
+   diag(circos.selected) <- 1
+
+   # Return the covariance matrix
+   return(circos.selected)
+}
+
+
+#' Filter and reformat feature association matrix 
+#'
+#' @description
+#' Reformats association matrix into network dataframe.
+#' Filters feature network to remove associations that do not meet a correlation cut off.
+#' Filters feature network to remove associations between features from the same block.
+#' Filters feature network to only include associations to a list of selected features. 
+#' 
+#'
+#' @param diablo.model Trained mixOmics multi-omics (DIABLO) model
+#' @param associations Matrix consisting the associations of top discriminative features from find.feature.associations()
+#' @param feature_list List of features of interest to filter network by. If argument not supplied, network will not be filtered
+#' @param cutoff Correlation cut off to filter feature network. (default set to 0.7)
+#' @param remove_intrablock If set to TRUE, removes associations between features from the same block (default set to FALSE)
+#'
+#' @return Dataframe describing associations between features and their blocks
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' filter.network(diablo.model=diablo.model, associations=associations, cutoff=0.7, feature_list= feature_list, remove_intrablock = FALSE)
+#' }
+
+filter.network <- function(diablo.model, associations, feature_list=NULL, cutoff=0.7, remove_intrablock=FALSE){
+
+'%!in%' <- function(x,y)!('%in%'(x,y))
+  
+#generate block names for all features in model
+feature_block_names <- data.frame()
+number_of_blocks <- length(diablo.model$loadings)-1
+for (i in 1:number_of_blocks) {
+  active.block <- diablo.model$loadings[[i]]
+  active.block.names <- data.frame(rownames(active.block), names(diablo.model$loadings[i]))
+  feature_block_names <- rbind(feature_block_names, active.block.names)
+}
+
+#identify blocks for top features
+block_association <- feature_block_names[feature_block_names$rownames.active.block. %in% rownames(associations),]$names.diablo.model.loadings.i..
+
+#export network file with correlation cut off
+network <- export.matrix.as.network(associations, cutoff= cutoff, 
+                                    filename = "network.csv", block.association = block_association)
+if (is.null(feature_list)){
+
+  #not filtering network by top features
+  #merge in block names for nodes
+  network_subset_merged <- merge(network, feature_block_names, by.x="feature.2", by.y="rownames.active.block.", all.x = TRUE)
+  names(network_subset_merged)[4] <- "feature.1_block"
+  names(network_subset_merged)[5] <- "feature.2_block"
+  network <- network_subset_merged %>% select("feature.1", "feature.2", "value", "feature.1_block", "feature.2_block")
+  }
+  
+  else{
+
+  #subset network to only include associations with features of interest
+  network_subset_switch <- network[network$feature.1 %in% feature_list | network$feature.2 %in% feature_list,]
+  
+  #conditionally switching features where the feature of interest node is in second column
+   
+  #identify which rows need to be switched and do not have the correct source node
+  i <- which(network_subset_switch$feature.2 %in% feature_list)
+  #create vectors with new row values
+  new_feature_1 <- as.character(network_subset_switch$feature.2[i])
+  new_feature_2 <- as.character(network_subset_switch$feature.1[i])
+  #change row values for the rows that need to be switched
+  network_subset_switch$feature.1[i] <- new_feature_1
+  network_subset_switch$feature.2[i] <- new_feature_2
+  #merge in block names for  nodes
+  network_subset_merged <- merge(network_subset_switch, feature_block_names, by.x="feature.2", by.y="rownames.active.block.", all.x = TRUE)
+  names(network_subset_merged)[4] <- "feature.1_block"
+  names(network_subset_merged)[5] <- "feature.2_block"
+  network <- network_subset_merged %>% select("feature.1", "feature.2", "value", "feature.1_block", "feature.2_block")
+  
+  #add error message if a feature of interest is not in top n features by blockrank score or loading score
+  feature_found <- FALSE
+
+  for (i in seq_along(feature_list)){
+    if (feature_list[i] %in% network$feature.1)  {
+      feature_found <- TRUE
+    }
+    else if (feature_list[i] %!in% network$feature.1) {
+      message(paste0(feature_list[i], " is not present in top features selected"))
+    }
+  }
+  
+  if(feature_found == FALSE) {
+    stop("None of the entered features are in the top selected features", call.=FALSE)
   }
 
-  # Filter the covariance matrix for the top factors
-  circos.selected <- circos[rownames(circos) %in% selected.factors,
-                            colnames(circos) %in% selected.factors]
-  diag(circos.selected) <- 1
+  }
+  
 
-  # Prepare dendrograms
-  circos.selected.long <- reshape2::melt(circos.selected)
-  circos.dendro <- stats::as.dendrogram(hclust(d = dist(x = circos.selected)))
-  dendro.plot <- ggdendro::ggdendrogram(data = circos.dendro, rotate = TRUE)
-  dendro.plot <- dendro.plot + ggplot2::theme(axis.text.y = element_blank())
+#remove intrablock connections if TRUE
+if (remove_intrablock == TRUE){
 
-  # Order the covariance matrix according to clustering in the dendrograms
-  circos.order <- stats::order.dendrogram(circos.dendro)
-  circos.selected.long$Var1 <- factor(x = circos.selected.long$Var1,
-    levels = rownames(circos.selected)[circos.order],
-    ordered = TRUE)
-  circos.selected.long$Var2 <- factor(x = circos.selected.long$Var2,
-    levels = rownames(circos.selected)[circos.order],
-    ordered = TRUE)
+  #create primary key for each id
+  network$id <- rownames(network)
+  #identify intrablock connections to remove
+  network_to_remove <- network[network$feature.1_block == network$feature.2_block,]
+  #remove the unwanted intrablock connections
+  network <- network[network$id %!in% network_to_remove$id,]
+  #remove primary key
+  network$id <- NULL
 
-  # Prepare the ordered heatmap plot
-  heatmap.plot <- ggplot2::ggplot(data = circos.selected.long,
-                                  ggplot2::aes(x = Var1, y = Var2)) +
-    ggplot2::geom_tile(ggplot2::aes(fill = value)) +
-    viridis::scale_fill_viridis(option="plasma") +
-    ggplot2::theme(legend.position = "top")
+  
+}
+#stop function is network has been filtered to to 0 associations
+if (nrow(network) < 1){
+  stop("Final network is empty. Please try again with different parameters.", call.=FALSE)
+}
 
-  # Make the plot
-  grDevices::windows()
-  grid::grid.newpage()
-  print(heatmap.plot,
-        vp = grid::viewport(x = 0.4, y = 0.5, width = 0.8, height = 1.0))
-  print(dendro.plot,
-        vp = grid::viewport(x = 0.90, y = 0.465, width = 0.2, height = 0.99))
+return(network)
 
-  # Return the covariance matrix
-  return(circos.selected)
+}
+
+#' Visualize feature interaction network 
+#'
+#' @description
+#' Plots feature interaction network output dataframe from filter.network(). Nodes represent biological features and edges
+#' represents correlations between nodes. Nodes are colored by block and edges are colored by correlation value.
+#' Uses Kamada-Kawai layout algorithm to position nodes. More strongly connected nodes will be pulled together,
+#' while more weakly connected nodes will pushed away from other nodes.
+#' 
+#'
+#' @param omicsfold_network Network dataframe generated by filter.network() that describes
+#' associations between features and their associated blocks
+#'
+#' @return  Visualization of feature interaction network
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' plot.network(omicsfold_network=omicsfold_network)
+#' }
+
+
+#visualize network
+plot.network <- function(omicsfold_network){
+  
+  #plot network
+  thm <- theme_minimal() +
+    theme(
+      axis.title = element_blank(),
+      axis.text = element_blank(),
+      panel.grid = element_blank(),
+      panel.grid.major = element_blank(),
+    ) 
+  
+  theme_set(thm)
+  
+  final_network_graph <- as_tbl_graph(omicsfold_network)
+  
+  final_network_graph <- final_network_graph %>%
+    activate(nodes) %>%
+    mutate(
+      title = str_to_title(name),
+      label = str_replace_all(title, " ", "\n")
+    )
+  
+  #generate block names for all features in model
+  feature_block_names <- data.frame()
+  number_of_blocks <- length(diablo.model$loadings)-1
+  for (i in 1:number_of_blocks) {
+    active.block <- diablo.model$loadings[[i]]
+    active.block.names <- data.frame(rownames(active.block), names(diablo.model$loadings[i]))
+    feature_block_names <- rbind(feature_block_names, active.block.names)
+  }
+  names(feature_block_names)[2] <- "block"
+  
+  #merge in block data
+  final_network_graph <-  left_join(final_network_graph %>%
+                                      activate(nodes), feature_block_names, by= c("name" = "rownames.active.block."))
+  
+  network_plot <- final_network_graph %>%
+      ggraph(layout = "kk") +
+      geom_edge_diagonal(aes(color = value), edge_width=3, alpha = 0.7) +
+      scale_edge_colour_continuous(
+        low = "orange",
+        high = "red",
+        space = "Lab",
+        na.value = "grey50",
+        guide = "edge_colourbar")+
+      geom_node_point(size=6,show.legend = FALSE)+
+      geom_node_label(aes(label=name, fill=block), repel = T, show.legend = TRUE, alpha=0.9,
+                      color = "white",          # text
+                      size = 5,                 # font size
+                      label.r = unit(20, "pt"), # corner radius of label box
+                      label.size = .1,          # label border size
+                      label.padding = unit(1, "lines"))
+  return(network_plot)
 }
 
 

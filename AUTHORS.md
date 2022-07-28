@@ -6,6 +6,7 @@
 
 ## OmicsFold Team
 
-* [Vancheswaran Gopalakrishnan](https://github.com/vgopalakrishnan1) (Project
-  Maintainer)
 * [Shameer Khader](https://github.com/shameer) (Project Director)
+* [Vancheswaran Gopalakrishnan](https://github.com/vgopalakrishnan1) (Project Maintainer)
+* [Ben Sparklin](https://github.com/bensparklin) (Project Maintainer)
+* [Chiyun Lee](https://github.com/Chiyun-Lee) (Project Maintainer)

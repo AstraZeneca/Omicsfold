@@ -10,6 +10,8 @@ Authors@R: c(
     person("Jonathan", "Ayling", email = "aylj@tessella.com", role = c("aut")),
     person("Tilly", "Softly", email = "tilly.softly@capgemini.com", role = c("aut")),
     person("Andrew", "Pollard", email = "andrew.pollard@capgemini.com", role = c("aut")),
+    person("Ben", "Sparklin", email = "ben.sparklin@astrazeneca.com", role = c("ctb")),
+    person("Chiyun", "Lee", email = "chiyun.lee@astrazeneca.com", role = c("ctb")),
     person("AstraZeneca", role = c("cph")))
 Description: Provides a unified toolkit for the analysis and integration of multi-omic high-throughput data.
     It relies upon the mixOmics toolkit to provide implementations of many of the underlying projection to latent structures
