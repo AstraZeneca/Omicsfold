@@ -73,7 +73,7 @@ conda update -n base -c defaults conda
 conda install -c conda-forge boost-cpp
 ```
 
-Second, launch R in the conda environment and manually install the following packages:
+Second, launch R in the conda environment and manually install the following packages (or if you are installing directly in local instance of R):
 ```R
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
