@@ -502,10 +502,10 @@ export.matrix.as.network(associations, filename = "network.csv", cutoff = 0.7,
 ```
 
 ## Network functions
-OmicsFold provides a method to filter and visualize top feature associations as a 
-multi-omic correlation network. The network functions extract the associations between 
-top features according to either blockrank or loading scores, filter and reformat
-into a network object for direct visualization in R or visualization in an external
+OmicsFold provides a set of functions to process a DIABLO model into a multi-omic interaction network
+visualization. The network functions extract the associations between 
+top features and reformat the associations into a network object 
+for direct visualization in R or visualization in an external
 program such as Cytoscape.
 
 ### Extract feature associations
@@ -517,9 +517,10 @@ To extract feature associations from a multi-omic DIABLO model, use the
 associations <- find.feature.associations(diablo.model, nscores=50, score_type="blockrank")
 ```
 
-The function requires the final trained DIABLO model and the can be adjusted to change 
-the number of features returned and ranking system. The function will return a matrix 
-of associations between most important features in the model according to either 
+The function requires the final trained DIABLO model. The `nscores` parameter can be 
+adjusted to select the number of top discriminative features to be returned. The `score_type` function
+can be set to either "blockrank" or "loading" to determine which feature ranking metric to use.
+The function will return a matrix of associations between most important features in the model according to either 
 blockrank or loading scores.
 
 ### Filter and reformat network
@@ -529,16 +530,16 @@ To filter and reformat the association matrix into a format for network visualiz
 
 ```R
 omicsfold_network <- filter.network(diablo.model=diablo.model, associations=associations, cutoff=0.7, 
-feature_list= feature_list, remove_intrablock = FALSE)
+feature_list=c("phenol.sulfate", "Alistipes_putredinis"), remove_intrablock = FALSE)
 ```
 
 The function requires the final trained DIABLO model and the association matrix from `find.feature.associations()`.
 A correlation cut off can be set with `cutoff` to remove associations between features that 
-do not meet a threshold. A vector of features can be supplied to filter the network to only include
+do not meet the supplied threshold. A vector of feature names can be supplied to filter the network to only include
 associations to features of interest with `feature_list`, and assocations between features from the same block
 can be removed with `remove_intrablock`. The function returns a dataframe describing associations 
 between features and the blocks that correspond features in each association. The dataframe
-be exported to Cytoscape or applied to the `plot.network()` function for visualization. 
+be exported to Cytoscape or applied to the `plot.network()` function for visualization in R. 
 
 ### Plot network
 
@@ -548,9 +549,12 @@ To visualize the multi-omic network, use the `plot.network()` function.
 plot.network(omicsfold_network=omicsfold_network)
 ```
 
+![image](https://user-images.githubusercontent.com/49563541/182643757-33a50d8d-153c-496e-af17-dab19cddcdb8.png)
+
 The function requires the network dataframe from the `filter.network()` function. Nodes in the network represent 
-features and edges represent correlations between nodes. Nodes are colored by block and edges are colored by correlation value.
-The function uses the Kamada-Kawai layout algorithm to position nodes so that more strongly connected nodes will be pulled together,
+features and edges represent correlations between nodes. Nodes are colored by block and edges are colored by correlation value, with darker red edges 
+indicating the high end of the correlation values in the network and darker orange edges indicating the lower end of correlation values in the network.
+The function uses the Kamada-Kawai network layout algorithm to position nodes so that more strongly connected nodes will be pulled together,
 while more weakly connected nodes will pushed away from other nodes.
 
 
