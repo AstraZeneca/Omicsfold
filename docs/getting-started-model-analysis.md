@@ -514,10 +514,10 @@ To extract feature associations from a multi-omic DIABLO model, use the
 `find.feature.associations()` function.
 
 ```R
-associations <- find.feature.associations(diablo.model, nscores=50, score_type="blockrank")
+associations <- find.feature.associations(diablo.model, feature_number=50, score_type="blockrank")
 ```
 
-The function requires the final trained DIABLO model. The `nscores` parameter can be 
+The function requires the final trained DIABLO model. The `feature_number` parameter can be 
 adjusted to select the number of top discriminative features to be returned. The `score_type` function
 can be set to either "blockrank" or "loading" to determine which feature ranking metric to use.
 The function will return a matrix of associations between the most important features in the model according to either 
