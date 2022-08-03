@@ -502,9 +502,9 @@ export.matrix.as.network(associations, filename = "network.csv", cutoff = 0.7,
 ```
 
 ## Network functions
-OmicsFold provides a set of functions to process a DIABLO model into a multi-omic interaction network
-visualization. The network functions extract the associations between 
-top features and reformat the associations into a network object 
+OmicsFold provides a set of functions to extract and process data from a DIABLO model 
+into a multi-omic interaction network visualization. The network functions identify associations between 
+top features in the model and reformat the associations into a network object 
 for direct visualization in R or visualization in an external
 program such as Cytoscape.
 
@@ -520,7 +520,7 @@ associations <- find.feature.associations(diablo.model, nscores=50, score_type="
 The function requires the final trained DIABLO model. The `nscores` parameter can be 
 adjusted to select the number of top discriminative features to be returned. The `score_type` function
 can be set to either "blockrank" or "loading" to determine which feature ranking metric to use.
-The function will return a matrix of associations between most important features in the model according to either 
+The function will return a matrix of associations between the most important features in the model according to either 
 blockrank or loading scores.
 
 ### Filter and reformat network
@@ -536,7 +536,7 @@ feature_list=c("phenol.sulfate", "Alistipes_putredinis"), remove_intrablock = FA
 The function requires the final trained DIABLO model and the association matrix from `find.feature.associations()`.
 A correlation cut off can be set with `cutoff` to remove associations between features that 
 do not meet the supplied threshold. A vector of feature names can be supplied to filter the network to only include
-associations to features of interest with `feature_list`, and assocations between features from the same block
+associations to features of interest with `feature_list`, and associations between features from the same block
 can be removed with `remove_intrablock`. The function returns a dataframe describing associations 
 between features and the blocks that correspond features in each association. The dataframe
 be exported to Cytoscape or applied to the `plot.network()` function for visualization in R. 
