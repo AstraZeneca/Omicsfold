@@ -504,8 +504,8 @@ export.matrix.as.network(associations, filename = "network.csv", cutoff = 0.7,
 ## Network functions
 OmicsFold provides a set of functions to extract and process data from a DIABLO model 
 into a multi-omic interaction network visualization. The network functions identify associations between 
-top features in the model and reformat the associations into a network object 
-for direct visualization in R or visualization in an external
+top features in the model and reformat them into a network object 
+for direct visualization in R or in an external
 program such as Cytoscape.
 
 ### Extract feature associations
@@ -525,7 +525,7 @@ blockrank or loading scores.
 
 ### Filter and reformat network
 
-To filter and reformat the association matrix into a format for network visualization, use the 
+To filter and reformat the association matrix for network visualization, use the 
 `filter.network()` function.
 
 ```R
@@ -538,7 +538,7 @@ A correlation cut off can be set with `cutoff` to remove associations between fe
 do not meet the supplied threshold. A vector of feature names can be supplied to filter the network to only include
 associations to features of interest with `feature_list`, and associations between features from the same block
 can be removed with `remove_intrablock`. The function returns a dataframe describing associations 
-between features and the blocks that correspond features in each association. The dataframe
+between features and the blocks that they belong to. The dataframe can
 be exported to Cytoscape or applied to the `plot.network()` function for visualization in R. 
 
 ### Plot network
@@ -553,10 +553,9 @@ plot.network(omicsfold_network=omicsfold_network)
 
 The function requires the network dataframe from the `filter.network()` function. Nodes in the network represent 
 features and edges represent correlations between nodes. Nodes are colored by block and edges are colored by correlation value, with darker red edges 
-indicating the high end of the correlation values in the network and darker orange edges indicating the lower end of correlation values in the network.
+indicating the higher end of the correlation values in the network and darker orange edges indicating the lower end of correlation values in the network.
 The function uses the Kamada-Kawai network layout algorithm to position nodes so that more strongly connected nodes will be pulled together,
 while more weakly connected nodes will pushed away from other nodes.
-
 
 ## BlockRank
 
