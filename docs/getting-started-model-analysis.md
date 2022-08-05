@@ -413,51 +413,6 @@ plot.feature.stability(stability)
 
 ![Feature Stability Plot](img/../imgs/plot-feature-stability.png)
 
-### Find DIABLO feature associations
-
-`find.feature.associations()` generates both a matrix of associations between
-features and a heatmap of the same data alongside a dendrogram showing
-similarity in associations between features.  By passing the trained DIABLO
-model and the number of blocks it contains as parameters, a matrix will be
-created with fractions indicating the common trends in observations for each
-pair of features selected for the sparse model in the first component only.
-Only features which are returned by the [top loadings
-function](#get-diablo-top-loadings) will be compared.  If a feature has a
-pattern of measurement that is exactly consistent with another, when comparing
-across the samples, the association will be `1.0`. Where the trend is inverse,
-this can be just as informative since there may still be a biological link
-between the features.  These associations are represented by negative numbers up
-to `-1.0`.
-
-As well as providing this information as a matrix, a plot is generated with the
-same information presented as a heatmap where orange and yellow squares indicate
-a positive association and purple to violet squares indicate a negative
-association.  The ordering of features on the heatmap are according to the
-clustering of the association patterns.  Each axis contains the features in the
-same order, hence a strong diagonal correlation is shown where features are
-associated with themselves.  The heatmap is accompanied by a dendrogram showing
-similarity in the associations between features.  Those with branches furthest
-to the left of the dendrogram show the most similarity in their associations
-with other features.
-
-The following code example will generate the matrix of associations for our
-DIABLO model and create the heatmap and dendrogram plot as shown below.  Note
-that the output shown is a trimmed version of the full matrix for brevity.  The
-heatmap and dendrogram plot is the original.
-
-```R
-find.feature.associations(diablo.model, block.count = 3)
-##                   KDM4B     ZNF552       FUT8      LRIG1      CCNA2      PREX1
-## KDM4B         1.0000000  0.8247985  0.5777819  0.6780996 -0.6194948  0.7235040
-## ZNF552        0.8247985  1.0000000  0.6428172  0.7072751 -0.6399958  0.7308222
-## FUT8          0.5777819  0.6428172  1.0000000  0.5162760 -0.4628657  0.5168250
-## LRIG1         0.6780996  0.7072751  0.5162760  1.0000000 -0.5223886  0.5995716
-## CCNA2        -0.6194948 -0.6399958 -0.4628657 -0.5223886  1.0000000 -0.5468418
-## PREX1         0.7235040  0.7308222  0.5168250  0.5995716 -0.5468418  1.0000000
-```
-
-![Feature Associations Plot](imgs/find-feature-associations.png)
-
 ### Export DIABLO matrix as a network
 
 `export.matrix.as.network()` takes the output of the associations function above
