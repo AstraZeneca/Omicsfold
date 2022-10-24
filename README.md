@@ -4,7 +4,7 @@
 
 ![](omicsfold_id.png)
 
-### Multi-omics data normalisation, model fitting and visualisation.
+### Multi-omics data normalisation, model fitting, and visualisation.
 
 ## Overview
 
