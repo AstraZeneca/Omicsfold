@@ -69,7 +69,6 @@ First, create the conda environment:
 conda create --name OmicsFold 
 source activate OmicsFold
 conda install r=3.6.0
-conda update -n base -c defaults conda
 conda install -c conda-forge boost-cpp
 ```
 
