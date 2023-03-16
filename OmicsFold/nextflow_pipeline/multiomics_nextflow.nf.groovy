@@ -1,13 +1,16 @@
 #!/usr/bin/env nextflow_multiomics
 nextflow.enable.dsl=2
 
-//nextflow script to build OmicsFold multi-omics integration pipeline
+//nextflow script to run OmicsFold multi-omics integration pipeline
 
 //tuning #1: tune optimal number of components
 process findncomp {
   
   //use OmicsFold conda environment
   conda "~/.conda/envs/OmicsFold"
+  
+  //set output directory
+  publishDir "omicsfold_output"
   
   input:
   path data
@@ -28,8 +31,11 @@ process findncomp {
 //tuning #2: tune optimal number of features per component
 process findkeepX {
   
-
+  //use OmicsFold conda environment
   conda "~/.conda/envs/OmicsFold"
+  
+  //set output directory
+  publishDir "omicsfold_output"
   
   input:
   path data
@@ -52,7 +58,11 @@ process findkeepX {
 //final performance check
  process perf_check {
    
+  //use OmicsFold conda environment
   conda "~/.conda/envs/OmicsFold"
+   
+  //set output directory
+  publishDir "omicsfold_output"
   
   input:
   path data
@@ -76,6 +86,6 @@ process findkeepX {
 //define workflow 
 workflow {
 findncomp(params.data, params.data_labels)
-findkeepX(findncomp.out[0], findncomp.out[1], findncomp.out[2])
-perf_check(findkeepX.out[0], findkeepX.out[1], findkeepX.out[2])
+findkeepX(findncomp.out[0], findncomp.out[1], findncomp.out[4])
+perf_check(findkeepX.out[0], findkeepX.out[1], findkeepX.out[4])
 }
