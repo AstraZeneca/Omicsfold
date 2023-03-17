@@ -501,12 +501,12 @@ be exported to Cytoscape or applied to the `plot.network()` function for visuali
 To visualize the multi-omic network, use the `plot.network()` function. 
 
 ```R
-plot.network(omicsfold_network=omicsfold_network)
+plot.network(omicsfold_network=omicsfold_network, diablo.model=diablo.model)
 ```
 
 ![image](https://user-images.githubusercontent.com/49563541/182643757-33a50d8d-153c-496e-af17-dab19cddcdb8.png)
 
-The function requires the network dataframe from the `filter.network()` function. Nodes in the network represent 
+The function requires the network dataframe from the `filter.network()` function and the final trained DIABLO model. Nodes in the network represent 
 features and edges represent correlations between nodes. Nodes are colored by block and edges are colored by correlation value, with darker red edges 
 indicating the higher end of the correlation values in the network and darker orange edges indicating the lower end of correlation values in the network.
 The function uses the Kamada-Kawai network layout algorithm to position nodes so that more strongly connected nodes will be pulled together,
