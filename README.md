@@ -84,7 +84,7 @@ installAnRichment()
 source('install.R')
 install.omicsfold()
 ```
-
+For installation using nextflow (https://www.nextflow.io/docs/latest/getstarted.html) please see https://github.com/AstraZeneca/Omicsfold/tree/master/OmicsFold/nextflow_pipeline
 
 ### Usage
 
